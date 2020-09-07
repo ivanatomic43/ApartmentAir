@@ -8,12 +8,15 @@ function showLoginForm(){
 }
 
  function showRegistrationForm(){
-	
-
-	$("#registrationForm").show();
-	$("#loginForm").hide();
-	$("#headerForm").hide();
+	 alert("USAO")
+	 $("#registrationForm").show();
+	 $("#loginForm").hide();
+	 
 	
 	
 }
 
+ function homePageClick(){
+	 $("#headerForm").show();
+	 $("#loginForm").hide();
+ }

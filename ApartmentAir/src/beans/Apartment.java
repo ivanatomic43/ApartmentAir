@@ -181,28 +181,28 @@ public class Apartment {
 	/**
 	 * @return the amenities
 	 */
-	public List<Integer> getAmenities() {
+	public List<Amenities> getAmenities() {
 		return amenities;
 	}
 
 	/**
 	 * @param amenities the amenities to set
 	 */
-	public void setAmenities(List<Integer> amenities) {
+	public void setAmenities(List<Amenities> amenities) {
 		this.amenities = amenities;
 	}
 
 	/**
 	 * @return the reservations
 	 */
-	public List<Integer> getReservations() {
+	public List<Reservation> getReservations() {
 		return reservations;
 	}
 
 	/**
 	 * @param reservations the reservations to set
 	 */
-	public void setReservations(List<Integer> reservations) {
+	public void setReservations(List<Reservation> reservations) {
 		this.reservations = reservations;
 	}
 	

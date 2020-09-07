@@ -19,13 +19,15 @@ public class User {
 	private List<Integer> reservationList = new ArrayList<>(); //guest
 	
 	
+	
 
 	public User() {
 		this.username="";
 		this.password="";
 		this.name="";
 		this.surname="";
-		this.role="buyer";
+		this.role="Guest";
+		this.gender="";
 		
 	}
 	
@@ -37,7 +39,8 @@ public class User {
 		this.password = password;
 		this.name="";
 		this.surname="";
-		this.role="buyer";
+		this.role="Guest";
+		this.gender="";
 	}
 	
 	
@@ -154,54 +157,66 @@ public class User {
 	}
 
 
-	/**
-	 * @return the apartmentsForRent
-	 */
+	
 	public List<Integer> getApartmentsForRent() {
 		return apartmentsForRent;
 	}
 
-
-	/**
-	 * @param apartmentsForRent the apartmentsForRent to set
-	 */
 	public void setApartmentsForRent(List<Integer> apartmentsForRent) {
 		this.apartmentsForRent = apartmentsForRent;
 	}
 
-
-	/**
-	 * @return the rentedApartments
-	 */
 	public List<Integer> getRentedApartments() {
 		return rentedApartments;
 	}
 
 
-	/**
-	 * @param rentedApartments the rentedApartments to set
-	 */
+	
 	public void setRentedApartments(List<Integer> rentedApartments) {
 		this.rentedApartments = rentedApartments;
 	}
 
 
-	/**
-	 * @return the reservationList
-	 */
+	
 	public List<Integer> getReservationList() {
 		return reservationList;
 	}
 
 
-	/**
-	 * @param reservationList the reservationList to set
-	 */
+	
 	public void setReservationList(List<Integer> reservationList) {
 		this.reservationList = reservationList;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
+	}
+
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return super.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 
 	
 	

@@ -86,14 +86,14 @@ public class Reservation {
 	 * @return the client
 	 */
 	public User getClient() {
-		return client;
+		return guest;
 	}
 
 	/**
 	 * @param client the client to set
 	 */
 	public void setClient(User client) {
-		this.client = client;
+		this.guest = client;
 	}
 
 	/**

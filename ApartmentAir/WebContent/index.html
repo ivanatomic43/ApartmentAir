@@ -20,6 +20,8 @@
 
 
 <script type = "text/javascript" src = "JavaScriptFiles/HomePage.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/Registration.js" charset = "utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/Login.js" charset="utf-8"></script>
 
 
 
@@ -40,17 +42,25 @@
       <ul class="nav navbar-nav navbar-left">
         <li class="nav-link" onclick="homePageClick()"><a href="#">Home</a></li>
           <li class="nav-item">
-            <a class="nav-link" onclick="showLoginForm()" href="#">Log in</a>
+            <a class="nav-link" onclick="showLoginForm()" id="loginBtn">Log in</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" onclick="showRegistrationForm()" href="#">Registration</a>
+            <a class="nav-link" onclick="showRegistrationForm()" id="regBtn">Registration</a>
           </li>
-        
+          <li class="nav-item">
+            <a class="nav-link" onclick="pronasao()" id="ajaxBtn">AJAX test</a>
+          </li>
       
       
       </ul>
       </div>
       </div>
+      
+      
+      
+      
+      
+      
   </nav>
 
 
@@ -60,7 +70,7 @@
 
 
   <!-- Page Content -->
-  <div class="container">
+  <div class="container" >
 
     <!-- Jumbotron Header -->
     <header class="jumbotron my-4" id="headerForm">
@@ -68,51 +78,56 @@
       <p class="lead">Make yourself at home is our slogan. We offer the best beds in the industry. Sleep well and rest well.</p>
       <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
     </header>
+</div>
 
+<section>
    <!--LOG IN FORM-->
 <div class="login-form" id="loginForm" hidden="true">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form>
         <h2 class="text-center">Log in</h2>       
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="required">
+            <input type="text" class="form-control" placeholder="Username" required="required" id="usernameLog" name="usernameLog">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required="required">
+            <input type="password" class="form-control" placeholder="Password" required="required" id="passwordLog" name="passwordLog">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn btn-primary btn-block">Log in</button>
-        </div>
+            <button type="submit" class="btn btn btn-primary btn-block" onclick="login()">Log in</button>
+       
         <div class="clearfix">
             
         </div>        
     </form>
     
 </div>
-   
+</section>  
    
   <!-- REGISTER FORM --> 
-   
-<div class="login-form" id="registrationForm" hidden="true">
-    <form action="" method="post">
+  <section>
+<div class="login-form" id="registrationForm" hidden = "true">
+    <form method="post">
         <h2 class="text-center">Register</h2>       
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="Username" required="required">
+            <input type="text" class="form-control" placeholder="Name" required="required" id="nameReg" name="nameReg">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" placeholder="Password" required="required">
+            <input type="text" class="form-control" placeholder="Last Name" required="required" id="LastNameReg" name="surnameReg">
         </div>
          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Name" required="required">
+            <input type="text" class="form-control" placeholder="Username" required="required" id="usernameReg" name="usernameReg" >
         </div>
          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Last Name" required="required">
+            <input type="password" class="form-control" placeholder="Password" required="required" id="passwordReg" name="passwordReg">
         </div>
          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Gender" required="required">
+            <input type="password" class="form-control" placeholder="Confirm Password" required="required" id="ConPasswordReg" name="confirmPasswordReg">
+        </div>
+         <div class="form-group">
+            <input type="text" class="form-control" placeholder="Gender" required="required" id="genderReg" name="genderReg">
         </div>
       
         <div class="form-group">
-            <button type="submit" class="btn btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn btn-primary btn-block" onclick="registration()">Register</button>
         </div>
         <div class="clearfix">
             
@@ -120,6 +135,8 @@
     </form>
     
 </div>
+</section>
+<!-- LIST OF APARTMENTS FOR EACH USER -->
 
 
 

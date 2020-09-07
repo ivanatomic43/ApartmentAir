@@ -115,12 +115,5 @@ public class AuthService {
 	  return retVal;
 	}
 	
-	@POST
-	@Path("/testAjax")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public void testAjax(@Context HttpServletRequest request) {
-		System.out.println("Pronasao testAjax");
-	}
 	
 }

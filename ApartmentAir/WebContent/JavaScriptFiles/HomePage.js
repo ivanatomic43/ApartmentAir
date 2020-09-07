@@ -8,9 +8,10 @@ function showLoginForm(){
 }
 
  function showRegistrationForm(){
-	 alert("USAO")
+	
 	 $("#registrationForm").show();
 	 $("#loginForm").hide();
+	 $("#headerForm").hide();
 	 
 	
 	

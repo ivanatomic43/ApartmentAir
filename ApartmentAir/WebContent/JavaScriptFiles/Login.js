@@ -1,20 +1,23 @@
-$(document).ready(function() {
+
+$(document).ready(()=> {
+	
+
+	
 	$.ajax({
-		url: "rest/auth/testlogin",
-		type:"GET",
-		success: function(data) {
-			if(data==null) {
-				alert("Niko nije ulogovan!!")
-			} else {
-					alert("Korisnik je ulogovan!");
+		url: "rest/auth/getLogged",
+		type: "GET",
+		contentType: "application/json",
+		success: function(user) {
 			
+			if(user != null){
+				adaptToUser(user);
+				
+			} else{
+				alert("There is no logged user");
 				}
-			
-		},
-		error: function(data) {
-			//alert("Neuspesno!");
-		}
-	})
+			}
+		});
+
 });
 
 function login(){
@@ -59,10 +62,11 @@ function login(){
 			dataType: "json",
 			success: function(user){
 				if(user != null){
-					alert("USAO, user nije null");
+					alert("Login successfull!")
+					adaptToUser(user);
 					
 				}else{
-					alert("Pogrešno korisničko ime ili lozinka");
+					alert("Wrong username or password!");
 				}
 				
 			}
@@ -83,30 +87,23 @@ function login(){
 function adaptToUser(u){
 	alert("Usao u adapt");
 	$("#loginBtn").hide();
-	$("$regBtn").hide();
+	$("#regBtn").hide();
+	$("#logoutBtn").show();
 	
 }
 
-function pronasao(){
+function logout(){
 	
 	$.ajax({
-		 url: "rest/auth/testAjax",
-		 type: "POST",
-		 succes: function(){
-			 
-			
-				alert("Login successful!")
-			
-			//adaptToUser(user);
-				$("#headerFrom").hide();
-				
-			 
-			 
-		 },
-		 error: function(){alert("neuspesno");}
-		
-		
-		
-	})
+		url:"rest/auth/logout",
+		type:"POST",
+		contentType:'application/json',
+		success: function(){
+			window.location.replace("index.html");
+		},
+		error : function(){
+			alert("Neuspesna odjava!")
+		}
+	});
 	
 }

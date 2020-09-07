@@ -40,6 +40,8 @@ function registration(){
 	let gender = $("#genderReg")[0].value;
 	
 	
+
+	
 	let validation = true;
 	
 	let letters = /^[A-Za-z]+$/;
@@ -74,6 +76,7 @@ function registration(){
 	    }else{
 	    	validation=false;
 	    	ConfirmPasswordReg.style.borderColor= "red";
+	    	alert("Passwords did  not match");
 	    }
 	
 	    
@@ -88,8 +91,7 @@ function registration(){
 	
 	    event.preventDefault();
 	    
-	alert("STIGAO DO VALIDATION");
-	alert("Validation: " + validation);
+
 	
 	
 	let data =  {
@@ -101,20 +103,18 @@ function registration(){
 };
 	
 	u= JSON.stringify(data);
-	alert("USER ZA REG: " + u);
+	
 	
 		if(validation){
-			
-			alert("USAO u if");
-			alert("user:" + u );
+		
 			$.ajax({
 				url:"rest/auth/signUp",
 				type: "POST",
 				data:u,
 				contentType: "application/json",
 				success: function(){
-					alert("Registration successful! You can now log in!");
-					
+					alert("Registration successful! Welcome to ApartmentAir!");
+					//prebaciti ga na pejdz za gosta
 					
 				},
 				
@@ -127,6 +127,9 @@ function registration(){
 				}
 				
 				
-			})
+			});
+		} else{
+			alert("Fields are empty!");
 		}
+		
 }

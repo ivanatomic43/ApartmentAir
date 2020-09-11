@@ -1,9 +1,23 @@
 
+function updatePriceInput(val) {
+          document.getElementById('priceInput').value=val; 
+        }
+
+function updateRoomsInput(val) {
+    document.getElementById('roomsInput').value=val; 
+  }
+
+
+
+
+
+
+
 function showLoginForm(){
 
 	$("#loginForm").show();
 	$("#registrationForm").hide();
-	$("#headerForm").hide();
+	$("#searchForm").hide();
 	
 }
 
@@ -11,13 +25,16 @@ function showLoginForm(){
 	
 	 $("#registrationForm").show();
 	 $("#loginForm").hide();
-	 $("#headerForm").hide();
+	 $("#searchForm").hide();
+	 
 	 
 	
 	
 }
 
  function homePageClick(){
-	 $("#headerForm").show();
+	 $("#searchForm").show();
 	 $("#loginForm").hide();
+	 $("#registrationForm").hide();
+	 
  }

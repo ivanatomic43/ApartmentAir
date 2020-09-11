@@ -42,7 +42,7 @@ function login(){
 	
 	
 	if(validation){
-		alert("Uspesna validacija")
+		
 
 		
 		
@@ -52,7 +52,7 @@ function login(){
 		};
 		
 		let u = JSON.stringify(data);
-		alert("User" + u );
+		
 		
 		$.ajax({
 			url: "rest/auth/login",
@@ -63,6 +63,8 @@ function login(){
 			success: function(user){
 				if(user != null){
 					alert("Login successfull!")
+						usernameLog.value="";
+						passwordLog.value="";	
 					adaptToUser(user);
 					
 				}else{
@@ -85,11 +87,43 @@ function login(){
 };
 
 function adaptToUser(u){
-	alert("Usao u adapt");
 	$("#loginBtn").hide();
-	$("#regBtn").hide();
+	$('#regBtn').hide();
+	$("#headerForm").hide();
+	$("#loginForm").hide();
 	$("#logoutBtn").show();
 	
+	
+	let uloga=u.role
+	
+	
+	if(u.role=="Guest"){
+		$("#profileBtn").show();
+		$("#usersAdminBtn").hide();
+		$("#usersHostBtn").hide();
+		$("#apartmentsAdminBtn").hide();
+		$("#activeApartmentsBtn").hide();
+	} 
+	
+	if(u.role==="Host"){
+		$("#profileBtn").show();
+		$("#usersAdminBtn").hide();
+		$("#usersHostBtn").show();
+		$("#apartmentsAdminBtn").hide();
+		$("#activeApartmentsBtn").show();
+	}
+	
+	if(uloga==="Admin"){
+		$("#profileBtn").show();
+		$("#usersAdminBtn").show();
+		$("#usersHostBtn").hide();
+		$("#apartmentsAdminBtn").show();
+		$("#activeApartmentsBtn").hide();
+		
+	}
+		
+
+	 
 }
 
 function logout(){
@@ -99,7 +133,13 @@ function logout(){
 		type:"POST",
 		contentType:'application/json',
 		success: function(){
-			window.location.replace("index.html");
+			//window.location.replace("index.html");
+			$("#loginForm").show();
+			$("#profileBtn").hide();
+			$("#logoutBtn").hide();
+			$("#userProfileDiv").hide();
+			//adaptToUser(user);
+			
 		},
 		error : function(){
 			alert("Neuspesna odjava!")

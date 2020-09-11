@@ -13,6 +13,7 @@
   <script src="jquery-3.3.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" type="text/css" href="style.css">
   
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,7 +23,7 @@
 <script type = "text/javascript" src = "JavaScriptFiles/HomePage.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/Registration.js" charset = "utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/Login.js" charset="utf-8"></script>
-
+<script type = "text/javascript" src = "JavaScriptFiles/User.js" charset="utf-8"></script>
 
 
 <title>ApartmentAir</title>
@@ -31,7 +32,7 @@
 
 </head>
 
-<body class="pozadina" background="images/cover.jpg">
+<body class="pozadina" background="images/cover.jpg" style="background-position: center;">
 
   <!-- Navigation -->
 
@@ -48,12 +49,27 @@
             <a class="nav-link" onclick="showRegistrationForm()" id="regBtn">Registration</a>
           </li>
         
+        <li class="nav-item">
+            <a class="nav-link" onclick="showUsersAdmin()" id="usersAdminBtn" style="display: none;">All users</a>
+         </li>
+       <li class="nav-item">
+            <a class="nav-link" onclick="showUsersHost()" id="usersHostBtn" style="display: none;">Users</a>
+         </li>
+      <li class="nav-item">
+            <a class="nav-link" onclick="showApartmentsAdmin()" id="apartmentsAdminBtn" style="display: none;">All apartments</a>
+         </li>
+       <li class="nav-item">
+            <a class="nav-link" onclick="showActiveApartments()" id="activeApartmentsBtn" style="display: none;">Active apartments</a>
+         </li>
       
       
       </ul>
       
            <ul class="nav navbar-nav navbar-right">
      
+      <li class="nav-item">
+            <a class="nav-link" onclick="getMyUser()" id="profileBtn" style="display: none;">My profile</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" onclick="logout()" id="logoutBtn" style="display: none;">Log out</a>
           </li>
@@ -63,12 +79,7 @@
       
       </div>
       </div>
-      
-      
-      
-      
-      
-      
+
   </nav>
 
 
@@ -76,17 +87,6 @@
 
 
 
-
-  <!-- Page Content -->
-  <div class="container" >
-
-    <!-- Jumbotron Header -->
-    <header class="jumbotron my-4" id="headerForm">
-      <h1 class="display-3">Welcome to ApartmentAir!</h1>
-      <p class="lead">Make yourself at home is our slogan. We offer the best beds in the industry. Sleep well and rest well.</p>
-      <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
-    </header>
-</div>
 
 <section>
    <!--LOG IN FORM-->
@@ -144,23 +144,69 @@
     
 </div>
 </section>
+
+
+   <div id="searchForm" class="w3-display-container w3-content" style=" margin-top: 250px; margin-left:520px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Find your apartment</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      <form action="/action_page.php" target="_blank">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i> Check In</label>
+            
+            <input  class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>
+          </div>
+          <div class="w3-half">
+            <label><i class="fa fa-calendar-o"></i> Check Out</label>
+            <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-male"></i>Location</label>
+            <input class="w3-input w3-border" type="text" name="location">
+          </div>
+          <div class="w3-half">
+            <label><i class="fa fa-child"></i> Adults</label>
+          <input class="w3-input w3-border" type="number"  name="adults" min="0" max="6">
+          </div>
+        </div>
+          <div class="w3-row-padding" style="margin:16px -24px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-male"></i> Number of rooms</label>
+            <input class="w3-input w3-border" type="range"  name="rooms" min="1" max="5" onchange="updateRoomsInput(this.value);" >
+            <input type="text" id="roomsInput" value="">
+          </div>
+          <div class="w3-half">
+            <label><i class="fa fa-child"></i>Price</label>
+          <input class="w3-input w3-border" type="range" name="price" min="0" max="1000" onchange="updatePriceInput(this.value);">
+          <input type="text" id="priceInput" value="">
+          </div>
+        </div>
+        <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- LIST OF APARTMENTS FOR EACH USER -->
 
 
 
 
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Mali Oglasi 2019</p>
-    </div>
-    <!-- /.container -->
-  </footer>
+<!-- USER PROFILE -->
+<div class = "container" id="userProfileDiv">
+<div class= "main-body-profile" id ="userProfileDiv2">
 
-
-
-
-
+</div>
+</div>
 
 
 

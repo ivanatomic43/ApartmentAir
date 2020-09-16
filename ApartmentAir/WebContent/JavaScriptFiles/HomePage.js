@@ -18,6 +18,7 @@ function showLoginForm(){
 	$("#loginForm").show();
 	$("#registrationForm").hide();
 	$("#searchForm").hide();
+	$("#listOfApartments").hide();
 	
 }
 
@@ -26,6 +27,7 @@ function showLoginForm(){
 	 $("#registrationForm").show();
 	 $("#loginForm").hide();
 	 $("#searchForm").hide();
+	 $("#listOfApartments").hide();
 	 
 	 
 	
@@ -36,5 +38,6 @@ function showLoginForm(){
 	 $("#searchForm").show();
 	 $("#loginForm").hide();
 	 $("#registrationForm").hide();
+	 $("#listOfApartments").show();
 	 
  }

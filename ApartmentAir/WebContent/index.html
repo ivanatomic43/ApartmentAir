@@ -11,9 +11,13 @@
   <meta name="author" content="">
   
   <script src="jquery-3.3.1.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+     <link rel="stylesheet" href="mobiscroll.jquery.min.css">
+    <script src="mobiscroll.jquery.min.js"></script>
+    
   <link rel="stylesheet" type="text/css" href="style.css">
   
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,10 +25,10 @@
 
 
 <script type = "text/javascript" src = "JavaScriptFiles/HomePage.js" charset="utf-8"></script>
-<script type = "text/javascript" src = "JavaScriptFiles/Registration.js" charset = "utf-8"></script>
-<script type = "text/javascript" src = "JavaScriptFiles/Login.js" charset="utf-8"></script>
-<script type = "text/javascript" src = "JavaScriptFiles/User.js" charset="utf-8"></script>
-
+<script type = "text/javascript" src = "JavaScriptFiles/AuthService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/UserService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/Calendar.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/ApartmentService.js" charset="utf-8"></script>
 
 <title>ApartmentAir</title>
 
@@ -32,7 +36,7 @@
 
 </head>
 
-<body class="pozadina" background="images/cover.jpg" style="background-position: center;">
+<body class="pozadina" background="images/cover.jpg" style="background-position: center; background-size: cover; height: 100%; width:100%;">
 
   <!-- Navigation -->
 
@@ -59,7 +63,7 @@
             <a class="nav-link" onclick="showApartmentsAdmin()" id="apartmentsAdminBtn" style="display: none;">All apartments</a>
          </li>
        <li class="nav-item">
-            <a class="nav-link" onclick="showActiveApartments()" id="activeApartmentsBtn" style="display: none;">Active apartments</a>
+            <a class="nav-link" onclick="showActiveApartments()" id="nonactiveApartmentsBtn" style="display: none;">Non Active apartments</a>
          </li>
       
       
@@ -67,6 +71,7 @@
       
            <ul class="nav navbar-nav navbar-right">
      
+   
       <li class="nav-item">
             <a class="nav-link" onclick="getMyUser()" id="profileBtn" style="display: none;">My profile</a>
           </li>
@@ -145,8 +150,8 @@
 </div>
 </section>
 
-
-   <div id="searchForm" class="w3-display-container w3-content" style=" margin-top: 250px; margin-left:520px;">
+<!-- INITIAL SEARCH FORM -->
+   <div id="searchForm" class="w3-display-container w3-content" style="display: none; margin-top: 250px; margin-left:520px;">
  
   <div class="w3-display-left w3-padding w3-col l6 m8">
     <div class="w3-container w3-khaki">
@@ -197,8 +202,73 @@
 
 
 <!-- LIST OF APARTMENTS FOR EACH USER -->
+<div class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: khaki;" id="listOfApartments">
 
+<button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" style="display: none;">New Appartment</button>
+  
+  <div class="w3-row-padding" >
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check In</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check Out</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-male"></i> Location</label>
+      <input class="w3-input w3-border" type="text">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Adults</label>
+      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+    </div>
+     <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Number of rooms</label>
+      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-search"></i> Search</label>
+      <button class="w3-button w3-block w3-black">Search</button>
+    </div>
+  </div>
 
+  <div class="w3-row-padding w3-padding-16" >
+    <div class="w3-third w3-margin-bottom">
+      <img src="https://www.crescentcourt.com/wp-content/uploads/2018/03/suitelife.jpg" alt="Norway" style="width:100%">
+      <div class="w3-container w3-white">
+        <h3>Single Room</h3>
+        <h6 class="w3-opacity">From $99</h6>
+        <p>Single bed</p>
+        <p>15m<sup>2</sup></p>
+        <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i></p>
+        <button class="w3-button w3-block w3-black w3-margin-bottom">Choose Room</button>
+      </div>
+    </div>
+    <div class="w3-third w3-margin-bottom">
+      <img src="https://veritad.com/wp-content/uploads/2018/01/1.jpg" alt="Norway" style="width:100%">
+      <div class="w3-container w3-white">
+        <h3>Double Room</h3>
+        <h6 class="w3-opacity">From $149</h6>
+        <p>Queen-size bed</p>
+        <p>25m<sup>2</sup></p>
+        <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i> <i class="fa fa-tv"></i></p>
+        <button class="w3-button w3-block w3-black w3-margin-bottom">Choose Room</button>
+      </div>
+    </div>
+    <div class="w3-third w3-margin-bottom">
+      <img src="https://d1vp8nomjxwyf1.cloudfront.net/wp-content/uploads/sites/214/2017/08/10154746/hotel_ai_reali_luxury_suite_gallery_06-1000x665.jpg" alt="Norway" style="width:100%">
+      <div class="w3-container w3-white">
+        <h3>Deluxe Room</h3>
+        <h6 class="w3-opacity">From $199</h6>
+        <p>King-size bed</p>
+        <p>40m<sup>2</sup></p>
+        <p class="w3-large"><i class="fa fa-bath"></i> <i class="fa fa-phone"></i> <i class="fa fa-wifi"></i> <i class="fa fa-tv"></i> <i class="fa fa-glass"></i> <i class="fa fa-cutlery"></i></p>
+        <button class="w3-button w3-block w3-black w3-margin-bottom">Choose Room</button>
+      </div>
+    </div>
+  </div>
+ </div>
 
 
 <!-- USER PROFILE -->
@@ -208,8 +278,101 @@
 </div>
 </div>
 
-
-
+<!-- NEW APARTMENT FORM -->
+ <div id="newApartmentForm" class="w3-display-container w3-content" style=" display:none; margin-left:300px; margin-top:500px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki" style="width: 1000px;">
+      <h2><i class="fa fa-bed w3-margin-right"></i>New Apartment</h2>
+    </div>
+    <div class="w3-container w3-light-grey w3-padding-16" style="width:1000px;">
+      <form method="post">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i>Type:</label><br>
+            <input type="radio" id="apartment" name="type" value="apartment">
+			<label for="apartment">Apartment</label><br>
+			<input type="radio" id="room" name="type" value="room">
+			<label for="room">Room</label><br>
+           
+          </div>
+          <div class="w3-half">
+             <label ><i class="fa fa-calendar-o"></i>Status:</label><br>
+            <input type="radio" id="active" name="status" value="active">
+			<label for="active">Active</label><br>
+			<input type="radio" id="inactive" name="status" value="inactive">
+			<label for="inactive">Inactive</label><br>
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-male"></i>Location</label>
+            <input class="w3-input w3-border" type="text" name="newApplocation" id="newAppLocation" required>
+          </div>
+          <div class="w3-half">
+           <label><i class="fa fa-calendar-o"></i> Price per night</label>
+            <input class="w3-input w3-border" type="text"  name="newAppPricePerNight"  id="newAppPricePerNight" required>
+          </div>
+        </div>
+          <div class="w3-row-padding" style="margin:16px -24px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-child"></i>Number of guests:</label>
+          <input class="w3-input w3-border" type="number"  name="newAppNumberOfGuests" min="0" max="10" id="newAppNumberOfGuests">
+          </div>
+          <div class="w3-half">
+                <label><i class="fa fa-child"></i>Number of rooms:</label>
+          <input class="w3-input w3-border" type="number"  name="newAppNumberOfRooms" min="0" max="10" id="newAppNumberOfRooms">
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:16px -24px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-child"></i>List of amenities:</label><br>
+            
+            <label for="tv">TV</label>
+            <input class="w3-input w3-border" type="checkbox" name="tv" id="tv" value="TV">
+            
+             <label for="airconditioner">Air Conditioner</label>
+            <input class="w3-input w3-border" type="checkbox" name="airconditioner" id="airconditioner" value="AirConditioner">
+          
+            <label for="parkinglot">Parking Lot</label>
+            <input class="w3-input w3-border" type="checkbox" name="parkinglot" id="parkinglot" value="ParkingLot">
+            
+            <label for="kitchen">Kitchen</label>
+            <input class="w3-input w3-border" type="checkbox" name="kitchen" id="kitchen" value="Kitchen">
+            
+            <label for="wifi">Wifi</label>
+            <input class="w3-input w3-border" type="checkbox" name="wifi" id="wifi" value="Wifi">
+            
+           
+          </div>
+          <div class="w3-half">
+          		<div class="file-field">
+				<label><i class="fa fa-male"></i>Image:</label>
+                  <div id = "plavaBoja" class="btn btn-primary btn-sm float-left">
+                    <input onchange="adImageSelected()" required type="file" accept="image/*" id = "newAppImage">
+                  </div>      
+                </div>
+          </div>
+       </div>
+         <div class="w3-row-padding" style="margin:32px -40px;">
+          <div class="w3-half w3-margin-bottom">
+          <label style="margin-left:50px;"><i class="fa fa-child"></i>Dates for renting:</label>
+         
+			 <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="date" required="required" class="form-control" name="naziv" id="dateForRent" "/>
+        </div>
+        </div>
+         
+        
+        
+        
+        <button class="w3-button w3-dark-grey" type="submit" onclick="createApartment()"><i class="fa fa-search w3-margin-right" ></i> Create</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 

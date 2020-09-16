@@ -6,12 +6,22 @@ import java.util.List;
 
 public class Apartment {
 
+	private int id;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String type;
 	private String numberOfRooms;
 	private String numberOfGuests;
 	private Location location;
 	//private String [] datesForRent ;
-	private List<Integer> datesForRent = new ArrayList<>();
+	//private List<Integer> datesForRent = new ArrayList<>();
+	private String dateForRent;
 	private User host;
 	private List<Integer> comments = new ArrayList<>();
 	//private String [] images;
@@ -83,22 +93,26 @@ public class Apartment {
 	/**
 	 * @return the datesForRent
 	 */
-	public List<Integer> getDatesForRent() {
+/*	public List<Integer> getDatesForRent() {
 		return datesForRent;
 	}
 
-	/**
-	 * @param datesForRent the datesForRent to set
-	 */
+	
+	
 	public void setDatesForRent(List<Integer> datesForRent) {
 		this.datesForRent = datesForRent;
 	}
-
-	/**
-	 * @return the host
-	 */
+*/
 	public User getHost() {
 		return host;
+	}
+
+	public String getDateForRent() {
+		return dateForRent;
+	}
+
+	public void setDateForRent(String dateForRent) {
+		this.dateForRent = dateForRent;
 	}
 
 	/**

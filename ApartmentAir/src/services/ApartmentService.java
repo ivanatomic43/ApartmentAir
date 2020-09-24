@@ -16,6 +16,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Apartment;
+import beans.User;
 import dao.ApartmentDAO;
 import dao.UserDAO;
 
@@ -46,8 +47,25 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Apartment createApartment(Apartment newApp, @Context HttpServletRequest request) {
+		System.out.println("Usao u create");
+		User user = (User)request.getSession().getAttribute("loggedUser");
+		System.out.println(user.getUsername());
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
 		
-		return null;
+		newApp.setHost(user.getUsername());
+		String contextPath = ctx.getRealPath("");
+		Apartment apartment = apartments.addApartment(newApp, contextPath);
+		if(apartment == null) {
+			System.out.println("Usao u apartment null");
+			return null;
+		}
+		
+		users.addApartmentForRent(contextPath, apartment.getId(), user.getId());
+		
+		return apartment;
+		
+		
 	}
 	
 	@GET

@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
      <link rel="stylesheet" href="mobiscroll.jquery.min.css">
     <script src="mobiscroll.jquery.min.js"></script>
+
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 200px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
     
   <link rel="stylesheet" type="text/css" href="style.css">
   
@@ -107,7 +116,7 @@
         <div class="form-group">
             <button type="submit" class="btn btn btn-primary btn-block" onclick="login()">Log in</button>
        
-        <div class="clearfix">
+        
             
         </div>        
     </form>
@@ -279,7 +288,7 @@
 </div>
 
 <!-- NEW APARTMENT FORM -->
- <div id="newApartmentForm" class="w3-display-container w3-content" style=" display:none; margin-left:300px; margin-top:500px;">
+ <div id="newApartmentForm" class="w3-display-container w3-content" style=" display:none; margin-left:250px; margin-top:600px;">
  
   <div class="w3-display-left w3-padding w3-col l6 m8">
     <div class="w3-container w3-khaki" style="width: 1000px;">
@@ -305,17 +314,37 @@
 			<label for="inactive">Inactive</label><br>
           </div>
         </div>
-        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-row-padding" style="margin:8px -16px;">
           <div class="w3-half w3-margin-bottom">
-            <label><i class="fa fa-male"></i>Location</label>
-            <input class="w3-input w3-border" type="text" name="newApplocation" id="newAppLocation" required>
+            <label><i class="fa fa-male"></i>Street:</label>
+            <input class="w3-input w3-border" type="text" name="newAppStreet" id="newAppStreet" required>
           </div>
           <div class="w3-half">
-           <label><i class="fa fa-calendar-o"></i> Price per night</label>
+           <label><i class="fa fa-calendar-o"></i>Street number:</label>
+            <input class="w3-input w3-border" type="text"  name="newAppStreetNumber"  id="newAppStreetNumber" required>
+          </div>
+        </div>
+          <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-male"></i>City:</label>
+            <input class="w3-input w3-border" type="text" name="newAppCity" id="newAppCity" required>
+          </div>
+          <div class="w3-half">
+           <label><i class="fa fa-calendar-o"></i>Postal number:</label>
             <input class="w3-input w3-border" type="text"  name="newAppPricePerNight"  id="newAppPricePerNight" required>
           </div>
         </div>
-          <div class="w3-row-padding" style="margin:16px -24px;">
+        
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-calendar-o"></i> Price per night:</label>
+            <input class="w3-input w3-border" type="text"  name="newAppPricePerNight"  id="newAppPricePerNight" required>
+          </div>
+          <div class="w3-half">
+         
+        </div>
+		</div>
+          <div class="w3-row-padding" style="margin:8px -16px;">
           <div class="w3-half w3-margin-bottom">
             <label><i class="fa fa-child"></i>Number of guests:</label>
           <input class="w3-input w3-border" type="number"  name="newAppNumberOfGuests" min="0" max="10" id="newAppNumberOfGuests">
@@ -325,54 +354,91 @@
           <input class="w3-input w3-border" type="number"  name="newAppNumberOfRooms" min="0" max="10" id="newAppNumberOfRooms">
           </div>
         </div>
-        <div class="w3-row-padding" style="margin:16px -24px;">
+        <div class="w3-row-padding" style="margin:8px -16px;">
           <div class="w3-half w3-margin-bottom">
             <label><i class="fa fa-child"></i>List of amenities:</label><br>
             
-            <label for="tv">TV</label>
-            <input class="w3-input w3-border" type="checkbox" name="tv" id="tv" value="TV">
-            
-             <label for="airconditioner">Air Conditioner</label>
-            <input class="w3-input w3-border" type="checkbox" name="airconditioner" id="airconditioner" value="AirConditioner">
-          
-            <label for="parkinglot">Parking Lot</label>
-            <input class="w3-input w3-border" type="checkbox" name="parkinglot" id="parkinglot" value="ParkingLot">
-            
-            <label for="kitchen">Kitchen</label>
-            <input class="w3-input w3-border" type="checkbox" name="kitchen" id="kitchen" value="Kitchen">
-            
-            <label for="wifi">Wifi</label>
-            <input class="w3-input w3-border" type="checkbox" name="wifi" id="wifi" value="Wifi">
+            <div class="input-group" id="checkboxes"></div>
             
            
           </div>
           <div class="w3-half">
-          		<div class="file-field">
+          		
+          </div>
+       </div>
+         <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+          <label style="margin-left:50px;"><i class="fa fa-child"></i>Available from:</label>
+         				  <input type="date" required="required" class="form-control" id="newAppDateFrom"/>
+        </div>
+        
+          <div class="w3-half">
+                <label><i class="fa fa-child"></i>Available to:</label>
+           <input type="date" required="required" class="form-control" id="newAppDateTo"/>
+          </div>
+         </div>
+         <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+              <div class="file-field">
 				<label><i class="fa fa-male"></i>Image:</label>
                   <div id = "plavaBoja" class="btn btn-primary btn-sm float-left">
                     <input onchange="adImageSelected()" required type="file" accept="image/*" id = "newAppImage">
                   </div>      
                 </div>
+        </div>
+        
+          <div class="w3-half">
+               <div id="map" class="map"></div>
+				    <script type="text/javascript">
+				      var map = new ol.Map({
+				        target: 'map',
+				        layers: [
+				          new ol.layer.Tile({
+				            source: new ol.source.OSM()
+				          })
+				        ],
+				        view: new ol.View({
+				          center: ol.proj.fromLonLat([37.41, 8.82]),
+				          zoom: 4
+				        })
+				      });
+				    </script>
+                  <div class="cols-sm-5">
+                    <div class="input-group">
+                      <span class="input-group-addon"
+                        ><i class="fa fa-envelope fa" aria-hidden="true"></i
+                      ></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="latitude"
+                        id="latitude"
+                        placeholder="Latitude"
+                        required
+                      />
+                    </div>
+                    <div class="input-group">
+                      <span class="input-group-addon"
+                        ><i class="fa fa-envelope fa" aria-hidden="true"></i
+                      ></span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="longitude"
+                        id="longitude"
+                        placeholder="Longitude"
+                        required
+                      />
+                    </div>
+                  </div>
           </div>
+          </div>
+          <button class="w3-button w3-dark-grey" type="submit" onclick="createApartment()"><i class="fa fa-search w3-margin-right" ></i> Create</button>
+         </form>
        </div>
-         <div class="w3-row-padding" style="margin:32px -40px;">
-          <div class="w3-half w3-margin-bottom">
-          <label style="margin-left:50px;"><i class="fa fa-child"></i>Dates for renting:</label>
-         
-			 <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="date" required="required" class="form-control" name="naziv" id="dateForRent" "/>
-        </div>
-        </div>
-         
-        
-        
-        
-        <button class="w3-button w3-dark-grey" type="submit" onclick="createApartment()"><i class="fa fa-search w3-margin-right" ></i> Create</button>
-      </form>
-    </div>
-  </div>
-</div>
+   </div>
+ </div>
+       
 
 
 

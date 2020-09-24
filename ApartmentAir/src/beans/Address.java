@@ -7,14 +7,14 @@ public class Address {
 	private String street;
 	private String number;
 	private String city;
-	private String postNumber;
+	private int postNumber;
 	
 	
 	public Address() {
 		
 	}
 	
-	public Address(String street, String number, String city, String postNumber) {
+	public Address(String street, String number, String city, int postNumber) {
 		
 		this.street= street;
 		this.number=number;
@@ -67,14 +67,14 @@ public class Address {
 	/**
 	 * @return the postNumber
 	 */
-	public String getPostNumber() {
+	public int getPostNumber() {
 		return postNumber;
 	}
 
 	/**
 	 * @param postNumber the postNumber to set
 	 */
-	public void setPostNumber(String postNumber) {
+	public void setPostNumber(int postNumber) {
 		this.postNumber = postNumber;
 	}
 	

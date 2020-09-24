@@ -1,5 +1,21 @@
 var image="";
 
+$(document).ready(function(){
+
+	map.on('click', function(evt){
+	    console.info(evt.pixel);
+	    console.info(map.getPixelFromCoordinate(evt.coordinate));
+	    console.info(ol.proj.toLonLat(evt.coordinate));
+	    var coords = ol.proj.toLonLat(evt.coordinate);
+	    var lat = coords[1];
+	    var lon = coords[0];
+	    var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+	    // coords is a div in HTML below the map to display
+	    $('#latitude').val(lat) 
+	    $('#longitude').val(lon) 
+	});
+});
+
 function showNewApartmentForm(){
 	$("#listOfApartments").hide();
 	$("#newApartmentForm").show();
@@ -19,28 +35,26 @@ function adImageSelected(){
   }
 }
 
+
+
 function createApartment(){
 	alert("usao u create");
+	
+	
+	
 	
 	let validation = true;
 	let type='';
 	let status='';
-	let location=$("#newAppLocation")[0].value;
 	let price=$("#newAppPricePerNight")[0].value;
 	let numberOfGuests = $("#newAppNumberOfGuests")[0].value;
 	let numberOfRooms = $("#newAppNumberOfRooms")[0].value;
 	
-	let d = new Date($('#dateForRent').val());
-	let day=d.getDate();
-	let month=d.getMonth()+1;
-	let year=d.getFullYear();
-	let dateForRent=day+"."+month+"."+year+".";
+	let dateFrom= new Date($('#newAppDateFrom').val());
+	let dateTo = new Date($("#newAppDateTo").val());
 	
-	let tv='';
-	let airConditioner='';
-	let parkingLot='';
-	let kitchen='';
-	let wifi=''
+	alert(dateFrom + dateTo);
+
 		
 	let amenities =[];
 	
@@ -97,12 +111,16 @@ function createApartment(){
 		
 	}
 	
+	
+	
+	
+	/*
 	let data = {
 			
 			"type": type,
 			"status": status,
 			"location": location,
-			"pricePerNight": pricePerNight,
+			"pricePerNight": price,
 			"numberOfGuests": numberOfGuests,
 			"numberOfRooms": numberOfRooms,
 			"dateForRent": dateForRent,
@@ -116,17 +134,24 @@ function createApartment(){
 	if(validation){
 		
 		let app = JSON.stringify(data);
+		alert(app);
 		
 		$.ajax({
 			url:"rest/apartment/createApartment",
 			type: "POST",
 			data:app,
 			contentType: "application/json",
-			success: function(){
+			dataType: "json",
+			success: function(newApartment){
+				alert(newApartment);
+				if(newApartment != null){
 				alert("New apartment created!");
+				} else {
+					alert("Neuspesno");
+				}
 				
 				
-			},
+			}
 			
 		});
 		
@@ -138,5 +163,5 @@ function createApartment(){
 		alert("Some fields are empty!");
 	}
 	
-	
+	*/
 }

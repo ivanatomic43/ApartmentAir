@@ -110,7 +110,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 
 	}
 	
-public User checkLogin(String username,String password) {
+	public User checkLogin(String username,String password) {
 		
 		for(User u:users.values()) {
 			if(u.getUsername().equals(username)) {
@@ -123,4 +123,34 @@ public User checkLogin(String username,String password) {
 		return null;
 		
 	}
+	
+	public void addApartmentForRent(String contextPath, int appId, int userId) {
+		System.out.println("Usao u addapartmentforrentDAO");
+		User user = users.get(userId);
+		user.getApartmentsForRent().add(appId);
+		users.replace(user.getId(), user);
+		
+		saveUsers(contextPath);
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+	
+
+

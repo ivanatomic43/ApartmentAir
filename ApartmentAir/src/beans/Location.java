@@ -4,14 +4,14 @@ public class Location {
 
 	
 
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 	
 	private Address address;
 	
 	public Location() {}
 	
-	public Location(String latitude, String longitude, Address address) {
+	public Location(double latitude, double longitude, Address address) {
 		
 		this.latitude=latitude;
 		this.longitude=longitude;
@@ -21,28 +21,28 @@ public class Location {
 	/**
 	 * @return the latitude
 	 */
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
 	/**
 	 * @param latitude the latitude to set
 	 */
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
 	/**
 	 * @return the longitude
 	 */
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
 	/**
 	 * @param longitude the longitude to set
 	 */
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

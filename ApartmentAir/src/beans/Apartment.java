@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,20 +17,21 @@ public class Apartment {
 	}
 
 	private String type;
-	private String numberOfRooms;
-	private String numberOfGuests;
+	private int numberOfRooms;
+	private int numberOfGuests;
 	private Location location;
 	//private String [] datesForRent ;
 	//private List<Integer> datesForRent = new ArrayList<>();
-	private String dateForRent;
-	private User host;
+	private Date dateFrom;
+	private Date dateTo;
+	private String host;
 	private List<Integer> comments = new ArrayList<>();
-	//private String [] images;
-	private String pricePerNight;
+	private ArrayList<String> images;
+	private double pricePerNight;
 	private String timeToSignUp;
 	private String timetoSignOut;
-	private String status = "aktivan";
-	private List<Amenities> amenities = new ArrayList<>();
+	private String status;
+	private List<String> amenities = new ArrayList<>();
 	private List<Reservation> reservations = new ArrayList<>();
 	
 	public Apartment() {}
@@ -51,28 +53,28 @@ public class Apartment {
 	/**
 	 * @return the numberOfRooms
 	 */
-	public String getNumberOfRooms() {
+	public int getNumberOfRooms() {
 		return numberOfRooms;
 	}
 
 	/**
 	 * @param numberOfRooms the numberOfRooms to set
 	 */
-	public void setNumberOfRooms(String numberOfRooms) {
+	public void setNumberOfRooms(int numberOfRooms) {
 		this.numberOfRooms = numberOfRooms;
 	}
 
 	/**
 	 * @return the numberOfGuests
 	 */
-	public String getNumberOfGuests() {
+	public int getNumberOfGuests() {
 		return numberOfGuests;
 	}
 
 	/**
 	 * @param numberOfGuests the numberOfGuests to set
 	 */
-	public void setNumberOfGuests(String numberOfGuests) {
+	public void setNumberOfGuests(int numberOfGuests) {
 		this.numberOfGuests = numberOfGuests;
 	}
 
@@ -103,22 +105,30 @@ public class Apartment {
 		this.datesForRent = datesForRent;
 	}
 */
-	public User getHost() {
+	public String getHost() {
 		return host;
 	}
 
-	public String getDateForRent() {
-		return dateForRent;
+	public Date getDateFrom() {
+		return dateFrom;
 	}
 
-	public void setDateForRent(String dateForRent) {
-		this.dateForRent = dateForRent;
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
+	}
+
+	public Date getDateTo() {
+		return dateTo;
+	}
+
+	public void setDateTo(Date dateTo) {
+		this.dateTo = dateTo;
 	}
 
 	/**
 	 * @param host the host to set
 	 */
-	public void setHost(User host) {
+	public void setHost(String host) {
 		this.host = host;
 	}
 
@@ -139,15 +149,23 @@ public class Apartment {
 	/**
 	 * @return the pricePerNight
 	 */
-	public String getPricePerNight() {
+	public double getPricePerNight() {
 		return pricePerNight;
 	}
 
 	/**
 	 * @param pricePerNight the pricePerNight to set
 	 */
-	public void setPricePerNight(String pricePerNight) {
+	public void setPricePerNight(double pricePerNight) {
 		this.pricePerNight = pricePerNight;
+	}
+
+	public ArrayList<String> getImages() {
+		return images;
+	}
+
+	public void setImages(ArrayList<String> images) {
+		this.images = images;
 	}
 
 	/**
@@ -195,14 +213,14 @@ public class Apartment {
 	/**
 	 * @return the amenities
 	 */
-	public List<Amenities> getAmenities() {
+	public List<String> getAmenities() {
 		return amenities;
 	}
 
 	/**
 	 * @param amenities the amenities to set
 	 */
-	public void setAmenities(List<Amenities> amenities) {
+	public void setAmenities(List<String> amenities) {
 		this.amenities = amenities;
 	}
 

@@ -35,7 +35,7 @@ public class ApartmentDAO {
 			for(Apartment app:apartmentArray) {
 				apartments.put(app.getId(), app);
 			}
-			System.out.println("Apartments: "+apartments.size());
+			System.out.println("Apartments: " + apartments.size());
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -76,5 +76,22 @@ public class ApartmentDAO {
 		}
 		return id;
 	}
+	
+	public Apartment addApartment(Apartment newApartment, String contextPath) {
+		System.out.println("Usao u addApartmentDAO");
+		int id = generateNewId();
+		newApartment.setId(id);
+		newApartment.setComments(new ArrayList<>());
+		newApartment.setTimeToSignUp("14:00");
+		newApartment.setTimetoSignOut("22:00");
+		newApartment.setReservations(new ArrayList<>());
+		
+		apartments.put(newApartment.getId(), newApartment);
+		
+		saveApartments(contextPath);
+		
+		return newApartment;
+	}
+	
 	
 }

@@ -1,13 +1,19 @@
 package beans;
 
-public class Amenities {
+public class Amenity {
 
 	
 
 	private long id;
+	public Amenity(long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
 	private String name;
 	
-	public Amenities() {}
+	public Amenity() {}
 	
 	
 	/**

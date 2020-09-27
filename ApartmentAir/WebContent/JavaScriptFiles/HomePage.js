@@ -41,3 +41,4 @@ function showLoginForm(){
 	 $("#listOfApartments").show();
 	 
  }
+ 

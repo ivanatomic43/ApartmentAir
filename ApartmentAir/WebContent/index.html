@@ -38,6 +38,7 @@
 <script type = "text/javascript" src = "JavaScriptFiles/UserService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/Calendar.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/ApartmentService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/AmenityService.js" charset="utf-8"></script>
 
 <title>ApartmentAir</title>
 
@@ -45,7 +46,10 @@
 
 </head>
 
-<body class="pozadina" background="images/cover.jpg" style="background-position: center; background-size: cover; height: 100%; width:100%;">
+<body style="	background-image: url(images/cover.jpg);
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;" >
 
   <!-- Navigation -->
 
@@ -73,6 +77,9 @@
          </li>
        <li class="nav-item">
             <a class="nav-link" onclick="showActiveApartments()" id="nonactiveApartmentsBtn" style="display: none;">Non Active apartments</a>
+         </li>
+       <li class="nav-item">
+            <a class="nav-link" onclick="showAmenities()" id="amenitiesAdminBtn" style="display: none;">Amenities</a>
          </li>
       
       
@@ -439,6 +446,51 @@
    </div>
  </div>
        
+
+<!-- NEW AMENITY FORM -->
+<div id="addAmenityForm" class="w3-display-container w3-content" style="display: none; margin-top:80px; margin-left:520px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Create new amenity</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      <form method="post">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i> Name:</label>
+            
+            <input  class="w3-input w3-border" type="text"  name="newAmenityName" id ="newAmenityName" required>
+          </div>
+          <div class="w3-half">
+              
+          </div>
+        </div>
+        
+       <button onclick="createNewAmenity()" class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-center" ></i>Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+  <!--Kategorije tabelaa-->
+<div hidden="hidden" id="allAmenitiesDiv" class="preview-amenities"  style="display:none;">
+	<table class="table table-hover" id="allAmenitiesTable">
+		  <thead class="table-header">
+		    <tr>
+		      <th scope="col">Amenity ID</th>
+		      <th scope="col">Name</th>
+         	  <th scope="col">Action</th>
+		    
+		  </thead>
+		  <tbody class="table-cell" >
+		   
+		   
+		  </tbody>
+	</table>
+  </div>
+
 
 
 

@@ -202,6 +202,7 @@ function afterRegFunction(){
 	$("#apartmentsAdminBtn").hide();
 	$("#nonactiveApartmentsBtn").hide();
 	$("#listOfApartments").show();
+	$("#amenitiesAdminBtn").hide();
 	
 	
 }
@@ -224,6 +225,7 @@ function adaptToUser(u){
 		$("#apartmentsAdminBtn").hide();
 		$("#nonactiveApartmentsBtn").hide();
 		$("#listOfApartments").show();
+		$("#amenitiesAdminBtn").hide();
 	} 
 	
 	if(u.role==="Host"){
@@ -234,6 +236,7 @@ function adaptToUser(u){
 		$("#nonactiveApartmentsBtn").show();
 		$("#listOfApartments").show();
 		$("#newApartmentBtn").show();
+		$("#amenitiesAdminBtn").hide();
 	}
 	
 	if(uloga==="Admin"){
@@ -243,6 +246,7 @@ function adaptToUser(u){
 		$("#apartmentsAdminBtn").show();
 		$("#nonactiveApartmentsBtn").hide();
 		$("#listOfApartments").show();
+		$("#amenitiesAdminBtn").show();
 		
 	}
 		
@@ -264,10 +268,11 @@ function logout(){
 			$("#usersHostBtn").hide();
 			$("#nonactiveApartmentsBtn").hide();
 			$("#userProfileDiv").hide();
-			$("#showUsersAdmin").hide();
-			$("#showApartmentsAdmin").hide();
+			$("#usersAdminBtn").hide();
+			$("#apartmentsAdminBtn").hide();
 			$("#listOfApartments").hide();
 			$("#newApartmentForm").hide();
+			$("#amenitiesAdminBtn").hide();
 			//adaptToUser(user);
 			
 		},

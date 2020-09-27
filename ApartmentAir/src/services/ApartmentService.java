@@ -80,7 +80,16 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Apartment> getAllApartments(@Context HttpServletRequest request) {
-		return null;
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		return apartments.getAllApartments();
+		
+		
+		
+		
+		
+		
 	}
 	
 	@DELETE

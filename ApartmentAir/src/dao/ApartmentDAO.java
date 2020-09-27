@@ -2,6 +2,8 @@ package dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -91,6 +93,18 @@ public class ApartmentDAO {
 		saveApartments(contextPath);
 		
 		return newApartment;
+	}
+	
+
+	public Collection<Apartment> getAllApartments(){
+		ArrayList<Apartment> retVal=new ArrayList<>();
+		for(Apartment a:apartments.values()) {
+			
+				retVal.add(a);
+			
+		}
+		Collections.reverse(retVal);
+		return retVal;
 	}
 	
 	

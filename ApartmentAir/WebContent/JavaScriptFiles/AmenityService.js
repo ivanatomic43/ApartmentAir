@@ -82,3 +82,97 @@ function createNewAmenity(){
 	
 	
 }	
+
+
+function editAmenityClick(data){
+	
+	$("#addAmenityForm").hide();
+	$("#allAmenitiesDiv").hide();
+	$("#allAmenitiesTable").hide();
+	
+	fillEditAmenityForm(data);
+	$("#editAmenityForm").show();
+	
+}
+
+function fillEditAmenityForm(data){
+	
+	let info = data.split(",");
+	editAmenityId = info[0];
+	$("#editAmenityName").val(info[1]);
+	
+	
+	
+	
+}
+
+function editAmenity(){
+	
+	let id = editAmenityId;
+	let name = $("#editAmenityName")[0].value;
+	alert(name);
+	
+	let validation= true;
+	
+	if(name){
+		editAmenityName.style.borderColor="white";
+	}
+	else {
+		validation=false;
+		editAmenityName.style.borderColor="red";
+		alert("Empty field!");
+	}
+	
+	
+	if(validation){
+		
+		let data = {
+				"id": id,
+				"name": name
+			};
+		
+		let am = JSON.stringify(data);
+	 alert(am); // ovo saljem kao promenu
+		$.ajax({
+			url: "rest/amenity/editAmenity",
+			type: "PUT",
+			data: am,
+			contentType: "application/json",
+			success: function(){
+				alert("Usao u success edita");
+				//$("#editAmenityName").val('');
+				$("#addAmenityForm").show();
+				getAllAmenities();
+			},
+			statusCode: {
+				400: function(){
+					alert("Double entry for amenity name");
+				}
+			}
+		});
+	}
+}
+
+function removeAmenity(id){
+	
+	let urlRemove = "rest/amenity/removeAmenity/" + id;
+	
+	$.ajax({
+		url: urlRemove,
+		type: "DELETE",
+		contentType: "application/json",
+		success: function(amenity){
+			
+				getAllAmenities();
+			
+		},
+		error: function(){
+			alert("Error");
+			getAllAmenities();
+		}
+		
+	});
+	
+}
+
+

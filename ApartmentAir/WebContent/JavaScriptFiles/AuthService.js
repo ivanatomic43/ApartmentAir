@@ -273,6 +273,9 @@ function logout(){
 			$("#listOfApartments").hide();
 			$("#newApartmentForm").hide();
 			$("#amenitiesAdminBtn").hide();
+			$("#addAmenityForm").hide();
+			$("#allAmenitiesDiv").hide();
+			$("allAmenitiesTable").hide();
 			//adaptToUser(user);
 			
 		},

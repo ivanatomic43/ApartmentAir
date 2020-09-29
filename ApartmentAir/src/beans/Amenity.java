@@ -9,10 +9,23 @@ public class Amenity {
 		super();
 		this.id = id;
 		this.name = name;
+		
 	}
 
-	private String name;
 	
+	private String name;
+	private boolean isRemoved=false;
+	
+	public boolean isRemoved() {
+		return isRemoved;
+	}
+
+
+	public void setRemoved(boolean isRemoved) {
+		this.isRemoved = isRemoved;
+	}
+
+
 	public Amenity() {}
 	
 	

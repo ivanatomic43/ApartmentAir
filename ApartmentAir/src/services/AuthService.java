@@ -53,8 +53,9 @@ public class AuthService {
 		
 		String contextPath=ctx.getRealPath("");
 		users.addUser(u, contextPath);
+		request.getSession().setAttribute("loggedUser", u);
 		
-		return Response.status(200).build();
+		return Response.status(Response.Status.OK).entity(u).build();
 	}
 	
 	@GET

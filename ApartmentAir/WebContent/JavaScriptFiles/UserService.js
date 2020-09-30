@@ -1,5 +1,6 @@
 function getMyUser(){
 	
+	$("#userProfileDiv2").empty();
 	
 	$.ajax({
 		url: "rest/auth/getLogged",
@@ -8,6 +9,7 @@ function getMyUser(){
 		success: function(user){
 			$("#userProfileDiv").show();
 			$("#userProfileDiv2").show();
+			$("#listOfApartments").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +

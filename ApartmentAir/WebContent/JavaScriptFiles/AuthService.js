@@ -93,8 +93,9 @@ function registration(){
 	let username = $("#usernameReg")[0].value;
 	let password = $("#passwordReg")[0].value;
 	let confirmpassword = $("#ConPasswordReg")[0].value;
-	let gender = $("#genderReg")[0].value;
 	
+	let gender = $("#genderReg").val();
+	alert(gender);
 	
 
 	
@@ -168,9 +169,13 @@ function registration(){
 				type: "POST",
 				data:u,
 				contentType: "application/json",
-				success: function(){
+				success: function(user){
 					alert("Registration successful! Welcome to ApartmentAir!");
-					afterRegFunction();
+					//afterRegFunction();
+					let userrole = user.role;
+					alert(userrole);
+					adaptToUser(user);
+					
 					
 				},
 				
@@ -195,6 +200,7 @@ function afterRegFunction(){
 	$('#regBtn').hide();
 	$("#headerForm").hide();
 	$("#loginForm").hide();
+	$("#registrationFrom").hide();
 	$("#logoutBtn").show();
 	$("#profileBtn").show();
 	$("#usersAdminBtn").hide();
@@ -267,6 +273,7 @@ function logout(){
 			$("#logoutBtn").hide();
 			$("#usersHostBtn").hide();
 			$("#nonactiveApartmentsBtn").hide();
+			
 			$("#userProfileDiv").hide();
 			$("#usersAdminBtn").hide();
 			$("#apartmentsAdminBtn").hide();

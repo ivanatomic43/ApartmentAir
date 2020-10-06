@@ -1,11 +1,13 @@
 package services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,7 +41,7 @@ public class UserService {
 		}
 	}
 	
-	@Path("/editUserProfile")
+	/*@Path("/editUserProfile")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -48,13 +50,25 @@ public class UserService {
 		System.out.println(user.getId() + user.getName() + user.getSurname()+user.getGender()+user.getPassword());
 		
 		
-		
-		
-		
-		
-		
-		
 		return null;
 	}
+	*/
+	@GET
+	@Path("/getAllUsers")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getAllUsers(@Context HttpServletRequest request){
+		
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		
+		/*if (loggedUser == null)
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		if (!(loggedUser.getRole().equals("Admin")));
+			return Response.status(Response.Status.FORBIDDEN).build();*/
+		
+		return users.getAllUsers();
+	}
+	
 	
 }

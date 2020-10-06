@@ -141,7 +141,13 @@ private HashMap<Integer, User> users=new HashMap<>();
 		saveUsers(contextPath);
 	}
 	
-	
+	public ArrayList<User> getAllUsers(){
+		ArrayList<User> ret = new ArrayList<>();
+		for(User u: users.values()) {
+			ret.add(u);
+		}
+		return ret;
+	}
 	
 	
 	

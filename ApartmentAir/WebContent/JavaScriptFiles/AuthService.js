@@ -126,7 +126,7 @@ function registration(){
 	    	passwordReg.style.borderColor= "red";
 	    }
 	    
-	    if(confirmpassword.length == password.length)
+	    if(confirmpassword == password)
 	    {
 	    	ConPasswordReg.style.borderColor= "white";
 
@@ -156,7 +156,7 @@ function registration(){
 			"password": $("input[name=passwordReg]").val(),
 			"name": $("input[name=nameReg]").val(),
 			"surname": $("input[name=surnameReg]").val(),
-			"gender": $("input[name=genderReg]").val()
+			"gender": gender
 };
 	
 	u= JSON.stringify(data);
@@ -172,8 +172,7 @@ function registration(){
 				success: function(user){
 					alert("Registration successful! Welcome to ApartmentAir!");
 					//afterRegFunction();
-					let userrole = user.role;
-					alert(userrole);
+					
 					adaptToUser(user);
 					
 					
@@ -183,7 +182,7 @@ function registration(){
 					400: function() {
 						alert("Username exist. Try another username.");
 						//$('#error').text("Greska pri unosu, korisnicko ime vec postoji!");
-						//$("#error").show().delay(5000).fadeOut();
+						
 					}
 				}
 				
@@ -282,7 +281,8 @@ function logout(){
 			$("#amenitiesAdminBtn").hide();
 			$("#addAmenityForm").hide();
 			$("#allAmenitiesDiv").hide();
-			$("allAmenitiesTable").hide();
+			$("#allAmenitiesTable").hide();
+			$("#editUserForm").hide();
 			//adaptToUser(user);
 			
 		},

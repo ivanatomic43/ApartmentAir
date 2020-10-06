@@ -35,10 +35,19 @@ function showLoginForm(){
 }
 
  function homePageClick(){
-	 $("#searchForm").show();
+	 $("#listOfApartments").show();
+	 
+	 $("#searchForm").hide();
 	 $("#loginForm").hide();
 	 $("#registrationForm").hide();
-	 $("#listOfApartments").show();
+	 $("#editUserForm").hide();
+	 $("#editAmenityForm").hide();
+	 $("#userProfileDiv").hide();
+	 $("#newApartmentForm").hide();
+	 $("#addAmenityForm").hide();
+	 $("#allAmenitiesDiv").hide();
+	 
+	 
 	 
  }
  

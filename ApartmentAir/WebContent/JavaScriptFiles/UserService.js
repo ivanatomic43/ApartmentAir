@@ -10,6 +10,8 @@ function getMyUser(){
 			$("#userProfileDiv").show();
 			$("#userProfileDiv2").show();
 			$("#listOfApartments").hide();
+			$("#addAmenityForm").hide();
+			$("#allAmenitiesDiv").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -21,7 +23,7 @@ function getMyUser(){
                 "<h4>" + user.name + "</h4>" +
                 "<p class=\"text-secondary mb-1\">" + user.surname + "</p>" +
                 
-               "<button class=\"btn btn-primary\" (click)=\"editProfile()\">Edit profile</button>" +
+               "<button class=\"btn btn-primary\" onclick=\"editUserClick('"+user.id+","+user.name+", "+user.surname+","+user.username+", "+user.password+"')\">Edit profile</button>" +
 
              " </div>" +
             "</div>"+
@@ -95,5 +97,85 @@ function getMyUser(){
 		
 		
 	});
+	
+}
+
+
+function editUserClick(data){
+
+	$("#userProfileDiv").hide();
+	fillEditUserForm(data);
+	$("#editUserForm").show();
+}
+
+function fillEditUserForm(data){
+	
+	let info = data.split(",");
+	userId = info[0];
+	$("#editUserFirstName").val(info[1]);
+	$("#editUserLastName").val(info[2]);
+	editUserUsername = info[3];
+	$("#editUserPassword").val(info[4]);
+	
+	
+	
+}
+
+function editUser(){
+	
+	event.preventDefault();
+	
+	let id= userId;
+	let username=editUserUsername;
+	let name = $("#editUserFirstName").val();
+	let surname= $("#editUserLastName").val();
+	let password = $("#editUserPassword").val();
+	let conpassword = $("#editUserConPassword").val();
+	
+	
+	
+	if(password == "" && conpassword == ""){
+		alert("Enter password...");
+		
+		return;
+	}else{
+		if(password !== conpassword){
+			alert("Passwords doesn't match!");
+			return;
+		}
+	}
+	
+      let data = {
+    		  
+    		 "id": id,
+    		 "username": username,
+    		 "name": name,
+    		 "surname": surname,
+    		 "password": password
+    		  
+      };
+	
+      let u= JSON.stringify(data);
+	
+	$.ajax({
+		
+		url:"rest/users/editUserProfile",
+		type: "PUT",
+		data: u,
+		contentType: "application/json",
+		success: function(user){
+		  	
+			$("#editUserForm").hide();
+			getMyUser();
+			
+			
+		}
+		
+		
+	});
+	
+	
+	
+	
 	
 }

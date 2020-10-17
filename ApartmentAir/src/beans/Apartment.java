@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import enums.ApartmentStatus;
+
 
 public class Apartment {
 
@@ -20,17 +22,14 @@ public class Apartment {
 	private int numberOfRooms;
 	private int numberOfGuests;
 	private Location location;
-	//private String [] datesForRent ;
-	//private List<Integer> datesForRent = new ArrayList<>();
+	private ArrayList<Date> dates;
 	private Date dateFrom;
 	private Date dateTo;
 	private String host;
 	private List<Integer> comments = new ArrayList<>();
 	private ArrayList<String> images;
 	private double pricePerNight;
-	private String timeToSignUp;
-	private String timetoSignOut;
-	private String status;
+	private ApartmentStatus status;
 	private List<String> amenities = new ArrayList<>();
 	private List<Reservation> reservations = new ArrayList<>();
 	
@@ -168,45 +167,21 @@ public class Apartment {
 		this.images = images;
 	}
 
-	/**
-	 * @return the timeToSignUp
-	 */
-	public String getTimeToSignUp() {
-		return timeToSignUp;
+
+
+	public ArrayList<Date> getDates() {
+		return dates;
 	}
 
-	/**
-	 * @param timeToSignUp the timeToSignUp to set
-	 */
-	public void setTimeToSignUp(String timeToSignUp) {
-		this.timeToSignUp = timeToSignUp;
+	public void setDates(ArrayList<Date> dates) {
+		this.dates = dates;
 	}
 
-	/**
-	 * @return the timetoSignOut
-	 */
-	public String getTimetoSignOut() {
-		return timetoSignOut;
-	}
-
-	/**
-	 * @param timetoSignOut the timetoSignOut to set
-	 */
-	public void setTimetoSignOut(String timetoSignOut) {
-		this.timetoSignOut = timetoSignOut;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
+	public ApartmentStatus getStatus() {
 		return status;
 	}
 
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
+	public void setStatus(ApartmentStatus status) {
 		this.status = status;
 	}
 

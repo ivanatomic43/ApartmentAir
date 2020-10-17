@@ -48,7 +48,7 @@ public class ApartmentDAO {
 	
 	public void saveApartments(String contextPath) {
 		try {
-			//File file=new File(contextPath+"/jsonFiles/vozila.json");
+			
 			ObjectMapper objectMapper=new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
@@ -84,8 +84,6 @@ public class ApartmentDAO {
 		int id = generateNewId();
 		newApartment.setId(id);
 		newApartment.setComments(new ArrayList<>());
-		newApartment.setTimeToSignUp("14:00");
-		newApartment.setTimetoSignOut("22:00");
 		newApartment.setReservations(new ArrayList<>());
 		
 		apartments.put(newApartment.getId(), newApartment);

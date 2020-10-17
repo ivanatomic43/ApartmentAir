@@ -1,44 +1,55 @@
 package beans;
 
+import java.util.Date;
+
+import enums.ReservationStatus;
+
 public class Reservation {
 
-	private Apartment rentedApartmen = new Apartment();
-	private String dateOfReservation;
+	private String apartmentID;
+	private Date dateOfReservation;
 	private int numberOfNights = 1;
-	private double totalPrice;
-	private String message;
-	private User guest = new User();
-	private String reservationStatus;
-	
-	public Reservation() {}
-
-	/**
-	 * @return the rentedApartmen
-	 */
-	public Apartment getRentedApartmen() {
-		return rentedApartmen;
+	public String getApartmentID() {
+		return apartmentID;
 	}
 
-	/**
-	 * @param rentedApartmen the rentedApartmen to set
-	 */
-	public void setRentedApartmen(Apartment rentedApartmen) {
-		this.rentedApartmen = rentedApartmen;
+
+	public void setApartmentID(String apartmentID) {
+		this.apartmentID = apartmentID;
 	}
 
-	/**
-	 * @return the dateOfReservation
-	 */
-	public String getDateOfReservation() {
+
+	public Date getDateOfReservation() {
 		return dateOfReservation;
 	}
 
-	/**
-	 * @param dateOfReservation the dateOfReservation to set
-	 */
-	public void setDateOfReservation(String dateOfReservation) {
+
+	public void setDateOfReservation(Date dateOfReservation) {
 		this.dateOfReservation = dateOfReservation;
 	}
+
+
+	public String getGuestID() {
+		return guestID;
+	}
+
+
+	public void setGuestID(String guestID) {
+		this.guestID = guestID;
+	}
+
+
+	public void setReservationStatus(ReservationStatus reservationStatus) {
+		this.reservationStatus = reservationStatus;
+	}
+
+	private double totalPrice;
+	private String message;
+	private String guestID;
+	private ReservationStatus reservationStatus;
+	
+	public Reservation() {}
+
 
 	/**
 	 * @return the numberOfNights
@@ -82,33 +93,7 @@ public class Reservation {
 		this.message = message;
 	}
 
-	/**
-	 * @return the client
-	 */
-	public User getClient() {
-		return guest;
-	}
-
-	/**
-	 * @param client the client to set
-	 */
-	public void setClient(User client) {
-		this.guest = client;
-	}
-
-	/**
-	 * @return the reservationStatus
-	 */
-	public String getReservationStatus() {
-		return reservationStatus;
-	}
-
-	/**
-	 * @param reservationStatus the reservationStatus to set
-	 */
-	public void setReservationStatus(String reservationStatus) {
-		this.reservationStatus = reservationStatus;
-	}
+	
 	
 	
 }

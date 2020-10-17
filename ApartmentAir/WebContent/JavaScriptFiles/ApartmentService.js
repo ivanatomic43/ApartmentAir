@@ -14,7 +14,38 @@ $(document).ready(function(){
 	    $('#latitude').val(lat) 
 	    $('#longitude').val(lon) 
 	});
+	
+	
+	$.ajax({
+		type:"GET",
+		url:"rest/amenity/getAllAmenities",
+		contentType:"application/json",
+		success:function(amenities){
+			console.log(amenities)
+			for(let amenity of amenities){
+				addAmenity(amenity)
+			}
+		},
+		error:function(){
+			alert('error getting amenities')
+		}
+	})
+
+	
+	
+	
 });
+
+function addAmenity(amenity){
+	$("#checkboxes").append(
+	"<div class=\"form-check\">" +
+			"<input type=\"checkbox\" class=\"form-check-input\" id=\"${amenity.id}\" name=\"amenities\" value=\"${amenity.id}\" >"+
+			"<label class=\"form-check-label\" for=\"${amenity.id}\">"+ amenity.name + "</label>" +
+	"</div>"
+	);
+}
+
+
 
 function showNewApartmentForm(){
 	$("#listOfApartments").hide();
@@ -35,53 +66,81 @@ function adImageSelected(){
   }
 }
 
-
+function getDates(startDate, stopDate) {
+    var dateArray = new Array();
+    var currentDate = startDate;
+    while (currentDate <= stopDate) {
+        dateArray.push(new Date (currentDate));
+		let date = new Date(currentDate);
+		date.setDate(date.getDate() + 1);
+        currentDate = date;
+    }
+    return dateArray;
+}
 
 function createApartment(){
 	alert("usao u create");
 	
 	
-	
+	event.preventDefault();
 	
 	let validation = true;
+	//basic
 	let type='';
 	let status='';
 	let price=$("#newAppPricePerNight")[0].value;
 	let numberOfGuests = $("#newAppNumberOfGuests")[0].value;
 	let numberOfRooms = $("#newAppNumberOfRooms")[0].value;
 	
-	let dateFrom= new Date($('#newAppDateFrom').val());
-	let dateTo = new Date($("#newAppDateTo").val());
+	//dates
+	let startDate= new Date($('#newAppDateFrom').val());
+	let endDate= new Date($("#newAppDateTo").val());
 	
-	alert(dateFrom + dateTo);
+	alert(startDate + endDate);
 
-		
+	
+	//address
+	let street = $("#newAppStreet")[0].value;
+	let streetNumber = $("#newAppStreetNumber")[0].value;
+	let city = $("#newAppCity")[0].value;
+	let postal = $("#newAppPostalNumber")[0].value;
+	let postalInt = 0
+	if(postal != ""){
+		postalInt = parseInt(postal)
+	}
+	
+	let address = {
+			street: street,
+			number: streetNumber,
+			city: city,
+			postNumber: postalInt
+	}
+	alert(address);
+	 //location
+	let latitude = $("#latitude").val();
+	let longitude = $("#longitude").val();
+	
+	let location ={
+			latitude: parseFloat(latitude),
+			longitude: parseFloat(longitude),
+			address: address
+	}
+	
+	
+	//amenities
 	let amenities =[];
+	var $boxes = $('input[name=amenities]:checked');
+	$boxes.each(function(){
+		amenities.push($(this).val())
+	})
+	console.log('all amenities: ' + amenities)
 	
-	if(document.getElementById("tv").checked){
-		tv = document.getElementById("tv").value;
-		amenities.push(tv);
-
-	}
+		var dateFrom = Date.parse(startDate)
+		var dateTo = Date.parse(endDate)
+		var validDates = getDates(dateFrom, dateTo)
+		console.log(validDates)
 	
-	if(document.getElementById("airconditioner").checked){
-		airConditioner = document.getElementById("airconditioner").value;
-		amenities.push(airConditioner);
-	}
-	if(document.getElementById("parkinglot").checked){
-		parkingLot = document.getElementById("parkinglot").value;
-		amenities.push(parkingLot);
-
-	}
-	if(document.getElementById("kitchen").checked){
-		 kitchen = document.getElementById("kitchen").value;
-		 amenities.push(kitchen);
-
-	}
-	if(document.getElementById("wifi").checked){
-		 wifi= document.getElementById("wifi").value;
-		 amenities.push(wifi);
-	}
+	
 	
 	//type check
 	if (document.getElementById("apartment").checked) {
@@ -98,11 +157,11 @@ function createApartment(){
 	}
 	
 	//status check
-	if (document.getElementById("active").checked) {
-		  status = document.getElementById("active").value;
+	if (document.getElementById("ACTIVE").checked) {
+		  status = document.getElementById("ACTIVE").value;
 		}
-	else if (document.getElementById("inactive").checked) {
-		  status = document.getElementById("inactive").value;
+	else if (document.getElementById("INACTIVE").checked) {
+		  status = document.getElementById("INACTIVE").value;
 		}
 	else {
 		
@@ -114,7 +173,6 @@ function createApartment(){
 	
 	
 	
-	/*
 	let data = {
 			
 			"type": type,
@@ -123,7 +181,7 @@ function createApartment(){
 			"pricePerNight": price,
 			"numberOfGuests": numberOfGuests,
 			"numberOfRooms": numberOfRooms,
-			"dateForRent": dateForRent,
+			"dates": validDates,
 			"amenities": amenities
 			
 			
@@ -143,9 +201,11 @@ function createApartment(){
 			contentType: "application/json",
 			dataType: "json",
 			success: function(newApartment){
+				alert("USAO U SUCCESS")
 				alert(newApartment);
 				if(newApartment != null){
 				alert("New apartment created!");
+				
 				} else {
 					alert("Neuspesno");
 				}
@@ -163,5 +223,5 @@ function createApartment(){
 		alert("Some fields are empty!");
 	}
 	
-	*/
+	
 }

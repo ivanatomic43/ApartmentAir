@@ -80,7 +80,7 @@ public class AuthService {
 			System.out.println("Usao u if na beku");
 			request.getSession().setAttribute("loggedUser", u);
 			System.out.println("User koji se return:" + u.getUsername());
-			
+			//u.setGender("male");
 			return u;
 			
 		}

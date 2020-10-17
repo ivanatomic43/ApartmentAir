@@ -95,7 +95,7 @@ function registration(){
 	let confirmpassword = $("#ConPasswordReg")[0].value;
 	
 	let gender = $("#genderReg").val();
-	alert(gender);
+	
 	
 
 	
@@ -199,7 +199,7 @@ function afterRegFunction(){
 	$('#regBtn').hide();
 	$("#headerForm").hide();
 	$("#loginForm").hide();
-	$("#registrationFrom").hide();
+	$("#registrationForm").hide();
 	$("#logoutBtn").show();
 	$("#profileBtn").show();
 	$("#usersAdminBtn").hide();

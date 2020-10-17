@@ -41,18 +41,29 @@ public class UserService {
 		}
 	}
 	
-	/*@Path("/editUserProfile")
 	@PUT
+	@Path("/editUserProfile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User editUserProfile(User user, HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
+	public User editUserProfile(User user,@Context HttpServletRequest request) {
 	
 		System.out.println(user.getId() + user.getName() + user.getSurname()+user.getGender()+user.getPassword());
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		User temp = users.getUsers().get(user.getId());
+		user.setName(temp.getName());
+		user.setSurname(temp.getSurname());
+		user.setPassword(temp.getPassword());
+		user.setGender(temp.getGender());
 		
 		
-		return null;
+		users.editUser(user, contextPath);
+		users.saveUsers(contextPath);
+		
+		return user;
 	}
-	*/
+	 
 	@GET
 	@Path("/getAllUsers")
 	@Consumes(MediaType.APPLICATION_JSON)

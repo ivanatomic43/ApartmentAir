@@ -23,7 +23,7 @@ function getMyUser(){
                 "<h4>" + user.name + "</h4>" +
                 "<p class=\"text-secondary mb-1\">" + user.surname + "</p>" +
                 
-               "<button class=\"btn btn-primary\" onclick=\"editUserClick('"+user.id+","+user.name+", "+user.surname+","+user.username+", "+user.password+"')\">Edit profile</button>" +
+               "<button class=\"btn btn-primary\" onclick=\"editUserClick('"+user.id+","+user.name+","+user.surname+","+user.username+","+user.password+","+user.gender+"')\">Edit profile</button>" +
 
              " </div>" +
             "</div>"+
@@ -116,6 +116,7 @@ function fillEditUserForm(data){
 	$("#editUserLastName").val(info[2]);
 	editUserUsername = info[3];
 	$("#editUserPassword").val(info[4]);
+	editUserGender=info[5];
 	
 	
 	
@@ -131,6 +132,7 @@ function editUser(){
 	let surname= $("#editUserLastName").val();
 	let password = $("#editUserPassword").val();
 	let conpassword = $("#editUserConPassword").val();
+	let gender= editUserGender;
 	
 	
 	
@@ -151,7 +153,8 @@ function editUser(){
     		 "username": username,
     		 "name": name,
     		 "surname": surname,
-    		 "password": password
+    		 "password": password,
+    		 "gender": gender
     		  
       };
 	
@@ -166,8 +169,8 @@ function editUser(){
 		success: function(user){
 		  	
 			$("#editUserForm").hide();
-			getMyUser();
-			
+			//getMyUser();
+			window.location.replace("index.html");	
 			
 		}
 		

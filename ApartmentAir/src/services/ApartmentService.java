@@ -134,8 +134,10 @@ public class ApartmentService {
 	public Response makeActive(@PathParam("id") int id, @Context HttpServletRequest request) {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		String contextPath = ctx.getRealPath("");
 		
 		boolean done = apartments.makeApartmentActive(id);
+		apartments.saveApartments(contextPath);
 		
 		if(!done) {
 			return Response.status(404).build();

@@ -12,6 +12,8 @@ function getMyUser(){
 			$("#listOfApartments").hide();
 			$("#addAmenityForm").hide();
 			$("#allAmenitiesDiv").hide();
+			$("#listOfApartmentsAdmin").hide();
+			$("#listOfApartmentsHost").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +

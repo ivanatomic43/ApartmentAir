@@ -9,11 +9,13 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.Apartment;
 import beans.User;
@@ -84,6 +86,31 @@ public class ApartmentService {
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		
 		return apartments.getAllApartments();
+	
+	}
+	
+	@GET
+	@Path("/getAllActiveApartments")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Apartment> getAllActiveApartments(@Context HttpServletRequest request) {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		return apartments.getAllActiveApartments();
+		
+	}
+	
+	
+	@GET
+	@Path("/getAllInactiveApartments")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Apartment> getAllInactiveApartments(@Context HttpServletRequest request) {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		return apartments.getAllInactiveApartments();
 		
 		
 		
@@ -91,6 +118,7 @@ public class ApartmentService {
 		
 		
 	}
+	
 	
 	@DELETE
 	@Path("/deleteApartment/{id}")
@@ -99,6 +127,22 @@ public class ApartmentService {
 		
 	}
 	
+	@PUT
+	@Path("/makeActive/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response makeActive(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		boolean done = apartments.makeApartmentActive(id);
+		
+		if(!done) {
+			return Response.status(404).build();
+		}
+		 
+		return Response.status(200).build();
+	}
 	
 	
 }

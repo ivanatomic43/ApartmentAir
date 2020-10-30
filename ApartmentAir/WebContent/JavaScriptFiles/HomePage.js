@@ -2,13 +2,14 @@
 $(document).ready(function(){
 
 	$.ajax({
-		url: "rest/apartment/getAllApartments",
+		url: "rest/apartment/getAllActiveApartments",
 		type: "GET",
 		contentType: "application/json",
 		success: function(apartments){
 			
 			let i;
 			$("#apartmentList").empty();
+			
 			
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
@@ -68,7 +69,7 @@ function showLoginForm(){
 
  function homePageClick(){
 	 $("#listOfApartments").show();
-	 
+	 $("#hostPart").show();
 	 $("#searchForm").hide();
 	 $("#loginForm").hide();
 	 $("#registrationForm").hide();

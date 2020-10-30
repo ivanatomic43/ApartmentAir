@@ -218,40 +218,52 @@ function adaptToUser(u){
 	$("#headerForm").hide();
 	$("#loginForm").hide();
 	$("#logoutBtn").show();
+	$("#registrationForm").hide();
 	
 	
-	let uloga=u.role
+	//let uloga=parseString(u.role);
+	//alert(uloga);
 	
-	
-	if(u.role=="Guest"){
+	if(u.role=="GUEST"){
 		$("#profileBtn").show();
 		$("#usersAdminBtn").hide();
 		$("#usersHostBtn").hide();
 		$("#apartmentsAdminBtn").hide();
-		$("#nonactiveApartmentsBtn").hide();
+		$("#inactiveApartmentsBtn").hide();
 		$("#listOfApartments").show();
+		$("#hostPart").show();
 		$("#amenitiesAdminBtn").hide();
+		$("#listOfApartmentsAdmin").hide();
+		$("#listOfApartmentsHost").hide();
 	} 
 	
-	if(u.role==="Host"){
+	if(u.role==="HOST"){
 		$("#profileBtn").show();
 		$("#usersAdminBtn").hide();
 		$("#usersHostBtn").show();
 		$("#apartmentsAdminBtn").hide();
-		$("#nonactiveApartmentsBtn").show();
-		$("#listOfApartments").show();
+		$("#inactiveApartmentsBtn").show();
+		$("#listOfApartments").hide();
+		$("#hostPart").hide();
 		$("#newApartmentBtn").show();
 		$("#amenitiesAdminBtn").hide();
+		$("#listOfApartmentsAdmin").hide();
+		$("#activeApartmentsBtn").show();
+		//$("#listOfApartmentsHost").show();
 	}
 	
-	if(uloga==="Admin"){
+	if(u.role==="ADMIN"){
 		$("#profileBtn").show();
 		$("#usersAdminBtn").show();
 		$("#usersHostBtn").hide();
 		$("#apartmentsAdminBtn").show();
-		$("#nonactiveApartmentsBtn").hide();
-		$("#listOfApartments").show();
+		$("#inactiveApartmentsBtn").hide();
+		$("#listOfApartments").hide();
+		$("#hostPart").hide();
+		$("#listOfApartmentsAdmin").show();
 		$("#amenitiesAdminBtn").show();
+		$("#listOfApartmentsHost").hide();
+		getAllApartmentsAdmin();
 		
 	}
 		
@@ -271,7 +283,7 @@ function logout(){
 			$("#profileBtn").hide();
 			$("#logoutBtn").hide();
 			$("#usersHostBtn").hide();
-			$("#nonactiveApartmentsBtn").hide();
+			$("#inactiveApartmentsBtn").hide();
 			
 			$("#userProfileDiv").hide();
 			$("#usersAdminBtn").hide();
@@ -283,6 +295,11 @@ function logout(){
 			$("#allAmenitiesDiv").hide();
 			$("#allAmenitiesTable").hide();
 			$("#editUserForm").hide();
+			$("#allUsersDiv").hide();
+			$("#allUsersTable").hide();
+			$("#listOfApartmentsAdmin").hide();
+			$("#listOfApartmentsHost").hide();
+			
 			//adaptToUser(user);
 			
 		},

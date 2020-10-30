@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Apartment;
+import enums.ApartmentStatus;
 
 public class ApartmentDAO {
 
@@ -83,6 +84,7 @@ public class ApartmentDAO {
 		System.out.println("Usao u addApartmentDAO");
 		int id = generateNewId();
 		newApartment.setId(id);
+		newApartment.setStatus(ApartmentStatus.INACTIVE);
 		newApartment.setComments(new ArrayList<>());
 		newApartment.setReservations(new ArrayList<>());
 		
@@ -105,5 +107,40 @@ public class ApartmentDAO {
 		return retVal;
 	}
 	
+
+	public Collection<Apartment> getAllActiveApartments(){
+		ArrayList<Apartment> retVal=new ArrayList<>();
+		for(Apartment a:apartments.values()) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE))
+				retVal.add(a);
+			
+		}
+		Collections.reverse(retVal);
+		return retVal;
+	}
 	
+	
+	public Collection<Apartment> getAllInactiveApartments(){
+		ArrayList<Apartment> retVal=new ArrayList<>();
+		for(Apartment a:apartments.values()) {
+			 if(a.getStatus().equals(ApartmentStatus.INACTIVE))
+				retVal.add(a);
+			
+		}
+		Collections.reverse(retVal);
+		return retVal;
+	}
+	
+	public boolean makeApartmentActive( int id) {
+		
+		for(Apartment a : apartments.values()) {
+			if((a.getId() == id) && a.getStatus().equals(ApartmentStatus.INACTIVE)) {
+				a.setStatus(ApartmentStatus.ACTIVE);
+				return true;
+				
+			}
+		}
+		 return false;
+		
+	}
 }

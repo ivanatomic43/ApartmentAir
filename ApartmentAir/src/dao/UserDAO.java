@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.User;
+import enums.Role;
 
 public class UserDAO {
 
@@ -59,7 +60,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 	public void addUser(User user,String contextPath) {
 		int id=generateNewId();
 		user.setId(id);
-		user.setRole("Guest");
+		user.setRole(Role.GUEST);
 		users.put(id, user);
 		saveUsers(contextPath);
 	}
@@ -149,7 +150,17 @@ private HashMap<Integer, User> users=new HashMap<>();
 		return ret;
 	}
 	
-	
+	public User getUserById(int id) {
+		
+	     
+		
+	     for(User u : users.values()) {
+	    	 if(u.getId() == id){
+	    		return u;
+	    	 }
+	     }
+	     return null;
+	}
 	
 	
 	

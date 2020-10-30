@@ -3,6 +3,8 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import enums.Role;
+
 public class User {
 
 	//for all users
@@ -12,7 +14,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String gender;
-	private String role;
+	private Role role;
 	
 	private List<Integer> apartmentsForRent = new ArrayList<>(); //host
 	private List<Integer> rentedApartments = new ArrayList<>(); //guest
@@ -26,7 +28,7 @@ public class User {
 		this.password="";
 		this.name="";
 		this.surname="";
-		this.role="Guest";
+		this.role=Role.GUEST;
 		this.gender="";
 		
 	}
@@ -39,7 +41,7 @@ public class User {
 		this.password = password;
 		this.name="";
 		this.surname="";
-		this.role="Guest";
+		this.role=Role.GUEST;
 		this.gender="";
 	}
 	
@@ -144,7 +146,7 @@ public class User {
 	/**
 	 * @return the role
 	 */
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
@@ -152,7 +154,7 @@ public class User {
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

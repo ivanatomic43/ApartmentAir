@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -81,5 +82,33 @@ public class UserService {
 		return users.getAllUsers();
 	}
 	
+	@PUT
+	@Path("/changeRole/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response changeRole(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		String contextPath = ctx.getRealPath("");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		
+		/*
+		User change = users.getUserById(id);
+		System.out.println("username onog ciju ulogu menjamo: " + change.getUsername());
+		
+		if(change.getRole().equals("Host")) {
+			change.setRole("Guest");
+			
+		} else if(change.getRole().equals("Guest")) {
+			change.setRole("Host");
+		}
+		
+		users.saveUsers(contextPath);
+		*/
+	 return Response.status(200).build();
+	}
 	
 }

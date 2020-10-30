@@ -186,6 +186,13 @@ function editUser(){
 function showUsersAdmin(){
 	
 	$("#listOfApartments").hide();
+	$("#addAmenityForm").hide();
+	$("#editAmenityForm").hide();
+	$("#allAmenitiesDiv").hide();
+	$("#allAmenitiesTable").hide();
+	$("#newApartmentForm").hide();
+	$("#editUserForm").hide();
+	$("#userProfileDiv").hide();
 	 getAllUsers();
 	
 	
@@ -225,6 +232,27 @@ function getAllUsers(){
 		    }
 		  });
 	
+	
+}
+
+function changeRole(data){
+	
+	var info = data.split(",");
+	var id = info[0];
+	var role = info[1];
+	
+
+	$.ajax({
+		url: "rest/users/changeRole/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Role changed!");
+			getAllUsers();
+		}
+		
+		
+	});
 	
 }
 

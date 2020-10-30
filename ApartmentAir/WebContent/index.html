@@ -39,6 +39,7 @@
 <script type = "text/javascript" src = "JavaScriptFiles/Calendar.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/ApartmentService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/AmenityService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/HostApartmentService.js" charset="utf-8"></script>
 
 <title>ApartmentAir</title>
 
@@ -76,7 +77,10 @@
             <a class="nav-link" onclick="showApartmentsAdmin()" id="apartmentsAdminBtn" style="display: none;">All apartments</a>
          </li>
        <li class="nav-item">
-            <a class="nav-link" onclick="showActiveApartments()" id="nonactiveApartmentsBtn" style="display: none;">Non Active apartments</a>
+            <a class="nav-link" onclick="showInactiveApartments()" id="inactiveApartmentsBtn" style="display: none;">Inactive apartments</a>
+         </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showActiveApartments()" id="activeApartmentsBtn" style="display: none;">Active apartments</a>
          </li>
        <li class="nav-item">
             <a class="nav-link" onclick="showAmenities()" id="amenitiesAdminBtn" style="display: none;">Amenities</a>
@@ -218,11 +222,49 @@
   </div>
 </div>
 
+<!-- LIST OF APARTMENTS FOR ADMIN -->
+<div hidden="hidden" class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: #cccc99;" id="listOfApartmentsAdmin">
+
+
+  
+  <div class="w3-row-padding">
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check In</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check Out</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-male"></i> Location</label>
+      <input class="w3-input w3-border" type="text">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Adults</label>
+      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+    </div>
+     <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Number of rooms</label>
+      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-search"></i> Search</label>
+      <button class="w3-button w3-block w3-black">Search</button>
+    </div>
+  </div>
+
+
+  <div class="w3-row-padding w3-padding-16" id ="apartmentListAdmin">
+  
+  </div>
+ </div>
 
 
 <!-- LIST OF APARTMENTS FOR EACH USER -->
 <div class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: khaki;" id="listOfApartments">
 
+<div id = "hostPart">
 <button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" style="display: none;">New Appartment</button>
   
   <div class="w3-row-padding">
@@ -252,7 +294,47 @@
     </div>
   </div>
 
+</div>
   <div class="w3-row-padding w3-padding-16" id ="apartmentList">
+  
+  </div>
+ </div>
+
+<!-- LIST OF APARTMENTS FOR HOST  -->
+<div hidden="hidden" class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: #d9b38c;" id="listOfApartmentsHost">
+
+
+<button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" >New Appartment</button>
+  
+  <div class="w3-row-padding">
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check In</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m3">
+      <label><i class="fa fa-calendar-o"></i> Check Out</label>
+      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-male"></i> Location</label>
+      <input class="w3-input w3-border" type="text">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Adults</label>
+      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+    </div>
+     <div class="w3-col m2">
+      <label><i class="fa fa-child"></i>Number of rooms</label>
+      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+    </div>
+    <div class="w3-col m2">
+      <label><i class="fa fa-search"></i> Search</label>
+      <button class="w3-button w3-block w3-black">Search</button>
+    </div>
+  </div>
+
+
+  <div class="w3-row-padding w3-padding-16" id ="apartmentListHost">
   
   </div>
  </div>
@@ -344,11 +426,10 @@
            
           </div>
           <div class="w3-half">
-             <label ><i class="fa fa-calendar-o"></i>Status:</label><br>
-            <input type="radio" id="ACTIVE" name="status" value="ACTIVE">
-			<label for="ACTIVE">Active</label><br>
-			<input type="radio" id="INACTIVE" name="status" value="INACTIVE">
-			<label for="INACTIVE">Inactive</label><br>
+          
+            <label><i class="fa fa-calendar-o"></i> Price per night:</label>
+            <input class="w3-input w3-border" type="text"  name="newAppPricePerNight"  id="newAppPricePerNight" required>
+          
           </div>
         </div>
           <div class="w3-row-padding" style="margin:8px -16px;">
@@ -372,15 +453,7 @@
           </div>
         </div>
         
-        <div class="w3-row-padding" style="margin:8px -16px;">
-          <div class="w3-half w3-margin-bottom">
-            <label><i class="fa fa-calendar-o"></i> Price per night:</label>
-            <input class="w3-input w3-border" type="text"  name="newAppPricePerNight"  id="newAppPricePerNight" required>
-          </div>
-          <div class="w3-half">
-         
-        </div>
-		</div>
+  
           <div class="w3-row-padding" style="margin:8px -16px;">
           <div class="w3-half w3-margin-bottom">
             <label><i class="fa fa-child"></i>Number of guests:</label>
@@ -570,6 +643,8 @@
 		  </tbody>
 	</table>
   </div>
+
+
 
 
 

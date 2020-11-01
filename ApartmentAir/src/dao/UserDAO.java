@@ -162,7 +162,21 @@ private HashMap<Integer, User> users=new HashMap<>();
 	     return null;
 	}
 	
-	
+	public void changeUserRole(int id) {
+		
+		
+		for(User u: users.values()) {
+			if(u.getId() == id) {
+				if(u.getRole().equals(Role.GUEST)) {
+					u.setRole(Role.HOST);
+				} else if(u.getRole().equals(Role.HOST)) {
+					u.setRole(Role.GUEST);
+				}
+			}
+		}
+		
+		
+	}
 	
 	
 	

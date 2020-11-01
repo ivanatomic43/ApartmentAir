@@ -301,11 +301,13 @@
  </div>
 
 <!-- LIST OF APARTMENTS FOR HOST  -->
+
 <div hidden="hidden" class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: #d9b38c;" id="listOfApartmentsHost">
 
+ <button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" >New Appartment</button>
 
-<button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" >New Appartment</button>
   
+  <div hidden="hidden" id = "activeApartmentsView">
   <div class="w3-row-padding">
     <div class="w3-col m3">
       <label><i class="fa fa-calendar-o"></i> Check In</label>
@@ -332,7 +334,7 @@
       <button class="w3-button w3-block w3-black">Search</button>
     </div>
   </div>
-
+</div>
 
   <div class="w3-row-padding w3-padding-16" id ="apartmentListHost">
   
@@ -551,10 +553,10 @@
        
 
 <!-- NEW AMENITY FORM -->
-<div id="addAmenityForm" class="w3-display-container w3-content" style="display: none; margin-top:80px; margin-left:520px;">
+<div id="addAmenityForm" class="w3-display-container w3-content" style="display: none; margin-top:110px; margin-left:520px; background-color: #cccc99">
  
   <div class="w3-display-left w3-padding w3-col l6 m8">
-    <div class="w3-container w3-khaki">
+    <div class="w3-container" style="background-color: #cccc99;">
       <h2><i class="fa fa-bed w3-margin-right"></i>Create new amenity</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">

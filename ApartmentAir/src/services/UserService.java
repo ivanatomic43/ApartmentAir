@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import beans.User;
 import dao.ApartmentDAO;
 import dao.UserDAO;
+import enums.Role;
 
 @Path("/users")
 public class UserService {
@@ -94,20 +95,12 @@ public class UserService {
 		
 		if (loggedUser == null)
 			return Response.status(Response.Status.FORBIDDEN).build();
+		if(loggedUser.getRole().equals(Role.GUEST) || loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
-		/*
-		User change = users.getUserById(id);
-		System.out.println("username onog ciju ulogu menjamo: " + change.getUsername());
-		
-		if(change.getRole().equals("Host")) {
-			change.setRole("Guest");
-			
-		} else if(change.getRole().equals("Guest")) {
-			change.setRole("Host");
-		}
-		
+		users.changeUserRole(id);
 		users.saveUsers(contextPath);
-		*/
+		
 	 return Response.status(200).build();
 	}
 	

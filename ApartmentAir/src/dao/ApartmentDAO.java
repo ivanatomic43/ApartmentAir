@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Apartment;
+import beans.User;
 import enums.ApartmentStatus;
 
 public class ApartmentDAO {
@@ -108,10 +109,12 @@ public class ApartmentDAO {
 	}
 	
 
-	public Collection<Apartment> getAllActiveApartments(){
+	public Collection<Apartment> getAllActiveApartments(String username){
 		ArrayList<Apartment> retVal=new ArrayList<>();
-		for(Apartment a:apartments.values()) {
-			if(a.getStatus().equals(ApartmentStatus.ACTIVE))
+		
+		for(Apartment a : apartments.values()) {
+			
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(username))
 				retVal.add(a);
 			
 		}
@@ -120,10 +123,10 @@ public class ApartmentDAO {
 	}
 	
 	
-	public Collection<Apartment> getAllInactiveApartments(){
+	public Collection<Apartment> getAllInactiveApartments(String username){
 		ArrayList<Apartment> retVal=new ArrayList<>();
 		for(Apartment a:apartments.values()) {
-			 if(a.getStatus().equals(ApartmentStatus.INACTIVE))
+			 if(a.getStatus().equals(ApartmentStatus.INACTIVE) && a.getHost().equals(username))
 				retVal.add(a);
 			
 		}

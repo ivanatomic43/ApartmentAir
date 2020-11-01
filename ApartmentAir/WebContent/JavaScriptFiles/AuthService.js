@@ -299,6 +299,7 @@ function logout(){
 			$("#allUsersTable").hide();
 			$("#listOfApartmentsAdmin").hide();
 			$("#listOfApartmentsHost").hide();
+			$("#activeApartmentsBtn").hide();
 			
 			//adaptToUser(user);
 			

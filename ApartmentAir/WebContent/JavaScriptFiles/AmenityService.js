@@ -6,6 +6,9 @@ function showAmenities(){
 	 getAllAmenities();
 	$("#listOfApartments").hide();
 	$("#addAmenityForm").show();
+	$("#listOfApartmentsAdmin").hide();
+	$("#userProfileDiv").hide();
+	$("#userProfileDiv2").hide();
 	 
 	 
 }

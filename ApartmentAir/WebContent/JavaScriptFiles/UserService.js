@@ -195,6 +195,7 @@ function showUsersAdmin(){
 	$("#newApartmentForm").hide();
 	$("#editUserForm").hide();
 	$("#userProfileDiv").hide();
+	$("#listOfApartmentsAdmin").hide();
 	 getAllUsers();
 	
 	

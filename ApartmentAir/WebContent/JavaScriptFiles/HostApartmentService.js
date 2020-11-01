@@ -6,6 +6,8 @@ function showInactiveApartments(){
 	$("#editUserForm").hide();
 	$("#newApartmentForm").hide();
 	$("#listOfApartmentsHost").show();
+	$("#newApartmentBtn").show();
+	$("#activeApartmentsView").hide();
 	
 	
 }
@@ -18,7 +20,8 @@ function showActiveApartments(){
 		$("#newApartmentForm").hide();
 		$("#listOfApartmentsHost").show();
 		$("#newApartmentBtn").hide();
-	
+		$("#activeApartmentsView").show();
+		
 	
 	
 }

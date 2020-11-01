@@ -96,8 +96,9 @@ public class ApartmentService {
 	public Collection<Apartment> getAllActiveApartments(@Context HttpServletRequest request) {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
-		
-		return apartments.getAllActiveApartments();
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		System.out.println("Username od hosta:" + loggedUser.getUsername());
+		return apartments.getAllActiveApartments(loggedUser.getUsername());
 		
 	}
 	
@@ -109,8 +110,9 @@ public class ApartmentService {
 	public Collection<Apartment> getAllInactiveApartments(@Context HttpServletRequest request) {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
-		
-		return apartments.getAllInactiveApartments();
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		System.out.println("Username od hosta:" + loggedUser.getUsername());
+		return apartments.getAllInactiveApartments(loggedUser.getUsername());
 		
 		
 		

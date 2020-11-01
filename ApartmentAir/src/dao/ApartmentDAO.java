@@ -109,7 +109,7 @@ public class ApartmentDAO {
 	}
 	
 
-	public Collection<Apartment> getAllActiveApartments(String username){
+	public Collection<Apartment> getAllActiveApartmentsHost(String username){
 		ArrayList<Apartment> retVal=new ArrayList<>();
 		
 		for(Apartment a : apartments.values()) {
@@ -119,7 +119,9 @@ public class ApartmentDAO {
 			
 		}
 		Collections.reverse(retVal);
+		
 		return retVal;
+		
 	}
 	
 	
@@ -133,6 +135,22 @@ public class ApartmentDAO {
 		Collections.reverse(retVal);
 		return retVal;
 	}
+	
+	public Collection<Apartment> getAllActiveApartments(){
+		ArrayList<Apartment> retVal=new ArrayList<>();
+		
+		for(Apartment a : apartments.values()) {
+			
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE))
+				retVal.add(a);
+			
+		}
+		Collections.reverse(retVal);
+		
+		return retVal;
+		
+	}
+	
 	
 	public boolean makeApartmentActive( int id) {
 		

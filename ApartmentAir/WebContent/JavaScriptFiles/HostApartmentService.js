@@ -13,7 +13,7 @@ function showInactiveApartments(){
 }
 
 function showActiveApartments(){
-	    getAllActiveApartments();
+	    getAllActiveApartmentsHost();
 		$("#userProfileDiv").hide();
 		$("#userProfileDiv2").hide();
 		$("#editUserForm").hide();
@@ -33,14 +33,14 @@ function getAllInactiveApartments(){
 		url: "rest/apartment/getAllInactiveApartments",
 		type: "GET",
 		contentType: "application/json",
-		success: function(apartments){
+		success: function(apartmentList){
 			
 			let i;
 			$("#apartmentListHost").empty();
 			
 			
-			for(i=0; i < apartments.length; i++){
-				let ap= apartments[i];
+			for(i=0; i < apartmentList.length; i++){
+				let ap= apartmentList[i];
 				
 				
 			$("#apartmentListHost").append(
@@ -90,10 +90,10 @@ function makeActive(data){
 	
 }
 
-function getAllActiveApartments(){
+function getAllActiveApartmentsHost(){
 	
 	$.ajax({
-		url: "rest/apartment/getAllActiveApartments",
+		url: "rest/apartment/getAllActiveApartmentsHost",
 		type: "GET",
 		contentType: "application/json",
 		success: function(apartments){

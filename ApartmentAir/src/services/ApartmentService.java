@@ -90,15 +90,26 @@ public class ApartmentService {
 	}
 	
 	@GET
-	@Path("/getAllActiveApartments")
+	@Path("/getAllActiveApartmentsHost")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Apartment> getAllActiveApartments(@Context HttpServletRequest request) {
+	public Response getAllActiveApartmentsHost(@Context HttpServletRequest request)  {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		System.out.println("Username od hosta:" + loggedUser.getUsername());
-		return apartments.getAllActiveApartments(loggedUser.getUsername());
+		
+
+		if(loggedUser==null)
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Collection<Apartment> apartmentList = apartments.getAllActiveApartmentsHost(loggedUser.getUsername());
+		
+		if(!apartmentList.isEmpty())
+			return Response.status(Response.Status.OK).entity(apartmentList).build();
+		else 
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
 		
 	}
 	
@@ -107,16 +118,41 @@ public class ApartmentService {
 	@Path("/getAllInactiveApartments")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Apartment> getAllInactiveApartments(@Context HttpServletRequest request) {
+	public Response getAllInactiveApartments(@Context HttpServletRequest request){
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		System.out.println("Username od hosta:" + loggedUser.getUsername());
-		return apartments.getAllInactiveApartments(loggedUser.getUsername());
+		
+		if(loggedUser==null)
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Collection<Apartment> apartmentList = apartments.getAllInactiveApartments(loggedUser.getUsername());
+		
+		if(!apartmentList.isEmpty())
+			return Response.status(Response.Status.OK).entity(apartmentList).build();
+		else 
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		
+	}
+	
+	@GET
+	@Path("/getAllActiveApartments")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActiveApartments(@Context HttpServletRequest request)  {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		
 		
 		
+		Collection<Apartment> apartmentList = apartments.getAllActiveApartments();
 		
+		if(!apartmentList.isEmpty())
+			return Response.status(Response.Status.OK).entity(apartmentList).build();
+		else 
+			return Response.status(Response.Status.NO_CONTENT).build();
 		
 		
 	}

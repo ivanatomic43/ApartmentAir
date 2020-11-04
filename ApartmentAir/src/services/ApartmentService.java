@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -48,7 +50,7 @@ public class ApartmentService {
 	@Path("/createApartment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Apartment createApartment(Apartment newApp, @Context HttpServletRequest request) {
+	public Response createApartment(Apartment newApp, @Context HttpServletRequest request) {
 		System.out.println("Usao u create");
 		User user = (User)request.getSession().getAttribute("loggedUser");
 		System.out.println(user.getUsername());
@@ -65,7 +67,7 @@ public class ApartmentService {
 		
 		users.addApartmentForRent(contextPath, apartment.getId(), user.getId());
 		
-		return apartment;
+		return Response.status(Response.Status.OK).entity(apartment).build();
 		
 		
 	}
@@ -73,8 +75,17 @@ public class ApartmentService {
 	@GET
 	@Path("/getApartment/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Apartment getApartmentById(@PathParam("id") int id){
-		return null;
+	public Response getApartment(@PathParam("id") int id){
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		Apartment apartment = apartments.getApartmentById(id);
+		
+		if(apartment== null)
+			return Response.status(Response.Status.NOT_FOUND).build();
+		
+		return Response.status(Response.Status.OK).entity(apartment).build();
+		
 	}
 	
 	@GET
@@ -184,5 +195,24 @@ public class ApartmentService {
 		return Response.status(200).build();
 	}
 	
+	@GET
+	@Path("/getApartmentAmenities/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getApartmentAmenities(@PathParam("id") int id)  {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		List<String> amenities = apartments.getApartmentAmenities(id);
+		
+		if(amenities == null)
+			return Response.status(Response.Status.NOT_FOUND).build();
+		
+		
+		return Response.status(Response.Status.OK).entity(amenities).build();
+	
+		
+		
+	}
 	
 }

@@ -39,8 +39,8 @@ $(document).ready(function(){
 function addAmenity(amenity){
 	$("#checkboxes").append(
 	"<div class=\"form-check\">" +
-			"<input type=\"checkbox\" class=\"form-check-input\" id=\"${amenity.id}\" name=\"amenities\" value=\"${amenity.id}\" >"+
-			"<label class=\"form-check-label\" for=\"${amenity.id}\">"+ amenity.name + "</label>" +
+			"<input type=\"checkbox\" class=\"form-check-input\" id=\""+amenity.id+"\" name=\"amenities\" value=\""+amenity.name+"\">"+
+			"<label class=\"form-check-label\" for=\""+amenity.id+"\">"+ amenity.name + "</label>" +
 	"</div>"
 	);
 }
@@ -50,6 +50,7 @@ function addAmenity(amenity){
 function showNewApartmentForm(){
 	$("#listOfApartments").hide();
 	$("#newApartmentForm").show();
+	$("#listOfApartmentsHost").hide();
 	
 	
 }
@@ -95,7 +96,7 @@ function createApartment(){
 	let startDate= new Date($('#newAppDateFrom').val());
 	let endDate= new Date($("#newAppDateTo").val());
 	
-	alert(startDate + endDate);
+	//alert(startDate + endDate);
 
 	
 	//address
@@ -114,7 +115,7 @@ function createApartment(){
 			city: city,
 			postNumber: postalInt
 	}
-	alert(address);
+	//alert(address);
 	 //location
 	let latitude = $("#latitude").val();
 	let longitude = $("#longitude").val();
@@ -137,7 +138,7 @@ function createApartment(){
 		var dateFrom = Date.parse(startDate)
 		var dateTo = Date.parse(endDate)
 		var validDates = getDates(dateFrom, dateTo)
-		console.log(validDates)
+		//console.log(validDates)
 	
 	
 	
@@ -186,10 +187,10 @@ function createApartment(){
 			data:app,
 			contentType: "application/json",
 			dataType: "json",
-			success: function(newApartment){
-				alert("USAO U SUCCESS")
-				alert(newApartment);
-				if(newApartment != null){
+			success: function(apartment){
+				alert("USAO U SUCCESS");
+				//alert(newApartment);
+				if(apartment != null){
 				alert("New apartment created!");
 				
 				} else {
@@ -226,7 +227,7 @@ function getAllApartmentsAdmin(){
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
 				
-				
+				alert(ap.id);
 			$("#apartmentListAdmin").append(
 					
 			"<div class=\"w3-third w3-margin-bottom\">" +
@@ -237,7 +238,7 @@ function getAllApartmentsAdmin(){
         "<p>"+ ap.status+"</p>"+
         "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
+        "<button onclick=\"showApartmentDetails('"+ ap.id +"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
      " </div>" +
@@ -256,4 +257,146 @@ function getAllApartmentsAdmin(){
 	
 	
 }
+
+function showApartmentDetails(data){
+	
+	var id = data;
+	alert(id);
+	
+	$("#apartmentDetails").show();
+	$("#listOfApartments").hide();
+	$("#listOfApartmentsHost").hide();
+	$("#listOfApartmentsAdmin").hide();
+	$("#apartmentAmenities").show();
+	getApartmentDetails(id);
+	getApartmentAmenities(id);
+	//getApartmentComments(id);
+}
+
+function getApartmentDetails(id){
+	
+	$("#apartmentInfo").empty();
+	
+	$.ajax({
+		url: "rest/apartment/getApartment/" + id,
+		type:"GET",
+		contentType: "application/json",
+		success: function(apartment){
+			
+			
+			
+			
+			
+			$("#apartmentInfo").append(
+					"<div class=\"w3-container\" >" +
+					"<h2 class=\"w3-text-black\">The Facility Details</h2>"+
+					"<div class=\"w3-display-container mySlides\"> " +
+    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">" +
+      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
+        "<p>Living Room</p>" +
+      "</div>" +
+    "</div>"+
+    "<div class=\"w3-display-container mySlides\">"+
+    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
+      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
+       " <p>Dining Room</p>"+
+      "</div>"+
+    "</div>"+
+    "<div class=\"w3-display-container mySlides\">"+
+    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
+      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
+       " <p>Bedroom</p>"+
+      "</div>"+
+    "</div>"+
+    "<div class=\"w3-display-container mySlides\">"+
+    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
+      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
+        "<p>Living Room II</p>"+
+      "</div>"+
+    "</div>"+
+    "</div>" +
+  "<div class=\"w3-row-padding w3-section\">"+
+    "<div class=\"w3-col s3\">" +
+      "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(1)\" title=\"Living room\">"+
+    "</div>"+
+    "<div class=\"w3-col s3\">" +
+    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(2)\" title=\"Dining room\">"+
+	"</div>"+
+    "<div class=\"w3-col s3\">" +
+    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(3)\" title=\"Bedroom\">"+
+	"</div>"+
+    "<div class=\"w3-col s3\">" +
+    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(4)\" title=\"Second living room\">"+
+	"</div>"+
+	"</div>"+
+
+  "<div class=\"w3-container\" id =\"apartmentInfo\">"+
+    "<h4><strong>Basic information</strong></h4>"+
+    "<div class=\"w3-row w3-large\">"+
+      "<div class=\"w3-col s6\">"+
+        "<p><i class=\"fa fa-fw fa-male\"></i> Type of facility: "+ apartment.type+ "</p>"+
+        "<p><i class=\"fa fa-fw fa-bath\"></i> Max people: "+ apartment.numberOfGuests+ "</p>"+
+        "<p><i class=\"fa fa-fw fa-bed\"></i> Number of rooms: "+ apartment.numberOfRooms+ "</p>"+
+        "<p><i class=\"fa fa-fw fa-bed\"></i> Host: " + apartment.host+ "</p>"+
+      "</div>" +
+      
+      "<h4><strong>Location</strong></h4>"+
+      
+      "<div class=\"w3-col s6\">"+
+      
+       " <p><i class=\"fa fa-fw fa-clock-o\"></i> Address: " + apartment.location.address.street + ", "+apartment.location.address.number+ "</p>" +
+        "<p><i class=\"fa fa-fw fa-clock-o\"></i> City: " +apartment.location.address.city +  "</p> " +
+      "</div>"+
+    "</div>"+
+    "</div>"+
+    "<hr>"		
+    	);
+			
+			
+			
+		}
+		
+	});
+	
+	
+	
+	
+}
+
+function getApartmentAmenities(id){
+	
+	$("#apartmentAmenities").empty();
+	
+	$.ajax({
+		
+		url: "rest/apartment/getApartmentAmenities/" + id,
+		type: "GET",
+		contentType: "application/json",
+		success: function(amenities){
+	
+			
+			let i;
+			for(i=0; i <amenities.length; i ++){
+				let a = amenities[i];
+				 alert(a);
+				 $("#apartmentAmenities").append(
+			 		"<div class=\"w3-col s6\">" +
+			        "<p><i class=\"fa fa-fw fa-shower\"></i>" + a + "</p>"+
+			      
+			     " </div>");
+			   
+				
+			}
+			
+			
+		}
+		
+		
+		
+	});
+	
+	
+}
+
+
 

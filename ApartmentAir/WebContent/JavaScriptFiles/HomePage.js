@@ -10,6 +10,10 @@ $(document).ready(function(){
 			let i;
 			$("#apartmentList").empty();
 			
+			if(apartments== null){
+				console.log("There is no active apartments!");
+				return;
+			}
 			
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
@@ -25,7 +29,7 @@ $(document).ready(function(){
         "<p>"+ ap.type+"</p>"+
         "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Choose Room</button>"+
+        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
      " </div>" +
     "</div>"
 			);	
@@ -34,8 +38,8 @@ $(document).ready(function(){
 			}
 			
 			
-			
 		}
+		
 	});
 	
 	
@@ -52,6 +56,7 @@ function showLoginForm(){
 	$("#registrationForm").hide();
 	$("#searchForm").hide();
 	$("#listOfApartments").hide();
+	$("#apartmentDetails").hide();
 	
 }
 
@@ -61,7 +66,7 @@ function showLoginForm(){
 	 $("#loginForm").hide();
 	 $("#searchForm").hide();
 	 $("#listOfApartments").hide();
-	 
+	 $("#apartmentDetails").hide();
 	 
 	
 	
@@ -79,8 +84,35 @@ function showLoginForm(){
 	 $("#newApartmentForm").hide();
 	 $("#addAmenityForm").hide();
 	 $("#allAmenitiesDiv").hide();
+	 $("#apartmentDetails").hide();
 	 
 	 
 	 
  }
  
+ var slideIndex = 1;
+ showDivs(slideIndex);
+
+ function plusDivs(n) {
+   showDivs(slideIndex += n);
+ }
+
+ function currentDiv(n) {
+   showDivs(slideIndex = n);
+ }
+
+ function showDivs(n) {
+   var i;
+   var x = document.getElementsByClassName("mySlides");
+   var dots = document.getElementsByClassName("demo");
+   if (n > x.length) {slideIndex = 1}
+   if (n < 1) {slideIndex = x.length}
+   for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+   }
+   for (i = 0; i < dots.length; i++) {
+     dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+   }
+   x[slideIndex-1].style.display = "block";
+   dots[slideIndex-1].className += " w3-opacity-off";
+ }

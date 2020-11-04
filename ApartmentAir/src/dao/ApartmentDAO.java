@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Apartment;
 import beans.User;
+import beans.Amenity;
 import enums.ApartmentStatus;
 
 public class ApartmentDAO {
@@ -164,4 +166,36 @@ public class ApartmentDAO {
 		 return false;
 		
 	}
+	
+	public Apartment getApartmentById(int id) {
+		
+		 for(Apartment a : apartments.values()) {
+			 if(a.getId() == id) {
+				 return a;
+			 }
+		 }
+		
+		return null;
+		
+	}
+	
+	public List<String> getApartmentAmenities(int id){
+		
+		List<String> amenities = new ArrayList<>();
+		
+		for(Apartment a : apartments.values()) {
+			if(a.getId() == id) {
+				amenities = a.getAmenities();
+				for(int i = 0; i <amenities.size(); i ++) {
+					System.out.println("Amenities: " + i);
+				}
+				return amenities;
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
 }

@@ -8,6 +8,7 @@ function showInactiveApartments(){
 	$("#listOfApartmentsHost").show();
 	$("#newApartmentBtn").show();
 	$("#activeApartmentsView").hide();
+	$("#apartmentDetails").hide();
 	
 	
 }
@@ -21,6 +22,7 @@ function showActiveApartments(){
 		$("#listOfApartmentsHost").show();
 		$("#newApartmentBtn").hide();
 		$("#activeApartmentsView").show();
+		$("#apartmentDetails").hide();
 		
 	
 	
@@ -53,7 +55,7 @@ function getAllInactiveApartments(){
         "<p>"+ ap.status+"</p>"+
         "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
+        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
         "<button onclick=\"makeActive('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Make active</button>"+
@@ -70,6 +72,9 @@ function getAllInactiveApartments(){
 	});
 	
 }
+
+
+
 
 function makeActive(data){
 	
@@ -116,7 +121,7 @@ function getAllActiveApartmentsHost(){
         "<p>"+ ap.status+"</p>"+
         "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
+        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
         "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
      " </div>" +
@@ -133,3 +138,5 @@ function getAllActiveApartmentsHost(){
 	
 	
 }
+
+

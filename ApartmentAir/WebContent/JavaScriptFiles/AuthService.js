@@ -300,6 +300,7 @@ function logout(){
 			$("#listOfApartmentsAdmin").hide();
 			$("#listOfApartmentsHost").hide();
 			$("#activeApartmentsBtn").hide();
+			$("#apartmentDetails").hide();
 			
 			//adaptToUser(user);
 			

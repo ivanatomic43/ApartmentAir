@@ -27,7 +27,7 @@ public class Apartment {
 	private Date dateTo;
 	private String host;
 	private List<Integer> comments = new ArrayList<>();
-	private ArrayList<String> images;
+	private String image="";
 	private double pricePerNight;
 	private ApartmentStatus status;
 	private List<String> amenities = new ArrayList<>();
@@ -159,12 +159,12 @@ public class Apartment {
 		this.pricePerNight = pricePerNight;
 	}
 
-	public ArrayList<String> getImages() {
-		return images;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImages(ArrayList<String> images) {
-		this.images = images;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

@@ -56,7 +56,7 @@ function showNewApartmentForm(){
 }
 
 function adImageSelected(){
-	console.log('jou');
+	console.log('Image...');
   var reader = new FileReader();
   reader.readAsDataURL($('#newAppImage')[0].files[0]);
   var me = this;
@@ -80,12 +80,10 @@ function getDates(startDate, stopDate) {
 }
 
 function createApartment(){
-	alert("usao u create");
-	
 	
 	//event.preventDefault();
 	
-	let validation = true;
+	//let validation = true;
 	//basic
 	let type='';
 	let price=$("#newAppPricePerNight")[0].value;
@@ -96,8 +94,7 @@ function createApartment(){
 	let startDate= new Date($('#newAppDateFrom').val());
 	let endDate= new Date($("#newAppDateTo").val());
 	
-	//alert(startDate + endDate);
-
+	
 	
 	//address
 	let street = $("#newAppStreet")[0].value;
@@ -107,6 +104,11 @@ function createApartment(){
 	let postalInt = 0
 	if(postal != ""){
 		postalInt = parseInt(postal)
+	}
+	
+	if(price== "" || numberOfRooms == "0" || numberOfGuests == "0" || street== "" || streetNumber=="" || city == "" || postal=="" || startDate=="" || endDate ==""){
+		alert('Fill fields...')
+		return;
 	}
 	
 	let address = {
@@ -119,6 +121,8 @@ function createApartment(){
 	 //location
 	let latitude = $("#latitude").val();
 	let longitude = $("#longitude").val();
+	
+	
 	
 	let location ={
 			latitude: parseFloat(latitude),
@@ -152,14 +156,9 @@ function createApartment(){
 	else {
 		
 		alert("Please select type!");
-		validation=false;
 		
+		return;
 	}
-	
-
-	
-	
-	
 	
 	let data = {
 			
@@ -169,17 +168,14 @@ function createApartment(){
 			"numberOfGuests": numberOfGuests,
 			"numberOfRooms": numberOfRooms,
 			"dates": validDates,
-			"amenities": amenities
+			"amenities": amenities,
+			"image": image
 			
 			
 	};
 	
-	
-	//ajax
-	if(validation){
-		
-		let app = JSON.stringify(data);
-		alert(app);
+	let app = JSON.stringify(data);
+	alert(app);
 		
 		$.ajax({
 			url:"rest/apartment/createApartment",
@@ -205,15 +201,12 @@ function createApartment(){
 		
 		
 		
-	} else
-		{
-		alert("Some fields are empty!");
-	}
+	
 	
 	
 }
 function getAllApartmentsAdmin(){
-	alert("PRON");
+	
 	$.ajax({
 		url: "rest/apartment/getAllApartments",
 		type: "GET",
@@ -227,20 +220,21 @@ function getAllApartmentsAdmin(){
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
 				
-				alert(ap.id);
+				
 			$("#apartmentListAdmin").append(
 					
 			"<div class=\"w3-third w3-margin-bottom\">" +
-      "<img src=\"https://www.crescentcourt.com/wp-content/uploads/2018/03/suitelife.jpg\" alt=\"Norway\" style=\"width:100%\">"+
+      "<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
       "<div class=\"w3-container w3-white\">"+
         "<h3>" +ap.type+ "</h3>" +
-        "<h6 class=\"w3-opacity\">" +ap.pricePerNight+ "</h6>" +
-        "<p>"+ ap.status+"</p>"+
-        "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
+        "<h6 class=\"w3-opacity\">Price: "+ap.pricePerNight+ "$</h6>" +
+        "<p> Status: "+ ap.status+"</p>"+
+        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+        "<p>Rating: "+ap.numberOfGuests+"</p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
         "<button onclick=\"showApartmentDetails('"+ ap.id +"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
-        "<button class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
+        "<button onclick=\"editApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
+        "<button onclick=\"deleteApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
      " </div>" +
     "</div>"
 			);	
@@ -270,7 +264,7 @@ function showApartmentDetails(data){
 	$("#apartmentAmenities").show();
 	getApartmentDetails(id);
 	getApartmentAmenities(id);
-	//getApartmentComments(id);
+	getApartmentComments(id);
 }
 
 function getApartmentDetails(id){
@@ -291,43 +285,19 @@ function getApartmentDetails(id){
 					"<div class=\"w3-container\" >" +
 					"<h2 class=\"w3-text-black\">The Facility Details</h2>"+
 					"<div class=\"w3-display-container mySlides\"> " +
-    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">" +
+    "<img src=\""+apartment.image+"\" style=\"width:100%;margin-bottom:-6px\">" +
       "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
-        "<p>Living Room</p>" +
+        "<p>Photo of the facility</p>" +
       "</div>" +
     "</div>"+
-    "<div class=\"w3-display-container mySlides\">"+
-    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
-      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
-       " <p>Dining Room</p>"+
-      "</div>"+
-    "</div>"+
-    "<div class=\"w3-display-container mySlides\">"+
-    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
-      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
-       " <p>Bedroom</p>"+
-      "</div>"+
-    "</div>"+
-    "<div class=\"w3-display-container mySlides\">"+
-    "<img src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;margin-bottom:-6px\">"+
-      "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
-        "<p>Living Room II</p>"+
-      "</div>"+
-    "</div>"+
+    
+  
     "</div>" +
   "<div class=\"w3-row-padding w3-section\">"+
     "<div class=\"w3-col s3\">" +
-      "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(1)\" title=\"Living room\">"+
+      "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\""+apartment.image+"\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(1)\" title=\"Photo of the facility\">"+
     "</div>"+
-    "<div class=\"w3-col s3\">" +
-    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(2)\" title=\"Dining room\">"+
-	"</div>"+
-    "<div class=\"w3-col s3\">" +
-    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(3)\" title=\"Bedroom\">"+
-	"</div>"+
-    "<div class=\"w3-col s3\">" +
-    "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\"https://www.w3schools.com/w3images/livingroom.jpg\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(4)\" title=\"Second living room\">"+
-	"</div>"+
+
 	"</div>"+
 
   "<div class=\"w3-container\" id =\"apartmentInfo\">"+
@@ -394,6 +364,32 @@ function getApartmentAmenities(id){
 		
 		
 	});
+	
+	
+}
+
+function getApartmentComments(id){
+	
+	$("#apartmentComments").empty();
+	
+	$.ajax({
+		url: "rest/comment/getApartmentComments/" + id,
+		type: "GET",
+		contentType: "application/json",
+		success: function(comments){
+			alert("USAO U SUCC COMMENTS");
+			if(comments == null){
+				$("#apartmentComments").append("<p>There is no recensions for this facility.</p>");
+				return;
+			}
+			
+		}
+		
+		
+		
+		
+	});
+	
 	
 	
 }

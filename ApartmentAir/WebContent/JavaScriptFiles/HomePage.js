@@ -22,12 +22,12 @@ $(document).ready(function(){
 			$("#apartmentList").append(
 					
 			"<div class=\"w3-third w3-margin-bottom\">" +
-      "<img src=\"https://www.crescentcourt.com/wp-content/uploads/2018/03/suitelife.jpg\" alt=\"Norway\" style=\"width:100%\">"+
+      "<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
       "<div class=\"w3-container w3-white\">"+
         "<h3>" +ap.type+ "</h3>" +
-        "<h6 class=\"w3-opacity\">" +ap.pricePerNight+ "</h6>" +
-        "<p>"+ ap.type+"</p>"+
-        "<p>"+ap.numberOfRooms+"<sup>"+ap.numberOfGuests+"</sup></p>"+
+        "<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+        "<p>Rating: "+ap.numberOfRooms+"</p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
         "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
      " </div>" +

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -193,6 +194,21 @@ public class ApartmentDAO {
 			}
 		}
 		
+		
+		
+		return null;
+	}
+	
+	public ArrayList<Date> getApartmentDates(int id){
+		
+		ArrayList<Date> dates = new ArrayList<>();
+		
+		for(Apartment a: apartments.values()) {
+			if(a.getId() == id) {
+				dates = a.getDates();
+				return dates;
+			}
+		}
 		
 		
 		return null;

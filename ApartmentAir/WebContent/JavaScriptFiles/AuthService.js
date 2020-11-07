@@ -208,6 +208,11 @@ function afterRegFunction(){
 	$("#nonactiveApartmentsBtn").hide();
 	$("#listOfApartments").show();
 	$("#amenitiesAdminBtn").hide();
+	$("#commentsAdminBtn").hide();
+	$("#commentsHostBtn").hide();
+	$("#reservationsHostBtn").hide();
+	$("#reservationsAdminBtn").hide();
+	$("#reservationsGuestBtn").show();
 	
 	
 }
@@ -235,6 +240,12 @@ function adaptToUser(u){
 		$("#amenitiesAdminBtn").hide();
 		$("#listOfApartmentsAdmin").hide();
 		$("#listOfApartmentsHost").hide();
+		$("#commentsAdminBtn").hide();
+		$("#commentsHostBtn").hide();
+		$("#reservationsHostBtn").hide();
+		$("#reservationsAdminBtn").hide();
+		$("#reservationsGuestBtn").show();
+		
 	} 
 	
 	if(u.role==="HOST"){
@@ -250,6 +261,11 @@ function adaptToUser(u){
 		$("#listOfApartmentsAdmin").hide();
 		$("#activeApartmentsBtn").show();
 		//$("#listOfApartmentsHost").show();
+		$("#commentsAdminBtn").hide();
+		$("#commentsHostBtn").show();
+		$("#reservationsHostBtn").show();
+		$("#reservationsAdminBtn").hide();
+		$("#reservationsGuestBtn").hide();
 	}
 	
 	if(u.role==="ADMIN"){
@@ -264,6 +280,11 @@ function adaptToUser(u){
 		$("#amenitiesAdminBtn").show();
 		$("#listOfApartmentsHost").hide();
 		getAllApartmentsAdmin();
+		$("#commentsAdminBtn").show();
+		$("#commentsHostBtn").hide();
+		$("#reservationsHostBtn").hide();
+		$("#reservationsAdminBtn").show();
+		$("#reservationsGuestBtn").hide();
 		
 	}
 		
@@ -301,6 +322,11 @@ function logout(){
 			$("#listOfApartmentsHost").hide();
 			$("#activeApartmentsBtn").hide();
 			$("#apartmentDetails").hide();
+			$("#commentsAdminBtn").hide();
+			$("#commentsHostBtn").hide();
+			$("#reservationsHostBtn").hide();
+			$("#reservationsAdminBtn").hide();
+			$("#reservationsGuestBtn").hide();
 			
 			//adaptToUser(user);
 			

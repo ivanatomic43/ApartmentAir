@@ -15,8 +15,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-     <link rel="stylesheet" href="mobiscroll.jquery.min.css">
-    <script src="mobiscroll.jquery.min.js"></script>
+     
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    
 
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
     <style>
@@ -36,7 +41,6 @@
 <script type = "text/javascript" src = "JavaScriptFiles/HomePage.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/AuthService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/UserService.js" charset="utf-8"></script>
-<script type = "text/javascript" src = "JavaScriptFiles/Calendar.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/ApartmentService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/AmenityService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/HostApartmentService.js" charset="utf-8"></script>
@@ -85,8 +89,21 @@
        <li class="nav-item">
             <a class="nav-link" onclick="showAmenities()" id="amenitiesAdminBtn" style="display: none;">Amenities</a>
          </li>
-      
-      
+      <li class="nav-item">
+            <a class="nav-link" onclick="showAdminComments()" id="commentsAdminBtn" style="display: none;">Recensions</a>
+         </li>
+      <li class="nav-item">
+            <a class="nav-link" onclick="showHostComments()" id="commentsHostBtn" style="display: none;">Recensions</a>
+         </li>
+      <li class="nav-item">
+            <a class="nav-link" onclick="showReservationsHost()" id="reservationsHostBtn" style="display: none;">All reservations</a>
+         </li>
+      <li class="nav-item">
+            <a class="nav-link" onclick="showMyReservations()" id="reservationsGuestBtn" style="display: none;">My reservations</a>
+         </li>
+       <li class="nav-item">
+            <a class="nav-link" onclick="showAdminReservations()" id="reservationsAdminBtn" style="display: none;">All reservations</a>
+         </li>
       </ul>
       
            <ul class="nav navbar-nav navbar-right">
@@ -556,7 +573,7 @@
   <div id ="apartmentInfo" >
   
   </div>
-  <br>
+  
   
   <div class="w3-container" >
   	<h4><strong>Amenities</strong></h4>
@@ -572,12 +589,59 @@
 		  
   	</div>
   	</div>
+  	<br>
+	
+	
+  	<div class = "w3-container">
+  		<h4><strong>Available dates</strong></h4>
+  	<div class="w3-row w3-large" id = "apartmentDates">
+		  
+  	</div>
+  	</div>
+	
+	<div class = "w3-container">
+  		<h4 style="font-size: 28px; text-align:center;"><strong>Make a reservation</strong></h4>
+  	<div class="w3-row w3-large" id = "apartmentReservation">
+		<div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i>Pick a date:</label><br>
+            <input name="daterange" size="55">
+			
+          </div>
+          <div class="w3-half">
+          
+             <label><i class="fa fa-child"></i>Number of nights:</label>
+          <input class="w3-input w3-border" type="number"  name="reservationNights" min="1" max="30" id="reservationNights">
+          
+          </div>
+        </div>
+		<div class="w3-row-padding" style="margin:8 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-male"></i>Message or note to host:</label><br>
+            <textarea rows="4" cols="50" name="comment" id="reservationMessage" form="reservation"></textarea>
+			
+          </div>
+          <div class="w3-half">
+          
+             
+          
+          </div>
+          
+          
+        </div>
+		  
+		  
+		  
+  	</div>
   	
-
-
+  	</div>
 	
  	
 </div>
+
+
 
 <!-- FACILITY AMENITIES -->
 

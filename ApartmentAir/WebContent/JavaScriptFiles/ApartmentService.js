@@ -255,7 +255,7 @@ function getAllApartmentsAdmin(){
 function showApartmentDetails(data){
 	
 	var id = data;
-	alert(id);
+	
 	
 	$("#apartmentDetails").show();
 	$("#listOfApartments").hide();
@@ -265,6 +265,7 @@ function showApartmentDetails(data){
 	getApartmentDetails(id);
 	getApartmentAmenities(id);
 	getApartmentComments(id);
+	getApartmentDates(id);
 }
 
 function getApartmentDetails(id){
@@ -348,7 +349,7 @@ function getApartmentAmenities(id){
 			let i;
 			for(i=0; i <amenities.length; i ++){
 				let a = amenities[i];
-				 alert(a);
+				
 				 $("#apartmentAmenities").append(
 			 		"<div class=\"w3-col s6\">" +
 			        "<p><i class=\"fa fa-fw fa-shower\"></i>" + a + "</p>"+
@@ -377,7 +378,7 @@ function getApartmentComments(id){
 		type: "GET",
 		contentType: "application/json",
 		success: function(comments){
-			alert("USAO U SUCC COMMENTS");
+			
 			if(comments == null){
 				$("#apartmentComments").append("<p>There is no recensions for this facility.</p>");
 				return;
@@ -390,6 +391,67 @@ function getApartmentComments(id){
 		
 	});
 	
+	
+	
+}
+
+function getApartmentDates(id){
+	
+	$("#apartmentDates").empty();
+	let startDate='';
+	let endDate='';
+	
+	$.ajax({
+		url: "rest/apartment/getApartmentDates/"+ id,
+		type: "GET",
+		contentType: "application/json",
+		success: function(dates){
+			
+			let firstDate= dates[0];
+			let lastDate = dates[dates.length-1];
+			
+			var date1 = new Date(firstDate); 
+			var date2 = new Date(lastDate);
+			
+			let date3 = moment(date1, date1.toString()).format("YY/MM/DD")
+			let date4 = moment(date2, date2.toString()).format("YY/MM/DD")
+			
+			$("#apartmentDates").append("<div class=\"w3-col s6\">" +
+			        "<p><i class=\"fa fa-fw fa-shower\"></i>From: " + date3 + "</p>"+
+			        "<p><i class=\"fa fa-fw fa-shower\"></i>To: " + date4 + "</p>"+ 
+				     " </div>");
+			
+			fillTheDatepicker(date3, date4, date1, date2);
+			
+		}
+		
+		
+	});
+
+	
+	
+	
+	
+}
+
+function fillTheDatepicker(date3, date4, date1, date2){
+	
+	$('input[name="daterange"]').daterangepicker({
+	    opens: 'left',
+	    startDate: date3,
+	    endDate: date4,
+	    locale: {
+	      format: 'YYYY/MM/DD'
+	    }
+	  }, function(start, end, label) {
+	    if(start < date1 || end > date2){
+	    	alert('pick a propriete date!')
+	    	return
+	    }
+	    startDate = start.format('YYYY-MM-DD')
+	    endDate = end.format('YYYY-MM-DD')
+	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+	  });
 	
 	
 }

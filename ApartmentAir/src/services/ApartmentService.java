@@ -1,6 +1,7 @@
 package services;
 
 import java.util.List;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -213,6 +214,22 @@ public class ApartmentService {
 	
 		
 		
+	}
+	
+	@GET
+	@Path("/getApartmentDates/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getApartmentDates(@PathParam("id") int id) {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		ArrayList<Date> dates = apartments.getApartmentDates(id);
+		
+		if(dates.isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		return Response.status(Response.Status.OK).entity(dates).build();
 	}
 	
 }

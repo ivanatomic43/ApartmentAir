@@ -540,6 +540,12 @@ body-profile{
   margin-left: 320px;
  background-color: #dedfb5;
 }
+.preview-users {
+  width: 800px;
+  height: 100%;
+  margin: auto;
+ background-color: #dedfb5;
+}
 table {
   width: 800px;
   position: center;

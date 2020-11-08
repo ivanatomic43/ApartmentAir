@@ -2,6 +2,8 @@ package dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -179,7 +181,44 @@ private HashMap<Integer, User> users=new HashMap<>();
 	}
 	
 	
-	
+	public Collection<User> searchUsersAdmin(User user){
+		 ArrayList<User> usersList = new ArrayList<>();
+		
+		
+		 String username = user.getUsername().toLowerCase();
+		 String gender = user.getGender().toLowerCase();
+		 String role = "";
+		 
+		 
+		 if(user.getRole().equals("")) {
+			 role = "";
+		 } else {
+			  role = user.getRole().toString().toLowerCase();
+		 }
+		 
+		 
+		 for(User u: users.values()) {
+			 if(u.getUsername().toLowerCase().equals(username) && username != null && !usersList.contains(u)) {
+				 usersList.add(u);
+			 }
+		 }
+		 for(User u: users.values()) {
+			 if(u.getRole().toString().toLowerCase().equals(role) && !usersList.contains(u) && role != null) {
+				 usersList.add(u);
+			 }
+		 }
+		 for(User u: users.values()) {
+			 if(u.getGender().toLowerCase().equals(gender) && !usersList.contains(u) && gender != null) {
+				 usersList.add(u);
+			 }
+		 }
+		 
+		 
+		 
+		 
+		 Collections.reverse(usersList);
+		 return usersList;
+	}
 	
 	
 	

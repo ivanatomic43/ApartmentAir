@@ -196,6 +196,7 @@ function showUsersAdmin(){
 	$("#editUserForm").hide();
 	$("#userProfileDiv").hide();
 	$("#listOfApartmentsAdmin").hide();
+	$("#listOfUsersAdmin").show();
 	 getAllUsers();
 	
 	
@@ -231,7 +232,7 @@ function getAllUsers(){
 		    
 		    },
 		    error: function () {
-		      console.log("100% TE ZAJEBAVA NEKI #ID");
+		      console.log("Error");
 		    }
 		  });
 	

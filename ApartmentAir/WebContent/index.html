@@ -44,6 +44,7 @@
 <script type = "text/javascript" src = "JavaScriptFiles/ApartmentService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/AmenityService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/HostApartmentService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/SearchService.js" charset="utf-8"></script>
 
 <title>ApartmentAir</title>
 
@@ -642,9 +643,6 @@
 </div>
 
 
-
-<!-- FACILITY AMENITIES -->
-
 <!-- NEW AMENITY FORM -->
 <div id="addAmenityForm" class="w3-display-container w3-content" style="display: none; margin-top:110px; margin-left:520px; background-color: #cccc99">
  
@@ -719,7 +717,45 @@
   </div>
 
 <!-- ALL USERS ADMIN PREVIEW TABLE -->
-<div hidden="hidden" id="allUsersDiv" class="preview-amenities"  style="display:none;">
+<div hidden="hidden" class="w3-content" style=" margin-top:auto; background-color: #cccc99;" id="listOfUsersAdmin">
+
+	 <div class="w3-row-padding">
+    <div class="w3-col m3">
+     
+      <input style="margin-top: 30px;" class="w3-input w3-border" type="text" placeholder="Username" id="usernameAdminSearch">
+    </div>
+    <div class="w3-col m3">
+      
+       <select style="margin-top: 30px;" class="form-control" name="gender" id="gender">
+       					<option value="" selected>Choose gender...</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                      </select>
+    </div>
+    <div class="w3-col m2">
+     
+        <select style="margin-top: 30px;" class="form-control" name="role" id="role">
+        				
+                        <option value="ADMIN" selected>Admin</option>
+                        <option value="HOST">Host</option>
+                        <option value="GUEST">Guest</option>
+                      </select>
+    </div>
+    <div class="w3-col m2">
+     
+      <button onclick="searchUsersAdmin()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Search</button>
+      
+    </div>
+    <div class="w3-col m2">
+     
+      
+      <button onclick="cancelSearch()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
+    </div>
+  </div>
+
+
+
+<div hidden="hidden" id="allUsersDiv" class="preview-users"  style="display:none;">
 	<table class="table table-hover" id="allUsersTable">
 		  <thead class="table-header">
 		    <tr>
@@ -739,6 +775,7 @@
 	</table>
   </div>
 
+</div>
 
 
 

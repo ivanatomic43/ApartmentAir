@@ -327,6 +327,7 @@ function logout(){
 			$("#reservationsHostBtn").hide();
 			$("#reservationsAdminBtn").hide();
 			$("#reservationsGuestBtn").hide();
+			$("#listOfUsersAdmin").hide();
 			
 			//adaptToUser(user);
 			

@@ -2,6 +2,7 @@ package services;
 
 import java.util.List;
 import java.util.Date;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -19,6 +20,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import beans.Apartment;
 import beans.User;
@@ -51,7 +55,7 @@ public class ApartmentService {
 	@Path("/createApartment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createApartment(Apartment newApp, @Context HttpServletRequest request) {
+	public Response createApartment(Apartment newApp, @Context HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
 		System.out.println("Usao u create");
 		User user = (User)request.getSession().getAttribute("loggedUser");
 		System.out.println(user.getUsername());

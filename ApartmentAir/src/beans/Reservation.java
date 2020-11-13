@@ -7,12 +7,26 @@ import enums.ReservationStatus;
 public class Reservation {
 
 	private int id;
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public ReservationStatus getReservationStatus() {
+		return reservationStatus;
+	}
+
 	private int apartmentID;
     private Date dateOfReservation;
-	private int numberOfNights = 1;
+	private int numberOfNights;
 	private double totalPrice;
 	private String message;
-	private String guestID;
+	private int guestID;
 	private ReservationStatus reservationStatus;
 	
 	
@@ -36,12 +50,12 @@ public class Reservation {
 	}
 
 
-	public String getGuestID() {
+	public int getGuestID() {
 		return guestID;
 	}
 
 
-	public void setGuestID(String guestID) {
+	public void setGuestID(int guestID) {
 		this.guestID = guestID;
 	}
 

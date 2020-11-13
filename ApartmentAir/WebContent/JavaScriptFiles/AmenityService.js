@@ -3,14 +3,17 @@
 
 function showAmenities(){
 	
-	 getAllAmenities();
+	 
 	$("#listOfApartments").hide();
 	$("#addAmenityForm").show();
 	$("#listOfApartmentsAdmin").hide();
 	$("#userProfileDiv").hide();
 	$("#userProfileDiv2").hide();
-	 
-	 
+	$("#listOfReservationsAdmin").hide();
+	$("#allUsersDiv").hide();
+	$("#listOfUsersAdmin").hide();
+	$("#allAmenitiesDiv").show();
+	getAllAmenities();
 }
 
 function getAllAmenities(){
@@ -21,7 +24,8 @@ function getAllAmenities(){
 		    contentType: "application/json",
 		    success: function(amenities){
 		    	
-		    	$("#allAmenitiesDiv").show();
+		    	alert("Usao u succ");
+		    	$("allAmenitiesTable").show();
 		    	let i;
 				$('#allAmenitiesTable tbody').empty();
 				

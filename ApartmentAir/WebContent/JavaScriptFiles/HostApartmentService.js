@@ -37,6 +37,11 @@ function getAllInactiveApartments(){
 		contentType: "application/json",
 		success: function(apartmentList){
 			
+			if(apartmentList == null){
+				console.log("There is no inactive apartments...");
+				return;
+			}
+			
 			let i;
 			$("#apartmentListHost").empty();
 			

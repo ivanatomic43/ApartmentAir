@@ -65,6 +65,7 @@ function login(){
 					alert("Login successfull!")
 						usernameLog.value="";
 						passwordLog.value="";	
+						localStorage.setItem("user", JSON.stringify(user));
 					adaptToUser(user);
 					
 				}else{
@@ -172,7 +173,7 @@ function registration(){
 				success: function(user){
 					alert("Registration successful! Welcome to ApartmentAir!");
 					//afterRegFunction();
-					
+					localStorage.setItem("user", JSON.stringify(user));
 					adaptToUser(user);
 					
 					
@@ -328,6 +329,8 @@ function logout(){
 			$("#reservationsAdminBtn").hide();
 			$("#reservationsGuestBtn").hide();
 			$("#listOfUsersAdmin").hide();
+			$("#listOfReservationsGuest").hide();
+			$("#listOfReservationsAdmin").hide();
 			
 			//adaptToUser(user);
 			

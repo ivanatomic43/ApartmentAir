@@ -81,7 +81,7 @@ function getDates(startDate, stopDate) {
 
 function createApartment(){
 	
-	//event.preventDefault();
+	event.preventDefault();
 	
 	//let validation = true;
 	//basic
@@ -91,8 +91,8 @@ function createApartment(){
 	let numberOfRooms = $("#newAppNumberOfRooms")[0].value;
 	
 	//dates
-	let startDate= new Date($('#newAppDateFrom').val());
-	let endDate= new Date($("#newAppDateTo").val());
+	let startDate=$('#newAppDateFrom').val();
+	let endDate= $("#newAppDateTo").val();
 	
 	
 	
@@ -182,13 +182,12 @@ function createApartment(){
 			type: "POST",
 			data:app,
 			contentType: "application/json",
-			dataType: "json",
 			success: function(apartment){
 				alert("USAO U SUCCESS");
 				//alert(newApartment);
 				if(apartment != null){
 				alert("New apartment created!");
-				
+				getAllInactiveApartments();
 				} else {
 					alert("Neuspesno");
 				}
@@ -252,9 +251,13 @@ function getAllApartmentsAdmin(){
 	
 }
 
+
+
 function showApartmentDetails(data){
 	
 	var id = data;
+	document.getElementById("reservationMessage").value = "";
+	document.getElementById("reservationNights").value = "1";
 	
 	
 	$("#apartmentDetails").show();
@@ -328,6 +331,8 @@ function getApartmentDetails(id){
 		}
 		
 	});
+
+	
 	
 	
 	
@@ -444,17 +449,74 @@ function fillTheDatepicker(date3, date4, date1, date2){
 	      format: 'YYYY/MM/DD'
 	    }
 	  }, function(start, end, label) {
-	    if(start < date1 || end > date2){
-	    	alert('pick a propriete date!')
-	    	return
-	    }
-	    startDate = start.format('YYYY-MM-DD')
-	    endDate = end.format('YYYY-MM-DD')
-	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+		  
+		  alert(start);
+		  alert(date1);
+		  alert(end);
+		  alert(date2);
+		
+			  startDate = start.format('YYYY-MM-DD');
+			  endDate = end.format('YYYY-MM-DD');
+			  console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD')); 
+		
+		  
 	  });
 	
 	
 }
 
+
+function createNewReservation(){
+	
+	var user = JSON.parse(localStorage.getItem('user'));
+	if(user == null){
+		alert("Only guests can make a reservation! Please, log in or register...");
+		return ;
+	}
+	event.preventDefault();
+	
+	let apartmentID = apartment.id;
+	
+	var startDate = moment($('#daterange').data('daterangepicker').startDate).toDate();
+	var endDate = moment($('#daterange').data('daterangepicker').endDate).toDate();
+	
+	let numberOfNightss = $('#reservationNights').val();
+	let numberOfNights = parseInt(numberOfNightss);
+	let totalPrice = (apartment.price) * numberOfNights;
+	let message = $('#reservationMessage').val();
+	let guestID = user.id;
+	if(startDate == '' || endDate == ''){
+		alert('Pick a date!');
+		return;
+	}
+	
+	
+	let data = {
+			"apartmentID": apartmentID,
+			"dateOfReservation": startDate,
+			"numberOfNights": numberOfNights,
+			"totalPrice": totalPrice,
+			"message": message,
+			"guestID": guestID
+	};
+	
+	let r = JSON.stringify(data);
+	
+	alert(r);
+	$.ajax({
+		url: "rest/reservation/createNewReservation",
+		type: "POST",
+		contentType: "application/json",
+		data: r,
+		success: function(reservation){
+			
+		},
+		error: function(error){
+			console.log("Error...");
+		}
+		
+	});
+	
+}
 
 

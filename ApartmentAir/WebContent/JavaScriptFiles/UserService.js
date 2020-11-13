@@ -14,6 +14,8 @@ function getMyUser(){
 			$("#allAmenitiesDiv").hide();
 			$("#listOfApartmentsAdmin").hide();
 			$("#listOfApartmentsHost").hide();
+			$("#listOfReservationsAdmin").hide();
+			$("#listOfReservationsGuest").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -197,6 +199,7 @@ function showUsersAdmin(){
 	$("#userProfileDiv").hide();
 	$("#listOfApartmentsAdmin").hide();
 	$("#listOfUsersAdmin").show();
+	$("#listOfReservationsAdmin").hide();
 	 getAllUsers();
 	
 	
@@ -205,14 +208,15 @@ function showUsersAdmin(){
 }
 
 function getAllUsers(){
+	$("#allUsersDiv").show();
 	
 	  $.ajax({
 		    type: "GET",
 		    url: "rest/users/getAllUsers",
 		    contentType: "application/json",
 		    success: function(users){
+		    	$("#allUsersTable").show();
 		    	
-		    	$("#allUsersDiv").show();
 		    	let i;
 				$('#allUsersTable tbody').empty();
 				

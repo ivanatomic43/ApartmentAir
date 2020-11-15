@@ -4,12 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Reservation;
+import dto.ReservationDTO;
+import enums.ReservationStatus;
 
 public class ReservationDAO {
 
@@ -80,13 +83,22 @@ public class ReservationDAO {
 		return id;
 	}
 	
-	public Collection<Reservation> getAllReservationsGuest(int id){
+	public Collection<ReservationDTO> getAllReservationsGuest(int id){
 		
-		ArrayList<Reservation> reservationList = new ArrayList<>();
+		ArrayList<ReservationDTO> reservationList = new ArrayList<>();
 		
 			for(Reservation r: reservations.values()) {
 				if(r.getGuestID() == id) {
-					reservationList.add(r);
+					ReservationDTO res = new ReservationDTO();
+					res.setId(r.getId());
+					res.setApartmentID(r.getApartmentID());
+					res.setGuestID(r.getGuestID());
+					res.setDateOfReservation(r.getDateOfReservation().toString());
+					res.setNumberOfNights(r.getNumberOfNights());
+					res.setTotalPrice(r.getTotalPrice());
+					res.setMessage(r.getMessage());
+					res.setReservationStatus(r.getReservationStatus().toString());
+					reservationList.add(res);
 				}
 			}
 		Collections.reverse(reservationList);
@@ -94,18 +106,51 @@ public class ReservationDAO {
 	}
 	
 
-	public Collection<Reservation> getAllReservations(){
+	public Collection<ReservationDTO> getAllReservations(){
 		
-		ArrayList<Reservation> reservationList = new ArrayList<>();
+		ArrayList<ReservationDTO> reservationList = new ArrayList<>();
 		
 			for(Reservation r: reservations.values()) {
-				
-				 	reservationList.add(r);
+				ReservationDTO res = new ReservationDTO();
+				res.setId(r.getId());
+				res.setApartmentID(r.getApartmentID());
+				res.setGuestID(r.getGuestID());
+				res.setDateOfReservation(r.getDateOfReservation().toString());
+				res.setNumberOfNights(r.getNumberOfNights());
+				res.setTotalPrice(r.getTotalPrice());
+				res.setMessage(r.getMessage());
+				res.setReservationStatus(r.getReservationStatus().toString());
+				reservationList.add(res);
+				 	
 				
 			}
 		Collections.reverse(reservationList);
 		return reservationList;
 	}
 	
+	public Reservation createNewReservation(Reservation newReservation, String contextPath, double price) {
+		System.out.println("usao u createNewReservationDAO");
+		
+		int id = generateNewId();
+		newReservation.setId(id);
+		newReservation.setReservationStatus(ReservationStatus.CREATED);
+		
+		//calculate totalPrice
+		double totalPrice = newReservation.getNumberOfNights() * price;
+		
+		System.out.println(totalPrice);
+		
+		newReservation.setTotalPrice(totalPrice);
+		
+		reservations.put(newReservation.getId(), newReservation);
+		
+		saveReservations(contextPath);
+		
+		
+		
+		return newReservation;
+		
+		
+	}
 	
 }

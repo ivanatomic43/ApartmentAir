@@ -311,6 +311,7 @@ function getApartmentDetails(id){
         "<p><i class=\"fa fa-fw fa-male\"></i> Type of facility: "+ apartment.type+ "</p>"+
         "<p><i class=\"fa fa-fw fa-bath\"></i> Max people: "+ apartment.numberOfGuests+ "</p>"+
         "<p><i class=\"fa fa-fw fa-bed\"></i> Number of rooms: "+ apartment.numberOfRooms+ "</p>"+
+        "<p><i class=\"fa fa-fw fa-bed\"></i> Price per night: "+ apartment.pricePerNight+ "</p>"+
         "<p><i class=\"fa fa-fw fa-bed\"></i> Host: " + apartment.host+ "</p>"+
       "</div>" +
       
@@ -327,12 +328,77 @@ function getApartmentDetails(id){
     	);
 			
 			
+			$("form#makeReservation").submit(function(event){
+				 
+				 var user = JSON.parse(localStorage.getItem('user'));
+					if(user == null){
+						alert("Only guests can make a reservation! Please, log in or register...");
+						return ;
+					}
+					event.preventDefault();
+					
+					let apartmentID = apartment.id;
+					alert(apartment.id);
+					
+					var startDate = $('#daterange').data('daterangepicker').startDate;
+					var endDate = moment($('#daterange').data('daterangepicker').endDate).toDate();
+					
+					var date = new Date(startDate);
+					
+					let numberOfNightss = $('#reservationNights').val();
+					let numberOfNights = parseInt(numberOfNightss);
+					let price = apartment.pricePerNight;
+					let message = $('#reservationMessage').val();
+					let guestID = user.id;
+					if(startDate == '' || endDate == ''){
+						alert('Pick a date!');
+						return;
+					}
+					
+					
+					let data = {
+							"apartmentID": apartmentID,
+							"dateOfReservation": date,
+							"numberOfNights": numberOfNights,
+							"totalPrice": price,
+							"message": message,
+							"guestID": guestID
+					};
+					
+					let r = JSON.stringify(data);
+					
+					alert(r);
+					$.ajax({
+						url: "rest/reservation/createNewReservation",
+						type: "POST",
+						contentType: "application/json",
+						data: r,
+						success: function(reservation){
+							alert("USAOOVDE");
+							showMyReservations();
+						},
+						error: function(error){
+							alert("Pick a valid date/ Date is not available!")
+							console.log("Error...");
+						}
+						
+					});
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+			 });
+			
 			
 		}
 		
 	});
 
 	
+	 
 	
 	
 	
@@ -450,10 +516,10 @@ function fillTheDatepicker(date3, date4, date1, date2){
 	    }
 	  }, function(start, end, label) {
 		  
-		  alert(start);
-		  alert(date1);
-		  alert(end);
-		  alert(date2);
+		 // alert(start);
+		  //alert(date1);
+		 // alert(end);
+		 // alert(date2);
 		
 			  startDate = start.format('YYYY-MM-DD');
 			  endDate = end.format('YYYY-MM-DD');
@@ -466,7 +532,7 @@ function fillTheDatepicker(date3, date4, date1, date2){
 }
 
 
-function createNewReservation(){
+/*function createNewReservation(){
 	
 	var user = JSON.parse(localStorage.getItem('user'));
 	if(user == null){
@@ -476,9 +542,13 @@ function createNewReservation(){
 	event.preventDefault();
 	
 	let apartmentID = apartment.id;
+	alert(apartment.id);
 	
-	var startDate = moment($('#daterange').data('daterangepicker').startDate).toDate();
+	var startDate = $('#daterange').data('daterangepicker').startDate;
 	var endDate = moment($('#daterange').data('daterangepicker').endDate).toDate();
+	alert(startDate);
+	var date = new Date(startDate);
+	alert(date);
 	
 	let numberOfNightss = $('#reservationNights').val();
 	let numberOfNights = parseInt(numberOfNightss);
@@ -493,7 +563,7 @@ function createNewReservation(){
 	
 	let data = {
 			"apartmentID": apartmentID,
-			"dateOfReservation": startDate,
+			"dateOfReservation": date,
 			"numberOfNights": numberOfNights,
 			"totalPrice": totalPrice,
 			"message": message,
@@ -518,5 +588,5 @@ function createNewReservation(){
 	});
 	
 }
-
+*/
 

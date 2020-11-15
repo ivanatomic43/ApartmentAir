@@ -40,10 +40,10 @@ function getAllReservationsGuest(){
 				
 				
 			$('#listOfReservationsGuestTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
-					"<td>"+r.apartmentID.type+"</td>"+ "<td>"+r.apartmentID.location.address.street+" "+r.apartmentID.location.address.number+", "+r.apartmentID.location.address.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
-					+"</td>"+ "<td>"+r.apartmentID.host+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
-					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button>" +
-					"<button type=\"button\" onclick=\"leaveComment('"+r.id+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
+					"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
+					+"$</td>"+ "<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button></td>" +
+					"<td><button type=\"button\" onclick=\"leaveComment('"+r.id+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
 					);
 			}
 			
@@ -102,8 +102,8 @@ $("#listOfReservationsAdmin").show();
 				
 				
 			$('#listOfReservationsAdminTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
-					"<td>"+r.apartmentID.type+"</td>"+ "<td>"+r.apartmentID.location.address.street+" "+r.apartmentID.location.address.number+", "+r.apartmentID.location.address.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
-					+"</td>"+ "<td>"+r.guestID.name+" "+r.guestID.surname+"</td>"+"<td>"+r.apartmentID.host+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+					"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
+					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
 					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button></tr>"		
 					);
 			}

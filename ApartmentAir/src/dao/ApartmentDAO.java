@@ -2,11 +2,13 @@ package dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -91,6 +93,16 @@ public class ApartmentDAO {
 		newApartment.setStatus(ApartmentStatus.INACTIVE);
 		newApartment.setComments(new ArrayList<>());
 		newApartment.setReservations(new ArrayList<>());
+		
+		ArrayList<Date> dates = newApartment.getDates();
+		Date startDate = dates.get(0);
+		Date endDate = dates.get(dates.size() - 1);
+		
+		System.out.println(startDate);
+		System.out.println(endDate);
+		
+		newApartment.setDateFrom(startDate);
+		newApartment.setDateTo(endDate);
 		
 		apartments.put(newApartment.getId(), newApartment);
 		
@@ -214,4 +226,108 @@ public class ApartmentDAO {
 		return null;
 	}
 	
+	public boolean checkDate(int id, Date startDate, int nights) {
+		
+		boolean validDate= true;
+		Calendar c = Calendar.getInstance();
+		c.setTime(startDate);
+		c.add(Calendar.DATE, nights);
+		Date endDate = c.getTime();
+		System.out.println("start date: "+ startDate);
+		System.out.println("end date: " + endDate);
+		
+		for(Apartment a: apartments.values()) {
+			if(a.getId() == id) {
+				System.out.println(a.getDateFrom());
+				System.out.println(a.getDateTo());
+				//startDate is before dateFrom? or endDate is after dateTo
+				if(startDate.before(a.getDateFrom()) || endDate.after(a.getDateTo())) {
+					validDate = false;
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		
+		
+		return validDate;
+	
+	}
+	
+	public boolean checkAvailableDates(int id, Date startDate, int nights) {
+		
+	
+		for(Apartment a: apartments.values()) {
+			if(a.getId() == id) {
+				 
+
+				for( int i = 1; i <= nights; i ++) {
+					Calendar c1 = Calendar.getInstance();
+					c1.setTime(startDate);
+					c1.add(Calendar.DATE, i);
+					c1.set(Calendar.HOUR_OF_DAY, 0);
+					c1.set(Calendar.MINUTE, 0);
+					c1.set(Calendar.SECOND, 0);
+					c1.set(Calendar.MILLISECOND, 0); 
+					
+					boolean availableDates = a.getDates().stream().anyMatch(date -> {
+						Calendar c2 = Calendar.getInstance();
+						c2.setTime(date);
+						c2.set(Calendar.HOUR_OF_DAY, 0);
+						c2.set(Calendar.MINUTE, 0);
+						c2.set(Calendar.SECOND, 0);
+						c2.set(Calendar.MILLISECOND, 0);
+						return c1.compareTo(c2) == 0;
+					});
+					if (!availableDates) //date is not available
+						return availableDates;
+				}
+				
+				
+				for (int i = 1; i <= nights; i++) {
+					Calendar c1 = Calendar.getInstance();
+					c1.setTime(startDate);
+					c1.add(Calendar.DATE, i);
+					c1.set(Calendar.HOUR_OF_DAY, 0);
+					c1.set(Calendar.MINUTE, 0);
+					c1.set(Calendar.SECOND, 0);
+					c1.set(Calendar.MILLISECOND, 0);
+
+					ArrayList<Date> newDates = a.getDates().stream().filter(date -> {
+						Calendar c2 = Calendar.getInstance();
+						c2.setTime(date);
+						c2.set(Calendar.HOUR_OF_DAY, 0);
+						c2.set(Calendar.MINUTE, 0);
+						c2.set(Calendar.SECOND, 0);
+						c2.set(Calendar.MILLISECOND, 0);
+						return c1.compareTo(c2) != 0;
+					}).collect(Collectors.toCollection(ArrayList::new));
+					a.setDates(newDates);
+				}
+				
+			
+				
+			}
+		}
+		return true;
+	}		
+	
+	public double getApartmentPrice(int id) {
+		
+		double price = 0;
+		
+		for(Apartment a : apartments.values()) {
+			if(a.getId() == id) {
+				price = a.getPricePerNight();
+				return price;
+			}
+		}
+		
+		
+		return price;
+		
+	}
 }

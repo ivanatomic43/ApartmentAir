@@ -80,6 +80,8 @@ public class Apartment {
 	/**
 	 * @return the location
 	 */
+	
+	
 	public Location getLocation() {
 		return location;
 	}

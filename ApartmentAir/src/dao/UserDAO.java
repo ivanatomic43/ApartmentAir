@@ -221,7 +221,16 @@ private HashMap<Integer, User> users=new HashMap<>();
 		 return usersList;
 	}
 	
-
+	public void addReservation(String contextPath, int appId, int userId) {
+		System.out.println("Usao u addReservationDAO");
+		User user = users.get(userId);
+		user.getReservationList();
+		users.replace(user.getId(), user);
+		
+		saveUsers(contextPath);
+		
+		
+	}
 	
 	
 }

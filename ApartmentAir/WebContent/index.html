@@ -628,7 +628,7 @@
           </div>
           <div class="w3-half">
           
-              <button style="margin-top: 30px;" class="w3-button w3-dark-grey" type="submit" onclick="createNewReservation()"><i class="fa fa-search w3-margin-right" ></i>Book</button>
+              <button style="margin-top: 30px;" class="w3-button w3-dark-grey" type="submit" ><i class="fa fa-search w3-margin-right" ></i>Book</button>
           
           </div>
           
@@ -780,18 +780,19 @@
 
 
 <!-- LIST OF MY RESERVATIONS - GUEST -->
-<div hidden="hidden" id="listOfReservationsGuest" class="preview-users"  style="display:none;">
+<div hidden="hidden" id="listOfReservationsGuest" class="preview-users"  style="display:none; width:1000px;">
 	<table class="table table-hover" id="listOfReservationsGuestTable">
 		  <thead class="table-header">
 		    <tr>
 		      <th scope="col">Reservation ID</th>
 		      <th scope="col">Type of facility</th>
          	  <th scope="col">Location</th>
-         	  <th scope="col">From/To</th>
+         	  <th scope="col">Date</th>
          	  <th scope="col">Total Price</th>
          	  <th scope="col">Host</th>
          	  <th scope="col">Status</th>
          	  <th scope="col">Action</th>
+         	  <th scope="col"></th>
 		    
 		  </thead>
 		  <tbody class="table-cell" >
@@ -805,14 +806,14 @@
 
 
 <!-- LIST OF ALL RESERVATIONS - ADMIN -->
-<div hidden="hidden" id="listOfReservationsAdmin" class="preview-users"  style="display:none;">
+<div hidden="hidden" id="listOfReservationsAdmin" class="preview-users"  style="display:none; width:1000px;">
 	<table class="table table-hover" id="listOfReservationsAdminTable">
 		  <thead class="table-header">
 		    <tr>
 		      <th scope="col">Reservation ID</th>
 		      <th scope="col">Type of facility</th>
          	  <th scope="col">Location</th>
-         	  <th scope="col">From/To</th>
+         	  <th scope="col">Date</th>
          	  <th scope="col">Total Price</th>
          	  <th scope="col">Guest</th>
          	  <th scope="col">Host</th>

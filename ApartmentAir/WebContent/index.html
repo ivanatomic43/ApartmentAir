@@ -98,7 +98,7 @@
             <a class="nav-link" onclick="showHostComments()" id="commentsHostBtn" style="display: none;">Recensions</a>
          </li>
       <li class="nav-item">
-            <a class="nav-link" onclick="showReservationsHost()" id="reservationsHostBtn" style="display: none;">All reservations</a>
+            <a class="nav-link" onclick="showReservationsHost()" id="reservationsHostBtn" style="display: none;">Guest's reservations</a>
          </li>
       <li class="nav-item">
             <a class="nav-link" onclick="showMyReservations()" id="reservationsGuestBtn" style="display: none;">My reservations</a>
@@ -828,6 +828,32 @@
 	</table>
   </div>
 
+<!-- LIST OF MY RESERVATIONS - HOST -->
+<div hidden="hidden" id="listOfReservationsHost" class="preview-users"  style="display:none; width:1200px;">
+	<table class="table table-hover" id="listOfReservationsHostTable">
+		  <thead class="table-header">
+		    <tr>
+		      <th scope="col">Reservation ID</th>
+		      <th scope="col">Type of facility</th>
+		      <th scope="col">Facility ID</th>
+         	  <th scope="col">Location</th>
+         	  <th scope="col">Date</th>
+         	  <th scope="col">Total Price</th>
+         	  <th scope="col">Guest</th>
+         	  <th scope="col">Host</th>
+         	  <th scope="col">Status</th>
+         	  <th scope="col">Action</th>
+         	  <th scope="col"></th>
+         	  <th scope="col"></th>
+         	  
+		    
+		  </thead>
+		  <tbody class="table-cell" >
+		   
+		   
+		  </tbody>
+	</table>
+  </div>
 
 
 </body>

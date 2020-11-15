@@ -9,6 +9,7 @@ function showInactiveApartments(){
 	$("#newApartmentBtn").show();
 	$("#activeApartmentsView").hide();
 	$("#apartmentDetails").hide();
+	$("#listOfReservationsHost").hide();
 	
 	
 }
@@ -23,21 +24,22 @@ function showActiveApartments(){
 		$("#newApartmentBtn").hide();
 		$("#activeApartmentsView").show();
 		$("#apartmentDetails").hide();
+		$("#listOfReservationsHost").hide();
 		
 	
 	
 }
 
 function getAllInactiveApartments(){
-	
+	$("#apartmentListHost").empty();
 	
 	$.ajax({
 		url: "rest/apartment/getAllInactiveApartments",
 		type: "GET",
 		contentType: "application/json",
-		success: function(apartmentList){
+		success: function(apartmentListInactive){
 			
-			if(apartmentList == null){
+			if(apartmentListInactive == null){
 				console.log("There is no inactive apartments...");
 				return;
 			}
@@ -46,8 +48,8 @@ function getAllInactiveApartments(){
 			$("#apartmentListHost").empty();
 			
 			
-			for(i=0; i < apartmentList.length; i++){
-				let ap= apartmentList[i];
+			for(i=0; i < apartmentListInactive.length; i++){
+				let ap= apartmentListInactive[i];
 				
 				
 			$("#apartmentListHost").append(
@@ -101,7 +103,7 @@ function makeActive(data){
 }
 
 function getAllActiveApartmentsHost(){
-	
+	$("#apartmentListHost").empty();
 	$.ajax({
 		url: "rest/apartment/getAllActiveApartmentsHost",
 		type: "GET",

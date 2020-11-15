@@ -205,11 +205,66 @@ public class ReservationService {
 			}
 			
 		}
+			if(reservationList. isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
 		
 		
+		return Response.status(Response.Status.OK).entity(reservationList).build();
+	}
+	
+	
+	@GET
+	@Path("/getAllReservationsHost/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllReservationsHost(@PathParam("id") int id, @Context HttpServletRequest request) {
 		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
 		
+		String hostUsername= "";
 		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		//view 
+		Collection<Apartment> apartmentList = apartments.getAllApartments();
+		Collection<User> userList = users.getAllUsers();
+		
+		for(User u : userList) {
+			if(u.getId() == id ) {
+				 hostUsername = u.getUsername();
+			}
+		}
+		
+		Collection<ReservationDTO> reservationList = reservations.getAllReservationsHost(hostUsername);
+		
+		for(ReservationDTO dto : reservationList){
+				for(Apartment a : apartmentList) {
+					if(dto.getApartmentID() == a.getId()) {
+						dto.setApartmentType(a.getType());
+						dto.setHostUsername(a.getHost());
+						dto.setStreet(a.getLocation().getAddress().getStreet());
+						dto.setNumber(a.getLocation().getAddress().getNumber());
+						dto.setCity(a.getLocation().getAddress().getCity());
+					}
+				}
+		}
+		
+		for(ReservationDTO dto : reservationList) {
+			for(User u : userList) {
+				if(dto.getGuestID() == u.getId()) {
+					dto.setGuestName(u.getName());
+					dto.setGuestSurname(u.getSurname());
+				}
+			}
+			
+		}
 		
 		if(reservationList. isEmpty())
 			return Response.status(Response.Status.NO_CONTENT).build();
@@ -217,5 +272,7 @@ public class ReservationService {
 		
 		return Response.status(Response.Status.OK).entity(reservationList).build();
 	}
+	
+	
 	
 }

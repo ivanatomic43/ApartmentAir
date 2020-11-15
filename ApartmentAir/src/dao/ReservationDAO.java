@@ -128,12 +128,35 @@ public class ReservationDAO {
 		return reservationList;
 	}
 	
+public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
+		
+		ArrayList<ReservationDTO> reservationList = new ArrayList<>();
+		
+			for(Reservation r: reservations.values()) {
+				if(r.getHostUsername().equals(hostUsername)) {
+					ReservationDTO res = new ReservationDTO();
+					res.setId(r.getId());
+					res.setApartmentID(r.getApartmentID());
+					res.setGuestID(r.getGuestID());
+					res.setDateOfReservation(r.getDateOfReservation().toString());
+					res.setNumberOfNights(r.getNumberOfNights());
+					res.setTotalPrice(r.getTotalPrice());
+					res.setMessage(r.getMessage());
+					res.setReservationStatus(r.getReservationStatus().toString());
+					reservationList.add(res);
+				}
+			}
+		Collections.reverse(reservationList);
+		return reservationList;
+	}
+	
 	public Reservation createNewReservation(Reservation newReservation, String contextPath, double price) {
 		System.out.println("usao u createNewReservationDAO");
 		
 		int id = generateNewId();
 		newReservation.setId(id);
 		newReservation.setReservationStatus(ReservationStatus.CREATED);
+		
 		
 		//calculate totalPrice
 		double totalPrice = newReservation.getNumberOfNights() * price;

@@ -28,8 +28,19 @@ public class Reservation {
 	private String message;
 	private int guestID;
 	private ReservationStatus reservationStatus;
+	private String hostUsername;
 	
 	
+	public String getHostUsername() {
+		return hostUsername;
+	}
+
+
+	public void setHostUsername(String hostUsername) {
+		this.hostUsername = hostUsername;
+	}
+
+
 	public int getApartmentID() {
 		return apartmentID;
 	}

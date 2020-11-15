@@ -85,7 +85,9 @@ function showLoginForm(){
 	 $("#addAmenityForm").hide();
 	 $("#allAmenitiesDiv").hide();
 	 $("#apartmentDetails").hide();
-	 
+	 $("#listOfReservationsHost").hide();
+	 $("#listOfReservationsGuest").hide();
+	 $("#listOfReservationsAdmin").hide();
 	 
 	 
  }

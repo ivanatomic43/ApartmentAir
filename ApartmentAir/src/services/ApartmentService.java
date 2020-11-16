@@ -28,6 +28,7 @@ import beans.Apartment;
 import beans.User;
 import dao.ApartmentDAO;
 import dao.UserDAO;
+import enums.Role;
 
 @Path("/apartment")
 public class ApartmentService {
@@ -189,6 +190,14 @@ public class ApartmentService {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		String contextPath = ctx.getRealPath("");
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
 		boolean done = apartments.makeApartmentActive(id);
 		apartments.saveApartments(contextPath);

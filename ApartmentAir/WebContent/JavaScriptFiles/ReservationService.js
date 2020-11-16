@@ -59,6 +59,27 @@ function getAllReservationsGuest(){
 	
 }
 
+function cancelReservation(data){
+	
+	var id = data;
+	
+	$.ajax({
+		url: "rest/reservation/cancelReservation/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Reservation cancelled!");
+			getAllReservationsGuest();
+		},
+		error: function(error){
+			console.log("Error cancelling the reservation...");
+		}
+		
+		
+		
+	});
+}
+
 function showAdminReservations(){
 	
 	$("#userProfileDiv").hide();
@@ -183,11 +204,67 @@ function getAllReservationsHost(){
 		}
 		
 	});
+		
+}
+
+function approveReservation(data){
 	
+	var id = data;
 	
+	$.ajax({
+		url: "rest/reservation/approveReservation/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Reservation approved!");
+			getAllReservationsHost();
+		},
+		error: function(error){
+			console.log("Error approving the reservation...");
+		}
+		
+		
+		
+	});
+}
+
+function declineReservation(data){
 	
+	var id = data;
 	
+	$.ajax({
+		url: "rest/reservation/declineReservation/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Reservation declined!");
+			getAllReservationsHost();
+		},
+		error: function(error){
+			console.log("Error declining the reservation...");
+		}
+		
+		
+		
+	});
+}
+function finishReservation(data){
 	
+	var id = data;
 	
-	
+	$.ajax({
+		url: "rest/reservation/finishReservation/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Reservation finished!");
+			getAllReservationsGuest();
+		},
+		error: function(error){
+			console.log("Error finishing the reservation...");
+		}
+		
+		
+		
+	});
 }

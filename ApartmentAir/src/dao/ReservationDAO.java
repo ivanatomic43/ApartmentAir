@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -174,6 +175,86 @@ public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 		return newReservation;
 		
 		
+	}
+	
+	public boolean cancelReservation(int id) {
+		
+		boolean cancelled = false;
+		for(Reservation r: reservations.values()) {
+			if(r.getId() == id && (r.getReservationStatus().equals(ReservationStatus.ACCEPTED) || r.getReservationStatus().equals(ReservationStatus.CREATED))) {
+				
+				r.setReservationStatus(ReservationStatus.CANCELED);
+				return cancelled = true;
+			}
+			
+			
+		}
+		
+		return false;
+	}
+	
+	public boolean approveReservation(int id) {
+		
+		boolean approved = false;
+		for(Reservation r: reservations.values()) {
+			if(r.getId() == id &&  r.getReservationStatus().equals(ReservationStatus.CREATED)) {
+				
+				r.setReservationStatus(ReservationStatus.ACCEPTED);
+				return approved = true;
+			}
+			
+			
+		}
+		
+		return approved;
+	}
+	
+	
+	public boolean declineReservation(int id) {
+		
+		boolean declined = false;
+		for(Reservation r: reservations.values()) {
+			if(r.getId() == id && (r.getReservationStatus().equals(ReservationStatus.ACCEPTED) || r.getReservationStatus().equals(ReservationStatus.CREATED))) {
+				
+				r.setReservationStatus(ReservationStatus.DECLINED);
+				return declined = true;
+			}
+			
+			
+		}
+		
+		return declined;
+	}
+	
+	public boolean finishReservation(int id) {
+		
+		Calendar currentTime = Calendar.getInstance();
+		
+		
+		
+		
+		boolean finished = false;
+		for(Reservation r: reservations.values()) {
+			if(r.getId() == id && r.getReservationStatus().equals(ReservationStatus.ACCEPTED)) {
+					Calendar endDate = Calendar.getInstance();
+					endDate.setTime(r.getDateOfReservation());
+					endDate.add(Calendar.DATE, r.getNumberOfNights());
+					
+					if(currentTime.compareTo(endDate) == -1) {
+						System.out.println("End date has not passed..");
+						finished = false;
+					} 
+					
+				
+				
+				r.setReservationStatus(ReservationStatus.FINISHED);
+				return finished = true;
+			}
+			
+			
+		}
+		
+		return false;
 	}
 	
 }

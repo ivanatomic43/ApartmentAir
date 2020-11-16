@@ -273,6 +273,110 @@ public class ReservationService {
 		return Response.status(Response.Status.OK).entity(reservationList).build();
 	}
 	
+	@Path("/cancelReservation/{id}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelReservation(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.GUEST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		
+		boolean cancelled = reservations.cancelReservation(id);
+		reservations.saveReservations(contextPath);
+		if(!cancelled)
+		return Response.status(Response.Status.NOT_FOUND).build();
+		
+		
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	
+	@Path("/approveReservation/{id}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response approveReservation(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		
+		boolean approved = reservations.approveReservation(id);
+		reservations.saveReservations(contextPath);
+		if(!approved)
+		return Response.status(Response.Status.NOT_FOUND).build();
+		
+		
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	@Path("/declineReservation/{id}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response declineReservation(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		
+		boolean declined = reservations.declineReservation(id);
+		reservations.saveReservations(contextPath);
+		if(!declined)
+		return Response.status(Response.Status.NOT_FOUND).build();
+		
+		
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	@Path("/finishReservation/{id}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response finishReservation(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+	
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		
+		boolean finished = reservations.finishReservation(id);
+		reservations.saveReservations(contextPath);
+		if(!finished)
+		return Response.status(Response.Status.BAD_REQUEST).entity("The booking date has not expired.").build();
+		
+		
+		return Response.status(Response.Status.OK).build();
+	}
 	
 	
 }

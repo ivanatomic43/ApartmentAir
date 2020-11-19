@@ -74,7 +74,6 @@ function showLoginForm(){
 
  function homePageClick(){
 	 $("#listOfApartments").show();
-	 $("#hostPart").show();
 	 $("#searchForm").hide();
 	 $("#loginForm").hide();
 	 $("#registrationForm").hide();
@@ -88,6 +87,7 @@ function showLoginForm(){
 	 $("#listOfReservationsHost").hide();
 	 $("#listOfReservationsGuest").hide();
 	 $("#listOfReservationsAdmin").hide();
+	 
 	 
 	 
  }

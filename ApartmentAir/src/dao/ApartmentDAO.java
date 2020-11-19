@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Apartment;
 import beans.User;
+import dto.SearchApartmentDTO;
 import beans.Amenity;
 import enums.ApartmentStatus;
 
@@ -328,6 +329,13 @@ public class ApartmentDAO {
 		
 		
 		return price;
+		
+	}
+	
+	public Collection<Apartment> apartmentSearch(SearchApartmentDTO apartment){
+		
+		
+		return null;
 		
 	}
 }

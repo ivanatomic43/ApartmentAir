@@ -246,6 +246,7 @@ function adaptToUser(u){
 		$("#reservationsHostBtn").hide();
 		$("#reservationsAdminBtn").hide();
 		$("#reservationsGuestBtn").show();
+		$("#sortAndFilter").show();
 		
 	} 
 	

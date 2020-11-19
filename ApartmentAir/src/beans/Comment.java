@@ -8,6 +8,7 @@ public class Comment {
 	private int guestID;
 	private int hostID;
 	private int apartmentID;
+	private int reservationID;
 	private String text;
 	private double rating;
 	private CommentStatus status;
@@ -70,7 +71,14 @@ public class Comment {
 		this.status = status;
 	}
 
-	
+	public int getReservationID() {
+		return reservationID;
+	}
+
+	public void setReservationID(int reservationID) {
+		this.reservationID = reservationID;
+	}
+
 	
 	
 	

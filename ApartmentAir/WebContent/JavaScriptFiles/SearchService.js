@@ -68,3 +68,69 @@ function cancelSearch(){
     getAllUsers();
 	
 }
+
+function searchApartments(){
+	
+	event.preventDefault();
+	 
+	let startDate=$('#guestSearchStartDate').val();
+	let endDate= $("#guestSearchEndDate").val();
+	let city = $("#guestSearchCity").val();
+	
+	dateFrom = Date.parse(startDate);
+	dateTo = Date.parse(endDate);
+	
+	
+	let data = {
+			"dateFrom": dateFrom,
+			"dateTo": dateTo,
+			"location" : city
+	};
+	
+	let searchData=JSON.stringify(data);
+	
+	$.ajax({
+		url: "rest/search/basicSearch",
+		type: "GET",
+		data: searchData,
+		contentType: "application/json",
+		success: function(apartmentList){
+			
+			if(apartmentList == null){
+				$("#apartmentList").empty();
+				$("#apartmentList").append("<h3>No search results.</h3>");
+				
+			}
+			let i;
+			$("#apartmentList").empty();
+			
+			for(i=0; i < apartments.length; i++){
+				let ap= apartments[i];
+				
+				
+			$("#apartmentList").append(
+					
+			"<div class=\"w3-third w3-margin-bottom\">" +
+					"<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
+				"<div class=\"w3-container w3-white\">"+
+					"<h3>" +ap.type+ "</h3>" +
+					"<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+					"<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+					"<p>Rating: "+ap.numberOfRooms+"</p>"+
+					"<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
+					"<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
+				" </div>" +
+			"</div>");
+			}
+		},
+		error: function(error){
+			console.log("Search error...");
+		}
+		
+		
+		
+		
+	});
+}
+
+

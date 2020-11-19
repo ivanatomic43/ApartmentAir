@@ -43,7 +43,7 @@ function getAllReservationsGuest(){
 					"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
 					+"$</td>"+ "<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
 					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button></td>" +
-					"<td><button type=\"button\" onclick=\"leaveComment('"+r.id+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
+					"<td><button type=\"button\" onclick=\"leaveCommentClick('"+r.id+","+r.apartmentID+", "+r.reservationStatus+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
 					);
 			}
 			
@@ -56,6 +56,83 @@ function getAllReservationsGuest(){
 		}
 		
 	});
+	
+}
+
+function leaveCommentClick(data){
+	
+	$("#listOfReservationsGuest").hide();
+	$("#newCommentForm").show();
+	
+	leaveComment(data);
+	
+}
+
+function leaveComment(data){
+	
+	var info= data.split(",");
+	var reservationID = data[0];
+	var apartmentID = data[1];
+	var reservationStatus = data[2];
+
+	
+	var user = JSON.parse(localStorage.getItem('user'));
+	
+	
+	alert(reservationID, apartmentID, reservationStatus);
+	
+	
+	
+	
+	$("form#commentForm").submit(function(event){
+		
+		var text = $("#newCommentText").val();
+		var rate = $("#newCommentRate").val();
+		
+		if(reservationStatus != "DECLINED" || reservationStatus != "ENDED"){
+			alert("You can leave comment only for DECLINED and ENDED reservations!");
+			return;
+		}
+		
+		if(text == "" || rate == ""){
+			alert("Please leave rate  and comment text!");
+			return;
+		}
+		
+		let comment = {
+				"guestID" : user.id,
+				"apartmentID": apartmentID,
+				"text" : text,
+				"reservationID" : reservationID,
+				"rating": rate
+				
+		};
+		
+		let c = JSON.stringify(comment);
+		
+		$.ajax({
+			url: "rest/comment/leaveComment",
+			type:"POST",
+			data: c,
+			contentType: "application/json",
+			success: function(){
+				alert("Comment sent!");
+				getAllReservationsGuest();
+			},
+			error: function(error){
+				alert("Error leaving the comment!");
+				console.log("Error leaving comment...");
+			}
+			
+			
+			
+			
+		});
+		
+		
+	});
+	
+
 	
 }
 

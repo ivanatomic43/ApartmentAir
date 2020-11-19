@@ -14,9 +14,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import beans.Apartment;
 import beans.User;
 import dao.ApartmentDAO;
 import dao.UserDAO;
+import dto.SearchApartmentDTO;
 import enums.Role;
 
 @Path("/search")
@@ -72,6 +74,26 @@ public class SearchService {
 		return Response.status(Response.Status.OK).entity(usersList).build();
 	}
 	
-	
+	@GET
+	@Path("/basicSearch")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response apartmentSearch(SearchApartmentDTO apartment) {
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		
+		Collection<Apartment> apartmentList =apartments.apartmentSearch(apartment);
+		
+		if(apartmentList.isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		
+		return Response.status(Response.Status.OK).entity(apartmentList).build();
+		
+		
+		
+		
+		
+	}
 	
 }

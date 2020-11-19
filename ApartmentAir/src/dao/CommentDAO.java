@@ -96,7 +96,19 @@ private HashMap<Integer, Comment> comments =new HashMap<>();
 		return retVal;
 	}
 	
-	
+	public void leaveComment(Comment newComment, int hostID, String contextPath) {
+		
+		
+		
+		int id = generateNewId();
+		newComment.setId(id);
+		newComment.setHostID(hostID);
+		
+		comments.put(newComment.getId(), newComment);
+		
+		saveComments(contextPath);
+		
+	}
 	
 	
 }

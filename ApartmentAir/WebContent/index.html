@@ -246,30 +246,28 @@
 
 
   
-  <div class="w3-row-padding">
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check In</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
-    </div>
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check Out</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+ <div class="w3-row-padding">
+    <div class="w3-col m2">
+      <label><i class="fa fa-calendar-o"></i>Date from:</label>
+      <input class="w3-input w3-border" type="date" id="guestSearchStartDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-male"></i> Location</label>
-      <input class="w3-input w3-border" type="text">
+      <label><i class="fa fa-calendar-o"></i>Date to:</label>
+      <input class="w3-input w3-border" type="date" id="guestSearchEndDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Adults</label>
-      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+      <label><i class="fa fa-male"></i>City</label>
+      <input class="w3-input w3-border" type="text" id = "guestSearchCity" placeholder="City">
+    </div>
+    <div class="w3-col m2">
+      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsAdmin()" >Search</button>
     </div>
      <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Number of rooms</label>
-      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-search"></i> Search</label>
-      <button class="w3-button w3-block w3-black">Search</button>
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+      
     </div>
   </div>
 
@@ -283,41 +281,135 @@
 <!-- LIST OF APARTMENTS FOR EACH USER -->
 <div class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: khaki;" id="listOfApartments">
 
-<div id = "hostPart">
-<button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" style="display: none;">New Appartment</button>
+
   
   <div class="w3-row-padding">
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check In</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
-    </div>
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check Out</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    <div class="w3-col m2">
+      <label><i class="fa fa-calendar-o"></i>Date from:</label>
+      <input class="w3-input w3-border" type="date" id="guestSearchStartDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-male"></i> Location</label>
-      <input class="w3-input w3-border" type="text">
+      <label><i class="fa fa-calendar-o"></i>Date to:</label>
+      <input class="w3-input w3-border" type="date" id="guestSearchEndDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Adults</label>
-      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+      <label><i class="fa fa-male"></i>City</label>
+      <input class="w3-input w3-border" type="text" id = "guestSearchCity" placeholder="City">
+    </div>
+    <div class="w3-col m2">
+      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartments()" >Search</button>
     </div>
      <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Number of rooms</label>
-      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-search"></i> Search</label>
-      <button class="w3-button w3-block w3-black">Search</button>
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+      
     </div>
   </div>
 
-</div>
+	<div class="w3-row-padding" hidden="hidden" id="sortAndFilter">
+		<div class = "w3-col m1">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
+		</div>
+	
+		<div class = "w3-col m1">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter</button>
+		</div>
+	</div>
+
+
   <div class="w3-row-padding w3-padding-16" id ="apartmentList">
   
   </div>
  </div>
+
+<!-- ADVANCED SEARCH - MODAL -->
+<div class="modal fade" id="advancedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div  class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #deded3;" >
+      <div class="modal-header">
+        <h5 style="font-size: 25px; text-align: center;" class="modal-title" id="exampleModalLabel">Advanced search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="advancedSearch" method = "POST">
+   			<div class="w3-row-padding" style="margin:8 -16px;">
+          		<div class="w3-half w3-margin-bottom">
+         
+           			 <label  ><i class="fa fa-calendar-o"></i>Date from</label><br>
+            		 <input class="w3-input w3-border" type="date" id="advancedDateFrom" name="advancedDateFrom">
+			
+           
+         		</div>
+          		<div class="w3-half">
+          
+            		<label><i class="fa fa-calendar-o"></i>Date to</label>
+           			<input class="w3-input w3-border" type="date"  name="advancedDateTo"  id="advancedDateTo">
+          
+         		</div>
+        	</div>
+   
+   		 	<div class="w3-row-padding" style="margin:8 -16px;">
+          		<div class="w3-half w3-margin-bottom">
+         
+           			 <label  ><i class="fa fa-calendar-o"></i>City</label><br>
+            		 <input class="w3-input w3-border" type="text" id="advancedCity" name="advancedCity">
+			
+           
+         		</div>
+          		<div class="w3-half">
+          
+            		<label><i class="fa fa-calendar-o"></i>Max people</label>
+           			<input class="w3-input w3-border" type="number"  min="1" name="advancedNumberOfGuests" id="advancedNumberOfGuests">
+          
+         		</div>
+        	</div>
+   
+   			<div class="w3-row-padding" style="margin:8 -16px;">
+          		<div class="w3-half w3-margin-bottom">
+         
+           			 <label  ><i class="fa fa-calendar-o"></i>Price MIN</label><br>
+            		 <input class="w3-input w3-border" type="number" id="priceMIN" name="priceMIN">
+			
+           
+         		</div>
+          		<div class="w3-half">
+          
+            		<label><i class="fa fa-calendar-o"></i>Price MAX</label>
+           			<input class="w3-input w3-border" type="number"  name="priceMAX"  id="priceMAX">
+          
+         		</div>
+        	</div>
+   				<div class="w3-row-padding" style="margin:8 -16px;">
+          		<div class="w3-half w3-margin-bottom">
+         
+           			 <label  ><i class="fa fa-calendar-o"></i>Number of rooms MIN:</label><br>
+            		 <input class="w3-input w3-border" type="number" id="numberOfRoomMIN" name="numberOfRoomMIN">
+			
+           
+         		</div>
+          		<div class="w3-half">
+          
+            		<label><i class="fa fa-calendar-o"></i>Number of rooms MAX</label>
+           			<input class="w3-input w3-border" type="number"  name="numberOfRoomMAX"  id="numberOfRoomMAX">
+          
+         		</div>
+        	</div>
+   
+   
+        	<button type="button" class="w3-button w3-block w3-black" type="submit">Search</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="w3-button w3-block w3-black" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- LIST OF APARTMENTS FOR HOST  -->
 
@@ -325,35 +417,32 @@
 
  <button onclick="showNewApartmentForm();" id="newApartmentBtn" class="w3-button w3-block w3-black" >New Appartment</button>
 
-  
   <div hidden="hidden" id = "activeApartmentsView">
   <div class="w3-row-padding">
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check In</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
-    </div>
-    <div class="w3-col m3">
-      <label><i class="fa fa-calendar-o"></i> Check Out</label>
-      <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY">
+    <div class="w3-col m2">
+      <label><i class="fa fa-calendar-o"></i>Date from:</label>
+      <input class="w3-input w3-border" type="date" id="hostSearchStartDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-male"></i> Location</label>
-      <input class="w3-input w3-border" type="text">
+      <label><i class="fa fa-calendar-o"></i>Date to:</label>
+      <input class="w3-input w3-border" type="date" id="hostSearchEndDate">
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Adults</label>
-      <input class="w3-input w3-border" type="number" placeholder="0" min="1" max="10">
+      <label><i class="fa fa-male"></i>City</label>
+      <input class="w3-input w3-border" type="text" id = "hostSearchCity" placeholder="City">
+    </div>
+    <div class="w3-col m2">
+      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsHost()" >Search</button>
     </div>
      <div class="w3-col m2">
-      <label><i class="fa fa-child"></i>Number of rooms</label>
-      <input class="w3-input w3-border" type="range" placeholder="0" min="1" max="10">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-      <label><i class="fa fa-search"></i> Search</label>
-      <button class="w3-button w3-block w3-black">Search</button>
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+      
     </div>
   </div>
-</div>
+  </div>
 
   <div class="w3-row-padding w3-padding-16" id ="apartmentListHost">
   
@@ -855,7 +944,42 @@
 	</table>
   </div>
 
-
+<!-- COMMENT SECTION - GUEST -->
+ <div id="newCommentForm" class="w3-display-container w3-content" style="display: none; margin-top: 250px; margin-left:520px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Leave a comment</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      <form id ="commentForm">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i>Text</label>
+            <textarea rows="4" cols="50" name="comment" id="newCommentText" required ></textarea>
+          </div>
+          <div class="w3-half">
+           
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+             <label><i class="fa fa-calendar-o"></i>Rate</label>
+            <input class="w3-input w3-border" type="number"  name="newCommentRate" id ="newCommentRate" min ="1" max= "5" required>
+          </div>
+          <div class="w3-half">
+            
+          </div>
+        </div>
+        
+      
+        
+        <button  class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i>Send</button>
+      </form>
+    </div>
+    </div>
+  </div>
 </body>
 
 </html>

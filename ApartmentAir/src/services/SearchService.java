@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -74,15 +75,24 @@ public class SearchService {
 		return Response.status(Response.Status.OK).entity(usersList).build();
 	}
 	
-	@GET
+	@POST
 	@Path("/basicSearch")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response apartmentSearch(SearchApartmentDTO apartment) {
+	public Response apartmentSearch(SearchApartmentDTO apartment, @Context HttpServletRequest request) {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		
-		Collection<Apartment> apartmentList =apartments.apartmentSearch(apartment);
+		Collection<Apartment> apartmentList = new ArrayList<>();
+		
+		
+		if(loggedUser == null)
+			apartmentList = apartments.apartmentSearch(apartment);
+		else if(loggedUser.getRole().equals(Role.ADMIN))
+			apartmentList = apartments.apartmentSearchAdmin(apartment);
+		else if(loggedUser.getRole().equals(Role.GUEST))
+			apartmentList = apartments.apartmentSearch(apartment);
 		
 		if(apartmentList.isEmpty())
 			return Response.status(Response.Status.NO_CONTENT).build();

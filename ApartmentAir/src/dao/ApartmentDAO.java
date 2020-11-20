@@ -332,10 +332,80 @@ public class ApartmentDAO {
 		
 	}
 	
-	public Collection<Apartment> apartmentSearch(SearchApartmentDTO apartment){
+	
+	//only active apartments
+	public Collection<Apartment> apartmentSearch(SearchApartmentDTO ap){
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
+		
+		for(Apartment a : apartments.values()) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE)) {
+				
+				if(ap.getDateFrom()== null & ap.getDateTo() == null) {
+					if((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))
+						{
+							apartmentList.add(a);
+						}
+				}else if (ap.getLocation()== null) {
+						
+					if(((ap.getDateFrom().equals(a.getDateFrom()) || ((ap.getDateFrom().after(a.getDateFrom())) && ap.getDateFrom().before(a.getDateTo()))))
+							&& (ap.getDateTo().equals(a.getDateTo()) || ((ap.getDateTo().after(a.getDateFrom())) && ap.getDateTo().before(a.getDateTo())))
+							){
+						apartmentList.add(a);
+					}
+				}
+				else if(((ap.getDateFrom().equals(a.getDateFrom()) || ((ap.getDateFrom().after(a.getDateFrom())) && ap.getDateFrom().before(a.getDateTo()))))
+						&& (ap.getDateTo().equals(a.getDateTo()) || ((ap.getDateTo().after(a.getDateFrom())) && ap.getDateTo().before(a.getDateTo())))
+						&& ((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))){
+					
+			
+					apartmentList.add(a);
+			
+				}
+			}
+		
+		}
 		
 		
-		return null;
 		
+		return apartmentList;
+	}
+	
+	//all apartments
+	public Collection<Apartment> apartmentSearchAdmin(SearchApartmentDTO ap){
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
+		
+		for(Apartment a : apartments.values()) {
+			
+				
+				if(ap.getDateFrom()== null & ap.getDateTo() == null) {
+					if((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))
+						{
+							apartmentList.add(a);
+						}
+				}else if (ap.getLocation()== null) {
+						
+					if(((ap.getDateFrom().equals(a.getDateFrom()) || ((ap.getDateFrom().after(a.getDateFrom())) && ap.getDateFrom().before(a.getDateTo()))))
+							&& (ap.getDateTo().equals(a.getDateTo()) || ((ap.getDateTo().after(a.getDateFrom())) && ap.getDateTo().before(a.getDateTo())))
+							){
+						apartmentList.add(a);
+					}
+				}
+				else if(((ap.getDateFrom().equals(a.getDateFrom()) || ((ap.getDateFrom().after(a.getDateFrom())) && ap.getDateFrom().before(a.getDateTo()))))
+						&& (ap.getDateTo().equals(a.getDateTo()) || ((ap.getDateTo().after(a.getDateFrom())) && ap.getDateTo().before(a.getDateTo())))
+						&& ((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))){
+					
+			
+					apartmentList.add(a);
+			
+				}
+			}
+		
+		
+		
+		
+		
+		return apartmentList;
 	}
 }

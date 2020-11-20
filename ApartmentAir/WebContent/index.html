@@ -249,15 +249,15 @@
  <div class="w3-row-padding">
     <div class="w3-col m2">
       <label><i class="fa fa-calendar-o"></i>Date from:</label>
-      <input class="w3-input w3-border" type="date" id="guestSearchStartDate">
+      <input class="w3-input w3-border" type="date" id="adminSearchStartDate">
     </div>
     <div class="w3-col m2">
       <label><i class="fa fa-calendar-o"></i>Date to:</label>
-      <input class="w3-input w3-border" type="date" id="guestSearchEndDate">
+      <input class="w3-input w3-border" type="date" id="adminSearchEndDate">
     </div>
     <div class="w3-col m2">
       <label><i class="fa fa-male"></i>City</label>
-      <input class="w3-input w3-border" type="text" id = "guestSearchCity" placeholder="City">
+      <input class="w3-input w3-border" type="text" id = "adminSearchCity" placeholder="City">
     </div>
     <div class="w3-col m2">
       <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsAdmin()" >Search</button>
@@ -266,7 +266,7 @@
      <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="cancelSearchResults()">Cancel search results</button>
       
     </div>
   </div>
@@ -303,7 +303,7 @@
      <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="cancelSearchResults()">Cancel search results</button>
       
     </div>
   </div>

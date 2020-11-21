@@ -14,9 +14,14 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import beans.Apartment;
 import beans.User;
+import comparators.ApartmentDateComparator;
+import comparators.ApartmentGuestComparator;
+import comparators.ApartmentPriceComparator;
+import comparators.ApartmentRoomComparator;
 import dto.SearchApartmentDTO;
 import beans.Amenity;
 import enums.ApartmentStatus;
+import enums.OrderComparator;
 
 public class ApartmentDAO {
 
@@ -408,4 +413,43 @@ public class ApartmentDAO {
 		
 		return apartmentList;
 	}
+	
+	public ArrayList<Apartment> sortApartments(ArrayList<Apartment> apartmentList, String sort){
+		
+		switch(sort) {
+			
+		case "PRICE_ASC": 
+			apartmentList.sort(new ApartmentPriceComparator(OrderComparator.ASCENDING));
+			break;
+		case "PRICE_DESC":
+			apartmentList.sort(new ApartmentPriceComparator(OrderComparator.DESCENDING));
+			break;
+		case "DATE_ASC":
+			apartmentList.sort(new ApartmentDateComparator(OrderComparator.ASCENDING));
+			break;
+		case "DATE_DESC":
+			apartmentList.sort(new ApartmentDateComparator(OrderComparator.DESCENDING));
+			break;
+		case "GUEST_ASC":
+			apartmentList.sort(new ApartmentGuestComparator(OrderComparator.ASCENDING));
+			break;
+		case "GUEST_DESC":
+			apartmentList.sort(new ApartmentGuestComparator(OrderComparator.DESCENDING));
+			break;
+		case "ROOM_ASC":
+			apartmentList.sort(new ApartmentRoomComparator(OrderComparator.ASCENDING));
+			break;
+		case "ROOM_DESC":
+			apartmentList.sort(new ApartmentRoomComparator(OrderComparator.DESCENDING));
+			break;
+		}
+		
+		
+		
+		return apartmentList;
+		
+	}
+	
+	
+	
 }

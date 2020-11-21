@@ -103,18 +103,10 @@ public class SearchService {
 		
 		
 			//sorting
-			if(apartment.getSort().equals("PRICE_ASC"))
-				apartmentList.sort(new ApartmentPriceComparator(OrderComparator.ASCENDING));
-			else if(apartment.getSort().equals("PRICE_DESC"))
-				apartmentList.sort(new ApartmentPriceComparator(OrderComparator.DESCENDING));
 		
-		
-		
-		return Response.status(Response.Status.OK).entity(apartmentList).build();
-		
-		
-		
-		
+			apartmentList = apartments.sortApartments(apartmentList, apartment.getSort());
+	
+			return Response.status(Response.Status.OK).entity(apartmentList).build();
 		
 	}
 	

@@ -94,11 +94,14 @@ function searchApartments(){
 		city = $("#guestSearchCity").val();
 	}
 
+	let sort = $("#sort").val();
+	
 	
 	let data = {
 			"dateFrom": dateFrom,
 			"dateTo": dateTo,
-			"location" : city
+			"location" : city,
+			"sort": sort
 	};
 	
 	let searchData=JSON.stringify(data);
@@ -155,6 +158,7 @@ function searchApartmentsAdmin(){
 	let startDate = null;
 	let endDate = null;
 	let city= null;
+	//let sort = null;
 	
 	let dateFrom= null;
 	let dateTo = null;
@@ -173,11 +177,14 @@ function searchApartmentsAdmin(){
 		city = $("#adminSearchCity").val();
 	}
 
+	let sort = $("#sort").val();
+	alert("SORT OPTIONA: " + sort);
 	
 	let data = {
 			"dateFrom": dateFrom,
 			"dateTo": dateTo,
-			"location" : city
+			"location" : city,
+			"sort": sort
 	};
 	
 	let searchData=JSON.stringify(data);
@@ -208,7 +215,7 @@ function searchApartmentsAdmin(){
 					"<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
 				"<div class=\"w3-container w3-white\">"+
 					"<h3>" +ap.type+ "</h3>" +
-					"<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+					"<h6 class=\"w3-opacity\">Price: " +ap.pricePerNight+ "$</h6>" +
 					"<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
 					"<p>Rating: "+ap.numberOfRooms+"</p>"+
 					"<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
@@ -285,4 +292,5 @@ function cancelSearchResults(){
 	
 	
 }
+
 

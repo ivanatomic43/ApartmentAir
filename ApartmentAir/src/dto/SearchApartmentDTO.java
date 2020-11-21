@@ -7,8 +7,15 @@ public class SearchApartmentDTO {
 	private Date dateFrom;
 	private Date dateTo;
 	private String location;
+	private String sort;
 	
 	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	public Date getDateFrom() {
 		return dateFrom;
 	}

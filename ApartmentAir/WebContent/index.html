@@ -310,11 +310,18 @@
 
 	<div class="w3-row-padding" hidden="hidden" id="sortAndFilter">
 		<div class = "w3-col m1">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
-		</div>
+				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
+        					<option value="PRICE_ASC" selected>Price Min</option>
+        					<option value="PRICE_DESC">Price Max</option>
+        			</select>
+        </div>
 	
 		<div class = "w3-col m1">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter</button>
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
+		</div>
+		
+		<div class = "w3-col m2">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
 		</div>
 	</div>
 

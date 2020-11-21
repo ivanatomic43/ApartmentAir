@@ -334,7 +334,7 @@ public class ApartmentDAO {
 	
 	
 	//only active apartments
-	public Collection<Apartment> apartmentSearch(SearchApartmentDTO ap){
+	public ArrayList<Apartment> apartmentSearch(SearchApartmentDTO ap){
 		
 		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
 		
@@ -372,7 +372,7 @@ public class ApartmentDAO {
 	}
 	
 	//all apartments
-	public Collection<Apartment> apartmentSearchAdmin(SearchApartmentDTO ap){
+	public ArrayList<Apartment> apartmentSearchAdmin(SearchApartmentDTO ap){
 		
 		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
 		

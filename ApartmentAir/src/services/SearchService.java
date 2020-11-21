@@ -15,11 +15,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.model.internal.RankedComparator.Order;
+
 import beans.Apartment;
 import beans.User;
+import comparators.ApartmentPriceComparator;
 import dao.ApartmentDAO;
 import dao.UserDAO;
 import dto.SearchApartmentDTO;
+import enums.OrderComparator;
 import enums.Role;
 
 @Path("/search")
@@ -84,7 +88,7 @@ public class SearchService {
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		
-		Collection<Apartment> apartmentList = new ArrayList<>();
+		ArrayList<Apartment> apartmentList = new ArrayList<>();
 		
 		
 		if(loggedUser == null)
@@ -96,6 +100,14 @@ public class SearchService {
 		
 		if(apartmentList.isEmpty())
 			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		
+			//sorting
+			if(apartment.getSort().equals("PRICE_ASC"))
+				apartmentList.sort(new ApartmentPriceComparator(OrderComparator.ASCENDING));
+			else if(apartment.getSort().equals("PRICE_DESC"))
+				apartmentList.sort(new ApartmentPriceComparator(OrderComparator.DESCENDING));
+		
 		
 		
 		return Response.status(Response.Status.OK).entity(apartmentList).build();

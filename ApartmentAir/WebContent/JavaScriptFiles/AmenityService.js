@@ -13,6 +13,7 @@ function showAmenities(){
 	$("#allUsersDiv").hide();
 	$("#listOfUsersAdmin").hide();
 	$("#allAmenitiesDiv").show();
+	$("#allCommentsAdmin").hide();
 	getAllAmenities();
 }
 

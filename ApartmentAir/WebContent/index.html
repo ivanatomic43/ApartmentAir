@@ -46,6 +46,7 @@
 <script type = "text/javascript" src = "JavaScriptFiles/HostApartmentService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/SearchService.js" charset="utf-8"></script>
 <script type = "text/javascript" src = "JavaScriptFiles/ReservationService.js" charset="utf-8"></script>
+<script type = "text/javascript" src = "JavaScriptFiles/CommentService.js" charset="utf-8"></script>
 
 <title>ApartmentAir</title>
 
@@ -192,60 +193,11 @@
 </div>
 </section>
 
-<!-- INITIAL SEARCH FORM -->
-   <div id="searchForm" class="w3-display-container w3-content" style="display: none; margin-top: 250px; margin-left:520px;">
- 
-  <div class="w3-display-left w3-padding w3-col l6 m8">
-    <div class="w3-container w3-khaki">
-      <h2><i class="fa fa-bed w3-margin-right"></i>Find your apartment</h2>
-    </div>
-    <div class="w3-container w3-white w3-padding-16">
-      <form action="/action_page.php" target="_blank">
-        <div class="w3-row-padding" style="margin:0 -16px;">
-          <div class="w3-half w3-margin-bottom">
-         
-            <label  ><i class="fa fa-calendar-o"></i> Check In</label>
-            
-            <input  class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckIn" required>
-          </div>
-          <div class="w3-half">
-            <label><i class="fa fa-calendar-o"></i> Check Out</label>
-            <input class="w3-input w3-border" type="text" placeholder="DD MM YYYY" name="CheckOut" required>
-          </div>
-        </div>
-        <div class="w3-row-padding" style="margin:8px -16px;">
-          <div class="w3-half w3-margin-bottom">
-            <label><i class="fa fa-male"></i>Location</label>
-            <input class="w3-input w3-border" type="text" name="location">
-          </div>
-          <div class="w3-half">
-            <label><i class="fa fa-child"></i> Adults</label>
-          <input class="w3-input w3-border" type="number"  name="adults" min="0" max="6">
-          </div>
-        </div>
-          <div class="w3-row-padding" style="margin:16px -24px;">
-          <div class="w3-half w3-margin-bottom">
-            <label><i class="fa fa-male"></i> Number of rooms</label>
-            <input class="w3-input w3-border" type="range"  name="rooms" min="1" max="5" onchange="updateRoomsInput(this.value);" >
-            <input type="text" id="roomsInput" value="">
-          </div>
-          <div class="w3-half">
-            <label><i class="fa fa-child"></i>Price</label>
-          <input class="w3-input w3-border" type="range" name="price" min="0" max="1000" onchange="updatePriceInput(this.value);">
-          <input type="text" id="priceInput" value="">
-          </div>
-        </div>
-        <button class="w3-button w3-dark-grey" type="submit"><i class="fa fa-search w3-margin-right"></i> Search availability</button>
-      </form>
-    </div>
-  </div>
-</div>
+
 
 <!-- LIST OF APARTMENTS FOR ADMIN -->
 <div hidden="hidden" class="w3-content" style="max-width:1532px; margin-top: 20px; background-color: #cccc99;" id="listOfApartmentsAdmin">
-
-
-  
+ 
  <div class="w3-row-padding">
     <div class="w3-col m2">
       <label><i class="fa fa-calendar-o"></i>Date from:</label>
@@ -270,6 +222,30 @@
       
     </div>
   </div>
+
+<div class="w3-row-padding"  id="sortAndFilter">
+		<div class = "w3-col m1">
+				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
+        					<option value="PRICE_ASC" selected>Price Min</option>
+        					<option value="PRICE_DESC">Price Max</option>
+        					<option value="DATE_ASC">Date Min</option>
+	    					<option value="DATE_DESC">Date Max</option>
+	    					<option value="GUEST_ASC">Guests Min</option>
+	    					<option value="GUEST_DESC">Guests Max</option>
+	    					<option value="ROOM_ASC">Rooms Min</option>
+	    					<option value="ROOM_DESC">Rooms Max</option>
+        			</select>
+        </div>
+	
+		<div class = "w3-col m1">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
+		</div>
+		
+		<div class = "w3-col m2">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
+		</div>
+	</div>
+
 
 
   <div class="w3-row-padding w3-padding-16" id ="apartmentListAdmin">
@@ -318,7 +294,7 @@
 	    					<option value="GUEST_ASC">Guests Min</option>
 	    					<option value="GUEST_DESC">Guests Max</option>
 	    					<option value="ROOM_ASC">Rooms Min</option>
-	    					<option value="ROOM_ASC">Rooms Max</option>
+	    					<option value="ROOM_DESC">Rooms Max</option>
         			</select>
         </div>
 	
@@ -455,7 +431,37 @@
       
     </div>
   </div>
+  
+  <div class="w3-row-padding"  id="sortAndFilter">
+		<div class = "w3-col m1">
+				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
+        					<option value="PRICE_ASC" selected>Price Min</option>
+        					<option value="PRICE_DESC">Price Max</option>
+        					<option value="DATE_ASC">Date Min</option>
+	    					<option value="DATE_DESC">Date Max</option>
+	    					<option value="GUEST_ASC">Guests Min</option>
+	    					<option value="GUEST_DESC">Guests Max</option>
+	    					<option value="ROOM_ASC">Rooms Min</option>
+	    					<option value="ROOM_DESC">Rooms Max</option>
+        			</select>
+        </div>
+	
+		<div class = "w3-col m1">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
+		</div>
+		
+		<div class = "w3-col m2">
+			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
+		</div>
+	</div>
+  
+  
   </div>
+
+
+
+
+
 
   <div class="w3-row-padding w3-padding-16" id ="apartmentListHost">
   
@@ -965,12 +971,12 @@
       <h2><i class="fa fa-bed w3-margin-right"></i>Leave a comment</h2>
     </div>
     <div class="w3-container w3-white w3-padding-16">
-      <form id ="commentForm">
+      <form id ="commentForm" method="POST">
         <div class="w3-row-padding" style="margin:0 -16px;">
           <div class="w3-half w3-margin-bottom">
          
             <label  ><i class="fa fa-calendar-o"></i>Text</label>
-            <textarea rows="4" cols="50" name="comment" id="newCommentText" required ></textarea>
+            <textarea rows="4" cols="50" name="newCommentText" id="newCommentText" required ></textarea>
           </div>
           <div class="w3-half">
            
@@ -993,6 +999,49 @@
     </div>
     </div>
   </div>
+  
+  <!-- COMMENT SECTION - HOST -->
+  <div hidden="hidden" id="allCommentsHost" class="preview-users"  style="display:none;">
+	<table class="table table-hover" id="allCommentsHostTable">
+		  <thead class="table-header">
+		    <tr>
+		      <th scope="col">Comment ID</th>
+		      <th scope="col">Guest</th>
+         	  <th scope="col">Text</th>
+         	  <th scope="col">Rating</th>
+         	  <th scope="col">Facility</th>
+         	  <th scope="col">Status</th>
+         	  <th scope="col">Action</th>
+         	  <th scope="col"></th>
+		    
+		  </thead>
+		  <tbody class="table-cell" >
+		   
+		   
+		  </tbody>
+	</table>
+  </div>
+  
+  <div hidden="hidden" id="allCommentsAdmin" class="preview-users"  style="display:none;">
+	<table class="table table-hover" id="allCommentsAdminTable">
+		  <thead class="table-header">
+		    <tr>
+		      <th scope="col">Comment ID</th>
+		      <th scope="col">Guest</th>
+         	  <th scope="col">Text</th>
+         	  <th scope="col">Rating</th>
+         	  <th scope="col">Facility</th>
+         	  <th scope="col">Status</th>
+         	  
+		    
+		  </thead>
+		  <tbody class="table-cell" >
+		   
+		   
+		  </tbody>
+	</table>
+  </div>
+  
 </body>
 
 </html>

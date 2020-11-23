@@ -376,7 +376,7 @@ public class ApartmentDAO {
 		return apartmentList;
 	}
 	
-	//all apartments
+	//all apartments - admin & host search
 	public ArrayList<Apartment> apartmentSearchAdmin(SearchApartmentDTO ap){
 		
 		ArrayList<Apartment> apartmentList = new ArrayList<>(); 

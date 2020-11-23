@@ -17,6 +17,8 @@ function getMyUser(){
 			$("#listOfReservationsAdmin").hide();
 			$("#listOfReservationsGuest").hide();
 			$("#listOfReservationsHost").hide();
+			$("#allCommentsAdmin").hide();
+			$("#allCommentsHost").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -201,6 +203,7 @@ function showUsersAdmin(){
 	$("#listOfApartmentsAdmin").hide();
 	$("#listOfUsersAdmin").show();
 	$("#listOfReservationsAdmin").hide();
+	$("#allCommentsAdmin").hide();
 	 getAllUsers();
 	
 	

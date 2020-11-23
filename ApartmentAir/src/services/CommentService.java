@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,6 +24,7 @@ import dao.ApartmentDAO;
 import dao.CommentDAO;
 import dao.ReservationDAO;
 import dao.UserDAO;
+import dto.CommentDTO;
 import enums.Role;
 
 @Path("/comment")
@@ -60,12 +62,23 @@ public class CommentService {
 	public Response getApartmentComments(@PathParam("id") int id) {
 		
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser == null)
-			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
 		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
 		
-		Collection<Comment> commentsList = comments.getApartmentComments(id);
+		Collection<CommentDTO> commentsList = comments.getApartmentComments(id);
+		
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		Collection<User> userList = users.getAllUsers();
+		
+		for(CommentDTO c: commentsList) {
+			for(User u : userList) {
+				if(c.getGuestID()==u.getId()) {
+					c.setGuestName(u.getName());
+					c.setGuestSurname(u.getSurname());
+				}
+			}
+			
+		}
 		
 		if(commentsList.isEmpty()) {
 			return Response.status(Response.Status.NO_CONTENT).build();
@@ -81,12 +94,12 @@ public class CommentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response leaveComment(Comment newComment) {
-		
-		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		System.out.println("Pronasao leave comment");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		if (loggedUser == null)
 			return Response.status(Response.Status.FORBIDDEN).build();
 		
-		if(loggedUser.getRole().equals(Role.GUEST)) {
+		if(!loggedUser.getRole().equals(Role.GUEST)) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		
@@ -115,11 +128,164 @@ public class CommentService {
 			}
 		}
 		
-	    comments.leaveComment(newComment, hostID, contextPath);
+	   Comment comment =  comments.leaveComment(newComment, hostID, contextPath);
 	   
 	   
+		
+		return Response.status(Response.Status.OK).entity(newComment).build();
+		
+	}
+	
+	@GET
+	@Path("/getAllCommentsHost/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllCommentsHost(@PathParam("id") int id) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		
+		Collection<CommentDTO> commentsList = comments.getApartmentCommentsHost(id);
+		
+		//adding apartmentType & guest info
+		Collection<Apartment> apartmentList = apartments.getAllApartments();
+		Collection<User> userList = users.getAllUsers();
+		
+		for(CommentDTO c : commentsList) {
+			for(Apartment a: apartmentList) {
+				if(c.getApartmentID() == a.getId()) {
+					c.setApartmentType(a.getType());
+				}
+			}
+		}
+		
+		for(CommentDTO c: commentsList) {
+			for(User u : userList) {
+				if(c.getGuestID()==u.getId()) {
+					c.setGuestName(u.getName());
+					c.setGuestSurname(u.getSurname());
+				}
+			}
+			
+		}
+		
+		
+		if(commentsList.isEmpty()) {
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+		
+		
+		return Response.status(Response.Status.OK).entity(commentsList).build();
+		
+	}
+	
+	
+	@GET
+	@Path("/getAllCommentsAdmin")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllCommentsAdmin() {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if (!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		
+		Collection<CommentDTO> commentsList = comments.getAllCommentsAdmin();
+		
+		//adding apartmentType & guest info
+				Collection<Apartment> apartmentList = apartments.getAllApartments();
+				Collection<User> userList = users.getAllUsers();
+				
+				for(CommentDTO c : commentsList) {
+					for(Apartment a: apartmentList) {
+						if(c.getApartmentID() == a.getId()) {
+							c.setApartmentType(a.getType());
+						}
+					}
+				}
+				
+				for(CommentDTO c: commentsList) {
+					for(User u : userList) {
+						if(c.getGuestID()==u.getId()) {
+							c.setGuestName(u.getName());
+							c.setGuestSurname(u.getSurname());
+						}
+					}
+					
+				}
+		
+		if(commentsList.isEmpty()) {
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+		
+		
+		return Response.status(Response.Status.OK).entity(commentsList).build();
+		
+	}
+	
+	
+	@PUT
+	@Path("/approveComment/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response approveComment(@PathParam("id") int id) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if (!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		boolean approved = comments.approveComment(id, contextPath);
+		
+		if(!approved)
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		
+		return Response.status(Response.Status.OK).build();
+	}
+	
+	@PUT
+	@Path("/declineComment/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response declineComment(@PathParam("id") int id) {
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if (!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
+		String contextPath = ctx.getRealPath("");
+		
+
+		boolean declined = comments.declineComment(id, contextPath);
+		
+		if(!declined)
+			return Response.status(Response.Status.BAD_REQUEST).build();
 		
 		return Response.status(Response.Status.OK).build();
 		
+		
+		
 	}
+	
 }

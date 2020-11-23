@@ -10,6 +10,7 @@ function showInactiveApartments(){
 	$("#activeApartmentsView").hide();
 	$("#apartmentDetails").hide();
 	$("#listOfReservationsHost").hide();
+	$("#allCommentsHost").hide();
 	
 	
 }
@@ -25,6 +26,8 @@ function showActiveApartments(){
 		$("#activeApartmentsView").show();
 		$("#apartmentDetails").hide();
 		$("#listOfReservationsHost").hide();
+		$("#allCommentsHost").hide();
+		
 		
 	
 	

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
+import dto.CommentDTO;
+import enums.CommentStatus;
 
 public class CommentDAO {
 
@@ -81,14 +83,20 @@ private HashMap<Integer, Comment> comments =new HashMap<>();
 		return id;
 	}
 	
-	public Collection<Comment> getApartmentComments(int id){
+	public Collection<CommentDTO> getApartmentComments(int id){
 		
-		ArrayList<Comment> retVal = new ArrayList<>();
-	
+		ArrayList<CommentDTO> retVal = new ArrayList<>();
+		CommentDTO dto = new CommentDTO();
 		
 		for(Comment c:comments.values()) {
-			if(c.getApartmentID() == id) {
-				retVal.add(c);
+			if(c.getApartmentID() == id && c.getStatus().equals(CommentStatus.APPROVED)) {
+				dto.setId(c.getId());
+				dto.setApartmentID(c.getApartmentID());
+				dto.setGuestID(c.getGuestID());
+				dto.setRating(c.getRating());
+				dto.setText(c.getText());
+				dto.setStatus(c.getStatus());
+				retVal.add(dto);
 			}
 		}
 		
@@ -96,19 +104,94 @@ private HashMap<Integer, Comment> comments =new HashMap<>();
 		return retVal;
 	}
 	
-	public void leaveComment(Comment newComment, int hostID, String contextPath) {
+	public Comment leaveComment(Comment newComment, int hostID, String contextPath) {
 		
-		
+		System.out.println("USAO U LEave comment dao");
 		
 		int id = generateNewId();
 		newComment.setId(id);
 		newComment.setHostID(hostID);
+		newComment.setStatus(CommentStatus.WAITING_FOR_APPROVAL);
 		
 		comments.put(newComment.getId(), newComment);
-		
+		System.out.println("putt comments");
 		saveComments(contextPath);
 		
+		return newComment;
 	}
 	
+	public Collection<CommentDTO> getApartmentCommentsHost(int id){
+		
+		ArrayList<CommentDTO> retVal = new ArrayList<>();
+		CommentDTO dto = new CommentDTO();
+		
+		for(Comment c:comments.values()) {
+			if(c.getHostID() == id) {
+				dto.setId(c.getId());
+				dto.setGuestID(c.getGuestID());
+				dto.setApartmentID(c.getApartmentID());
+				dto.setRating(c.getRating());
+				dto.setStatus(c.getStatus());
+				dto.setText(c.getText());
+				
+				
+				
+				retVal.add(dto);
+			}
+		}
+		
+		Collections.reverse(retVal);
+		return retVal;
+	}
 	
+	public Collection<CommentDTO> getAllCommentsAdmin(){
+		
+		ArrayList<CommentDTO> retVal = new ArrayList<>();
+		CommentDTO dto = new CommentDTO();
+		
+		for(Comment c:comments.values()) {
+			
+				dto.setId(c.getId());
+				dto.setGuestID(c.getGuestID());
+				dto.setApartmentID(c.getApartmentID());
+				dto.setRating(c.getRating());
+				dto.setStatus(c.getStatus());
+				dto.setText(c.getText());
+				
+				
+				
+				retVal.add(dto);
+			
+		}
+		
+		Collections.reverse(retVal);
+		return retVal;
+	}
+
+	public boolean approveComment(int id, String contextPath) {
+		
+		boolean approved = false;
+		for(Comment c : comments.values()) {
+			if(c.getId() == id && c.getStatus().equals(CommentStatus.WAITING_FOR_APPROVAL)) {
+				c.setStatus(CommentStatus.APPROVED);
+				approved = true;
+			}
+		}
+		
+		saveComments(contextPath);
+		return approved;
+	}
+	
+	public boolean declineComment(int id, String contextPath) {
+		
+		boolean declined = false;
+		for(Comment c : comments.values()) {
+			if(c.getId() == id && c.getStatus().equals(CommentStatus.WAITING_FOR_APPROVAL)) {
+				c.setStatus(CommentStatus.DENIED);
+				declined = true;
+			}
+		}
+		saveComments(contextPath);
+		return declined;
+	}
 }

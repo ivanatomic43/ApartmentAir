@@ -333,6 +333,9 @@ function logout(){
 			$("#listOfReservationsGuest").hide();
 			$("#listOfReservationsAdmin").hide();
 			$("#listOfReservationsHost").hide();
+			$("#allCommentsHost").hide();
+			$("#newCommentForm").hide();
+			$("#allCommentsAdmin").hide();
 			
 			//adaptToUser(user);
 			

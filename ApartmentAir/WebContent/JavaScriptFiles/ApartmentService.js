@@ -265,6 +265,8 @@ function showApartmentDetails(data){
 	$("#listOfApartmentsHost").hide();
 	$("#listOfApartmentsAdmin").hide();
 	$("#apartmentAmenities").show();
+	$("#allCommentsHost").hide();
+	$("#allCommentsAdmin").hide();
 	getApartmentDetails(id);
 	getApartmentAmenities(id);
 	getApartmentComments(id);
@@ -444,20 +446,37 @@ function getApartmentAmenities(id){
 
 function getApartmentComments(id){
 	
-	$("#apartmentComments").empty();
+	
 	
 	$.ajax({
 		url: "rest/comment/getApartmentComments/" + id,
 		type: "GET",
 		contentType: "application/json",
 		success: function(comments){
-			
+			$("#apartmentComments").empty();
 			if(comments == null){
 				$("#apartmentComments").append("<p>There is no recensions for this facility.</p>");
 				return;
 			}
 			
-		}
+			let i ;
+			for(i=0; i <comments.length; i ++){
+				let c= comments[i];
+				
+				
+				
+			$("#apartmentComments").append(
+					"<div class=\"w3-row\">" +
+							"<div class=\"w3-col m2 text-center\">" +
+									"<img class=\"w3-circle\" src=\"images/avatar.jpg\" style=\"width:96px;height:96px\">" +
+							"</div>" +
+							"<div class=\"w3-col m10 w3-container\">" +
+								"<h4><b>"+c.guestName+" "+c.guestSurname+"</b><span class=\"w3-opacity w3-medium\">  Rate: "+c.rating+"</span></h4>"+
+								"<p>" +c.text+"</p><br>" +
+							"</div>" +
+						"</div>");
+				}
+			}
 		
 		
 		

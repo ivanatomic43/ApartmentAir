@@ -5,6 +5,7 @@ function showMyReservations(){
 	$("#editUserForm").hide();
 	$("#listOfApartments").hide();
 	$("#apartmentDetails").hide();
+	$("#newApartmentForm").hide();
 	getAllReservationsGuest();
 	
 	
@@ -14,6 +15,8 @@ function showMyReservations(){
 
 
 function getAllReservationsGuest(){
+	
+	
 	
 	var user = JSON.parse(localStorage.getItem('user'));
 	
@@ -43,7 +46,7 @@ function getAllReservationsGuest(){
 					"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
 					+"$</td>"+ "<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
 					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button></td>" +
-					"<td><button type=\"button\" onclick=\"leaveCommentClick('"+r.id+","+r.apartmentID+", "+r.reservationStatus+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
+					"<td><button type=\"button\" onclick=\"leaveCommentClick('"+r.id+","+r.apartmentID+","+r.reservationStatus+"')\" class=\"btn btn-primary\">Leave Comment</button></td></tr>"		
 					);
 			}
 			
@@ -70,35 +73,41 @@ function leaveCommentClick(data){
 
 function leaveComment(data){
 	
+	alert(data);
 	var info= data.split(",");
-	var reservationID = data[0];
-	var apartmentID = data[1];
-	var reservationStatus = data[2];
+	var reservationID = info[0];
+	var apartmentID = info[1];
+	var reservationStatus = info[2];
 
 	
 	var user = JSON.parse(localStorage.getItem('user'));
 	
 	
-	alert(reservationID, apartmentID, reservationStatus);
+	alert(reservationID);
+	
+	alert(reservationStatus);
 	
 	
 	
 	
 	$("form#commentForm").submit(function(event){
 		
+		 event.preventDefault();
+		 
 		var text = $("#newCommentText").val();
 		var rate = $("#newCommentRate").val();
 		
-		if(reservationStatus != "DECLINED" || reservationStatus != "ENDED"){
-			alert("You can leave comment only for DECLINED and ENDED reservations!");
-			return;
-		}
+		alert(reservationStatus);
+		
+		
 		
 		if(text == "" || rate == ""){
 			alert("Please leave rate  and comment text!");
 			return;
 		}
 		
+		if(reservationStatus == "DECLINED" || reservationStatus == "ENDED") {
+		alert("USAO U if");
 		let comment = {
 				"guestID" : user.id,
 				"apartmentID": apartmentID,
@@ -109,8 +118,10 @@ function leaveComment(data){
 		};
 		
 		let c = JSON.stringify(comment);
+		alert(c);
 		
 		$.ajax({
+		
 			url: "rest/comment/leaveComment",
 			type:"POST",
 			data: c,
@@ -128,6 +139,10 @@ function leaveComment(data){
 			
 			
 		});
+		} else {
+			alert("You can only leave comment for DECLINED and ENDED reservations!");
+			return;
+		}
 		
 		
 	});
@@ -171,6 +186,7 @@ function showAdminReservations(){
 	$("#allUsersDiv").hide();
 	$("#allUsersTable").hide();
 	$("#apartmentListAdmin").hide();
+	$("#allCommentsAdmin").hide();
 
 	getAllReservationsAdmin();
 }

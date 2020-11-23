@@ -97,6 +97,8 @@ public class SearchService {
 			apartmentList = apartments.apartmentSearchAdmin(apartment);
 		else if(loggedUser.getRole().equals(Role.GUEST))
 			apartmentList = apartments.apartmentSearch(apartment);
+		else if(loggedUser.getRole().equals(Role.HOST))
+			apartmentList = apartments.apartmentSearchAdmin(apartment);
 		
 		if(apartmentList.isEmpty())
 			return Response.status(Response.Status.NO_CONTENT).build();

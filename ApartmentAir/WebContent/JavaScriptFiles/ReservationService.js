@@ -187,13 +187,18 @@ function showAdminReservations(){
 	$("#allUsersTable").hide();
 	$("#apartmentListAdmin").hide();
 	$("#allCommentsAdmin").hide();
+	$("#listOfUsersAdmin").hide();
+	$("#listOfReservationsAdmin").show();
 
 	getAllReservationsAdmin();
 }
 
 function getAllReservationsAdmin(){
 	
-$("#listOfReservationsAdmin").show();
+	alert("USAO u get all reservationsAdmin");
+	
+
+	$("#listOfReservationsAdmin").show();
 	
 	$.ajax({
 		url: "rest/reservation/getAllReservationsAdmin",
@@ -206,6 +211,8 @@ $("#listOfReservationsAdmin").show();
 				return;
 			}
 			
+			$("#allReservationsAdmin").show();
+			$("#listOfReservationsAdminTable").show();
 			
 	    	let i;
 			$('#listOfReservationsAdminTable tbody').empty();
@@ -217,9 +224,11 @@ $("#listOfReservationsAdmin").show();
 				
 			$('#listOfReservationsAdminTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
 					"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
-					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
-					"<td><button type=\"button\" onclick=\"cancelReservation('"+r.id+"')\" class=\"btn btn-primary \">Cancel</button></td></tr>"		
+					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+					"</tr>"		
 					);
+			
+			
 			}
 			
 			
@@ -280,7 +289,7 @@ function getAllReservationsHost(){
 			$('#listOfReservationsHostTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
 					"<td>"+r.apartmentType+"</td>"+ 
 					"<td>"+r.apartmentID+"</td>"+  "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
-					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
 					"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+"')\" class=\"btn btn-primary \">Approve</button></td>" +
 					"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+"')\" class=\"btn btn-primary \">Decline</button></td>"+
 					"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+"')\" class=\"btn btn-primary \">End</button></td>"+
@@ -361,3 +370,6 @@ function finishReservation(data){
 		
 	});
 }
+
+
+

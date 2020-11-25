@@ -15,6 +15,14 @@ public class ReservationDTO {
 	private String message;
 	private String guestName;
 	private String guestSurname;
+	private String guestUsername;
+	
+	public String getGuestUsername() {
+		return guestUsername;
+	}
+	public void setGuestUsername(String guestUsername) {
+		this.guestUsername = guestUsername;
+	}
 	private String reservationStatus;
 	private String hostUsername;
 	private String street;

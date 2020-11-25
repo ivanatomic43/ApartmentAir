@@ -18,11 +18,15 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.model.internal.RankedComparator.Order;
 
 import beans.Apartment;
+import beans.Reservation;
 import beans.User;
 import comparators.ApartmentPriceComparator;
 import dao.ApartmentDAO;
+import dao.ReservationDAO;
 import dao.UserDAO;
+import dto.ReservationDTO;
 import dto.SearchApartmentDTO;
+import dto.SearchReservationDTO;
 import enums.OrderComparator;
 import enums.Role;
 
@@ -45,6 +49,10 @@ public class SearchService {
 		if(ctx.getAttribute("apartmentDAO")==null) {
 			String contexxtPath=ctx.getRealPath("");
 			ctx.setAttribute("apartmentDAO", new ApartmentDAO(contexxtPath));
+		}
+		if(ctx.getAttribute("reservationDAO")==null) {
+			String contextPath= ctx.getRealPath("");
+			ctx.setAttribute("reservationDAO", new ReservationDAO(contextPath));
 		}
 		
 	}
@@ -111,5 +119,74 @@ public class SearchService {
 			return Response.status(Response.Status.OK).entity(apartmentList).build();
 		
 	}
+	
+	
+	@POST
+	@Path("/searchReservations")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchReservations(SearchReservationDTO reservation, @Context HttpServletRequest request) {
+		
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		
+		ArrayList<ReservationDTO> reservationList = new ArrayList<>();
+		
+	
+		
+		if(loggedUser.getRole().equals(Role.ADMIN))
+			reservationList = reservations.reservationSearchAdmin(reservation);/*
+		else if(loggedUser.getRole().equals(Role.HOST))
+			reservationList = reservations.reservationSearchHost(reservation);
+		
+		if(reservationList.isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
+		*/
+		
+			//sorting
+		
+			reservationList = reservations.sortReservations(reservationList, reservation.getSort());
+	
+			reservationList = reservations.filterReservations(reservationList, reservation.getFilter());
+		
+		Collection<Apartment> apartmentList = apartments.getAllApartments();
+		Collection<User> userList = users.getAllUsers();
+		
+		for(ReservationDTO dto : reservationList){
+				for(Apartment a : apartmentList) {
+					if(dto.getApartmentID() == a.getId()) {
+						dto.setApartmentType(a.getType());
+						dto.setHostUsername(a.getHost());
+						dto.setStreet(a.getLocation().getAddress().getStreet());
+						dto.setNumber(a.getLocation().getAddress().getNumber());
+						dto.setCity(a.getLocation().getAddress().getCity());
+					}
+				}
+		}
+		
+		for(ReservationDTO dto : reservationList) {
+			for(User u : userList) {
+				if(dto.getGuestID() == u.getId()) {
+					dto.setGuestName(u.getName());
+					dto.setGuestSurname(u.getSurname());
+					dto.setGuestUsername(u.getUsername());
+				}
+			}
+			
+		}
+			if(reservationList.isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		
+		
+		return Response.status(Response.Status.OK).entity(reservationList).build();
+		
+
+			
+		
+	}
+	
 	
 }

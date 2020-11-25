@@ -404,3 +404,75 @@ function searchApartmentsHost(){
 	
 }
 
+function searchReservationsAdmin(){
+	
+	$("#listOfReservationsAdmin").show();
+	
+	let usernameAdminSearchReservations = null;
+	
+	if($("#usernameAdminSearchReservations").val() != ""){
+		usernameAdminSearchReservations = $("#usernameAdminSearchReservations").val();
+	}
+	
+	let sortReservationsAdmin = $("#sortReservationsAdmin").val();
+	let filterReservationsAdmin = $("#filterReservationsAdmin").val();
+	
+	
+	let data = {
+			"username" : usernameAdminSearchReservations,
+			"sort" : sortReservationsAdmin,
+			"filter" : filterReservationsAdmin
+	};
+
+
+	let searchData = JSON.stringify(data);
+	alert(searchData);
+		
+	$.ajax({
+			url: "rest/search/searchReservations",
+			type: "POST",
+			data: searchData,
+			contentType: "application/json",
+			success: function(reservationList) {
+				
+			 if(reservationList == null){
+				 alert("There is no match!");
+				 return;
+			 }
+				
+				$("#allReservationsAdmin").show();
+				$("#listOfReservationsAdminTable").show();
+		    	let i;
+				$('#listOfReservationsAdminTable tbody').empty();
+				
+				for(i=0; i< reservationList.length; i++){
+					let r= reservationList[i];
+					let rbr = i +1;
+					alert(r.id);
+					
+					$('#listOfReservationsAdminTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
+							"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
+							+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+							"</tr>"		
+							);
+					alert("PROSAO JEDNOM APPEND");
+					
+				}
+				
+				
+				
+			},
+			error: function(error){
+				console.log("Error getting search results...");
+			}
+		});
+}	
+ function cancelSearchReservationsAdmin(){
+	
+	  document.getElementById("usernameAdminSearchReservations").value = "";
+		 
+		 getAllReservationsAdmin();
+	 
+	 
+ }
+

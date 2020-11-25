@@ -72,6 +72,8 @@ public class ReservationService {
 		System.out.println("Broj nocenja: " + newRes.getNumberOfNights());
 		System.out.println("Pocetni datum: " + newRes.getDateOfReservation());
 		
+		String guestUsername="";
+		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
 		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
@@ -87,6 +89,12 @@ public class ReservationService {
 		if (apartment == null)
 			return Response.status(Response.Status.NOT_FOUND).build();
 
+		ArrayList<User> userList = users.getAllUsers();
+		
+		for(User u : userList) {
+			if(newRes.getGuestID() == u.getId())
+				guestUsername = u.getUsername();
+		}
 		
 		//checking selected date
 		boolean dateValidation = apartments.checkDate(newRes.getApartmentID(), newRes.getDateOfReservation(), newRes.getNumberOfNights());
@@ -99,6 +107,8 @@ public class ReservationService {
 		if(!availableDates) {
 			return Response.status(Response.Status.BAD_REQUEST).entity("Dates are not available!").build();
 		}
+		
+		
 		
 		double price = apartments.getApartmentPrice(newRes.getApartmentID());
 		
@@ -149,6 +159,7 @@ public class ReservationService {
 				if(dto.getGuestID() == u.getId()) {
 					dto.setGuestName(u.getName());
 					dto.setGuestSurname(u.getSurname());
+					dto.setGuestUsername(u.getUsername());
 				}
 			}
 			
@@ -201,6 +212,7 @@ public class ReservationService {
 				if(dto.getGuestID() == u.getId()) {
 					dto.setGuestName(u.getName());
 					dto.setGuestSurname(u.getSurname());
+					dto.setGuestUsername(u.getUsername());
 				}
 			}
 			
@@ -261,6 +273,7 @@ public class ReservationService {
 				if(dto.getGuestID() == u.getId()) {
 					dto.setGuestName(u.getName());
 					dto.setGuestSurname(u.getSurname());
+					dto.setGuestUsername(u.getUsername());
 				}
 			}
 			

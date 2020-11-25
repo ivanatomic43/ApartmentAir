@@ -914,7 +914,57 @@
 
 
 <!-- LIST OF ALL RESERVATIONS - ADMIN -->
-<div hidden="hidden" id="listOfReservationsAdmin" class="preview-users"  style="display:none; width:1000px;">
+<div hidden="hidden" id="listOfReservationsAdmin" class="preview-users"  style="display:none; width:1000px; background-color: #cccc99;">
+
+ <div class="w3-row-padding">
+    <div class="w3-col m2">
+     
+      <input style="margin-top: 30px;" class="w3-input w3-border" type="text" placeholder="Username" id="usernameAdminSearchReservations">
+    </div>
+    <div class="w3-col m2">
+       	   
+       	   <select style="margin-top: 30px;" class="form-control" name="sortReservationsAdmin" id="sortReservationsAdmin">
+        				
+                        <option value="PRICE_ASC" selected>Price min</option>
+                        <option value="PRICE_DESC">Price max</option>
+                        
+                      </select>
+      
+    </div>
+    <div class="w3-col m2">
+    
+       <select style="margin-top: 30px;" class="form-control" name="filterReservationsAdmin" id="filterReservationsAdmin">
+        				
+        				<option value="NONE" selected>NONE</option>
+                        <option value="CREATED" >CREATED</option>
+                        <option value="DECLINED">DECLINED</option>
+                        <option value="CANCELED">CANCELED</option>
+                        <option value="ACCEPTED">ACCEPTED</option>
+                        <option value="FINISHED">FINISHED</option>
+                        
+                        
+                      </select>
+     
+     
+    </div>
+    <div class="w3-col m2">
+     
+      
+      
+    </div>
+    <div class="w3-col m2">
+     <button onclick="searchReservationsAdmin()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Search</button>
+   
+      
+    </div>
+     <div class="w3-col m2">
+     <button onclick="cancelSearchReservationsAdmin()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
+      
+      
+    </div>
+  </div>
+
+ <div hidden="hidden" id="allReservationsAdmin" class="preview-users"  style="display:none; background-color: #cccc99;">
 	<table class="table table-hover" id="listOfReservationsAdminTable">
 		  <thead class="table-header">
 		    <tr>
@@ -924,16 +974,18 @@
          	  <th scope="col">Date</th>
          	  <th scope="col">Total Price</th>
          	  <th scope="col">Guest</th>
+         	  <th scope="col">Guest's Username</th>
          	  <th scope="col">Host</th>
          	  <th scope="col">Status</th>
-         	  <th scope="col">Action</th>
-		    
+         	  
+		   
 		  </thead>
 		  <tbody class="table-cell" >
 		   
 		   
 		  </tbody>
 	</table>
+	</div>
   </div>
 
 <!-- LIST OF MY RESERVATIONS - HOST -->
@@ -948,6 +1000,7 @@
          	  <th scope="col">Date</th>
          	  <th scope="col">Total Price</th>
          	  <th scope="col">Guest</th>
+         	  <th scope="col">Guest username</th>
          	  <th scope="col">Host</th>
          	  <th scope="col">Status</th>
          	  <th scope="col">Action</th>

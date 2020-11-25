@@ -7,12 +7,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Reservation;
+import comparators.ApartmentPriceComparator;
+import comparators.ReservationPriceComparator;
 import dto.ReservationDTO;
+import dto.SearchReservationDTO;
+import enums.OrderComparator;
 import enums.ReservationStatus;
 
 public class ReservationDAO {
@@ -162,7 +167,7 @@ public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 		//calculate totalPrice
 		double totalPrice = newReservation.getNumberOfNights() * price;
 		
-		System.out.println(totalPrice);
+		
 		
 		newReservation.setTotalPrice(totalPrice);
 		
@@ -257,4 +262,100 @@ public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 		return false;
 	}
 	
+	public ArrayList<ReservationDTO> reservationSearchAdmin(SearchReservationDTO reservation){
+		
+		ArrayList<ReservationDTO> reservationList = new ArrayList<>();
+		
+		for(Reservation r : reservations.values()) {
+			
+			if(reservation.getUsername() == null) { //ako nije prosledjen username, vrati celu listu
+				
+				ReservationDTO res = new ReservationDTO();
+				res.setId(r.getId());
+				res.setApartmentID(r.getApartmentID());
+				res.setGuestID(r.getGuestID());
+				res.setDateOfReservation(r.getDateOfReservation().toString());
+				res.setNumberOfNights(r.getNumberOfNights());
+				res.setTotalPrice(r.getTotalPrice());
+				res.setMessage(r.getMessage());
+				res.setReservationStatus(r.getReservationStatus().toString());
+				reservationList.add(res);
+				
+			}
+			else { //ako je prosledjen username, vrati rezervacije koje se poklapaju s njim
+				
+				
+				if(r.getGuestUsername().equals(reservation.getUsername())) {
+					ReservationDTO res = new ReservationDTO();
+					res.setId(r.getId());
+					res.setApartmentID(r.getApartmentID());
+					res.setGuestID(r.getGuestID());
+					res.setDateOfReservation(r.getDateOfReservation().toString());
+					res.setNumberOfNights(r.getNumberOfNights());
+					res.setTotalPrice(r.getTotalPrice());
+					res.setMessage(r.getMessage());
+					res.setReservationStatus(r.getReservationStatus().toString());
+					reservationList.add(res);
+				}
+				
+			}
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		Collections.reverse(reservationList);
+		return reservationList;
+	}
+	
+	public ArrayList<ReservationDTO> reservationSearchHost(SearchReservationDTO reservation){
+	
+	ArrayList<ReservationDTO> reservationList = new ArrayList<>();
+	
+	//ubaciti host username
+	
+	
+	
+	Collections.reverse(reservationList);
+	return reservationList;
+	}
+
+	
+	public ArrayList<ReservationDTO> sortReservations(ArrayList<ReservationDTO> reservationList, String sort){
+	
+		switch(sort) {
+		
+		case "PRICE_ASC": 
+			reservationList.sort(new ReservationPriceComparator(OrderComparator.ASCENDING));
+			break;
+		case "PRICE_DESC":
+			reservationList.sort(new ReservationPriceComparator(OrderComparator.DESCENDING));
+			break;
+		}
+		
+		return reservationList;
+	}
+	
+	public ArrayList<ReservationDTO> filterReservations(ArrayList<ReservationDTO> reservationList, ReservationStatus status){
+		
+		
+		String resStatus = status.toString();
+	
+		if(status.equals(ReservationStatus.NONE)) {
+			return reservationList;
+		}
+		
+		reservationList = reservationList.stream()
+				.filter(reservation -> reservation.getReservationStatus().toString().equals(resStatus))
+				.collect(Collectors.toCollection(ArrayList::new));
+		
+		
+		
+		return reservationList;
+	}
 }

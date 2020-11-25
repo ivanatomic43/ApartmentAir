@@ -353,6 +353,7 @@ function getApartmentDetails(id){
 					let message = $('#reservationMessage').val();
 					let guestID = user.id;
 					let hostUsername = apartment.host;
+					let guestUsername = user.username;
 					if(startDate == '' || endDate == ''){
 						alert('Pick a date!');
 						return;
@@ -366,7 +367,8 @@ function getApartmentDetails(id){
 							"totalPrice": price,
 							"message": message,
 							"guestID": guestID,
-							"hostUsername": hostUsername
+							"hostUsername": hostUsername,
+							"guestUsername": guestUsername
 					};
 					
 					let r = JSON.stringify(data);

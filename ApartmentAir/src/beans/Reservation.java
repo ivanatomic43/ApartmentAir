@@ -21,6 +21,15 @@ public class Reservation {
 		return reservationStatus;
 	}
 
+	public String getGuestUsername() {
+		return guestUsername;
+	}
+
+
+	public void setGuestUsername(String guestUsername) {
+		this.guestUsername = guestUsername;
+	}
+
 	private int apartmentID;
     private Date dateOfReservation;
 	private int numberOfNights;
@@ -29,6 +38,7 @@ public class Reservation {
 	private int guestID;
 	private ReservationStatus reservationStatus;
 	private String hostUsername;
+	private String guestUsername;
 	
 	
 	public String getHostUsername() {

@@ -51,6 +51,10 @@ public class CommentService {
 			String contextPath= ctx.getRealPath("");
 			ctx.setAttribute("commentDAO", new CommentDAO(contextPath));
 		}
+		if(ctx.getAttribute("reservationDAO")==null) {
+			String contextPath= ctx.getRealPath("");
+			ctx.setAttribute("reservationDAO", new ReservationDAO(contextPath));
+		}
 	
 	}
 	

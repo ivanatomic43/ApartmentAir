@@ -137,13 +137,11 @@ public class SearchService {
 	
 		
 		if(loggedUser.getRole().equals(Role.ADMIN))
-			reservationList = reservations.reservationSearchAdmin(reservation);/*
-		else if(loggedUser.getRole().equals(Role.HOST))
-			reservationList = reservations.reservationSearchHost(reservation);
-		
-		if(reservationList.isEmpty())
-			return Response.status(Response.Status.NO_CONTENT).build();
-		*/
+			reservationList = reservations.reservationSearchAdmin(reservation);
+		else if(loggedUser.getRole().equals(Role.HOST)) {
+			String hostUsername = loggedUser.getUsername();
+			reservationList = reservations.reservationSearchHost(reservation, hostUsername);
+		}
 		
 			//sorting
 		

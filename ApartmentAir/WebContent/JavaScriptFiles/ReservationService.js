@@ -255,7 +255,9 @@ function showReservationsHost(){
 	$("#allUsersDiv").hide();
 	$("#allUsersTable").hide();
 	$("#apartmentListHost").hide();
-
+	$("#allReservationsHost").show();
+	$("#allCommentsHost").hide();
+	
 	getAllReservationsHost();
 	
 }

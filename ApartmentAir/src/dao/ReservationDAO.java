@@ -313,16 +313,54 @@ public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 		return reservationList;
 	}
 	
-	public ArrayList<ReservationDTO> reservationSearchHost(SearchReservationDTO reservation){
+	public ArrayList<ReservationDTO> reservationSearchHost(SearchReservationDTO reservation, String hostUsername){
 	
 	ArrayList<ReservationDTO> reservationList = new ArrayList<>();
 	
-	//ubaciti host username
+	for(Reservation r : reservations.values()) {
+		if(r.getHostUsername().equals(hostUsername)) {
+			if(reservation.getUsername() == null) { //ako nije prosledjen username, vrati celu listu
+			
+			ReservationDTO res = new ReservationDTO();
+			res.setId(r.getId());
+			res.setApartmentID(r.getApartmentID());
+			res.setGuestID(r.getGuestID());
+			res.setDateOfReservation(r.getDateOfReservation().toString());
+			res.setNumberOfNights(r.getNumberOfNights());
+			res.setTotalPrice(r.getTotalPrice());
+			res.setMessage(r.getMessage());
+			res.setReservationStatus(r.getReservationStatus().toString());
+			reservationList.add(res);
+			
+			}
+			else { //ako je prosledjen username, vrati rezervacije koje se poklapaju s njim
+			
+			
+				if(r.getGuestUsername().equals(reservation.getUsername())) {
+				ReservationDTO res = new ReservationDTO();
+				res.setId(r.getId());
+				res.setApartmentID(r.getApartmentID());
+				res.setGuestID(r.getGuestID());
+				res.setDateOfReservation(r.getDateOfReservation().toString());
+				res.setNumberOfNights(r.getNumberOfNights());
+				res.setTotalPrice(r.getTotalPrice());
+				res.setMessage(r.getMessage());
+				res.setReservationStatus(r.getReservationStatus().toString());
+				reservationList.add(res);
+			}
+			
+		}
+		
+		
+		
+	}
 	
+	}
 	
 	
 	Collections.reverse(reservationList);
 	return reservationList;
+
 	}
 
 	

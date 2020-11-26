@@ -427,7 +427,7 @@
      <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
     </div>
     <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+     <button onclick="cancelSearchResults()" style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
       
     </div>
   </div>
@@ -989,7 +989,59 @@
   </div>
 
 <!-- LIST OF MY RESERVATIONS - HOST -->
-<div hidden="hidden" id="listOfReservationsHost" class="preview-users"  style="display:none; width:1200px;">
+<div hidden="hidden" id="listOfReservationsHost" class="preview-users"  style="display:none; width:1200px; background-color: #d9b38c;">
+	
+	<div class="w3-row-padding">
+    <div class="w3-col m2">
+     
+      <input style="margin-top: 30px;" class="w3-input w3-border" type="text" placeholder="Username" id="usernameHostSearchReservations">
+    </div>
+    <div class="w3-col m2">
+       	   
+       	   <select style="margin-top: 30px;" class="form-control" name="sortReservationsAdmin" id="sortReservationsHost">
+        				
+                        <option value="PRICE_ASC" selected>Price min</option>
+                        <option value="PRICE_DESC">Price max</option>
+                        
+                      </select>
+      
+    </div>
+    <div class="w3-col m2">
+    
+       <select style="margin-top: 30px;" class="form-control" name="filterReservationsHost" id="filterReservationsHost">
+        				
+        				<option value="NONE" selected>NONE</option>
+                        <option value="CREATED" >CREATED</option>
+                        <option value="DECLINED">DECLINED</option>
+                        <option value="CANCELED">CANCELED</option>
+                        <option value="ACCEPTED">ACCEPTED</option>
+                        <option value="FINISHED">FINISHED</option>
+                        
+                        
+                      </select>
+     
+     
+    </div>
+    <div class="w3-col m2">
+     
+      
+      
+    </div>
+    <div class="w3-col m2">
+     <button onclick="searchReservationsHost()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Search</button>
+   
+      
+    </div>
+     <div class="w3-col m2">
+     <button onclick="cancelSearchReservationsHost()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
+      
+      
+    </div>
+  </div>
+	
+	
+	
+ <div hidden="hidden" id="allReservationsHost" class="preview-users"  style="display:none; width:1200px; background-color: #d9b38c;">
 	<table class="table table-hover" id="listOfReservationsHostTable">
 		  <thead class="table-header">
 		    <tr>
@@ -1000,7 +1052,7 @@
          	  <th scope="col">Date</th>
          	  <th scope="col">Total Price</th>
          	  <th scope="col">Guest</th>
-         	  <th scope="col">Guest username</th>
+         	  <th scope="col">Guest's username</th>
          	  <th scope="col">Host</th>
          	  <th scope="col">Status</th>
          	  <th scope="col">Action</th>
@@ -1015,6 +1067,8 @@
 		  </tbody>
 	</table>
   </div>
+  </div>
+  
 
 <!-- COMMENT SECTION - GUEST -->
  <div id="newCommentForm" class="w3-display-container w3-content" style="display: none; margin-top: 250px; margin-left:520px;">
@@ -1054,7 +1108,7 @@
   </div>
   
   <!-- COMMENT SECTION - HOST -->
-  <div hidden="hidden" id="allCommentsHost" class="preview-users"  style="display:none;">
+  <div hidden="hidden" id="allCommentsHost" class="preview-users"  style="display:none; background-color: #d9b38c;">
 	<table class="table table-hover" id="allCommentsHostTable">
 		  <thead class="table-header">
 		    <tr>

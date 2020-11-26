@@ -27,6 +27,7 @@ function showActiveApartments(){
 		$("#apartmentDetails").hide();
 		$("#listOfReservationsHost").hide();
 		$("#allCommentsHost").hide();
+		$("#apartmentListHost").show();
 		
 		
 	
@@ -48,7 +49,7 @@ function getAllInactiveApartments(){
 			}
 			
 			let i;
-			$("#apartmentListHost").empty();
+			
 			
 			
 			for(i=0; i < apartmentListInactive.length; i++){
@@ -106,7 +107,7 @@ function makeActive(data){
 }
 
 function getAllActiveApartmentsHost(){
-	$("#apartmentListHost").empty();
+	
 	$.ajax({
 		url: "rest/apartment/getAllActiveApartmentsHost",
 		type: "GET",
@@ -119,7 +120,7 @@ function getAllActiveApartmentsHost(){
 			
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
-				
+				alert("USAO U FOR ACTIVE");
 				
 			$("#apartmentListHost").append(
 					

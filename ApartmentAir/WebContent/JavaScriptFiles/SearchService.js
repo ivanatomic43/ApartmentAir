@@ -476,3 +476,77 @@ function searchReservationsAdmin(){
 	 
  }
 
+ function searchReservationsHost(){
+		
+		$("#listOfReservationsHost").show();
+		
+		let usernameHostSearchReservations = null;
+		
+		if($("#usernameHostSearchReservations").val() != ""){
+			usernameHostSearchReservations = $("#usernameHostSearchReservations").val();
+		}
+		
+		let sortReservationsHost = $("#sortReservationsHost").val();
+		let filterReservationsHost = $("#filterReservationsHost").val();
+		
+		
+		let data = {
+				"username" : usernameHostSearchReservations,
+				"sort" : sortReservationsHost,
+				"filter" : filterReservationsHost
+		};
+
+
+		let searchData = JSON.stringify(data);
+		alert(searchData);
+			
+		$.ajax({
+				url: "rest/search/searchReservations",
+				type: "POST",
+				data: searchData,
+				contentType: "application/json",
+				success: function(reservationList) {
+					
+				 if(reservationList == null){
+					 alert("There is no match!");
+					 return;
+				 }
+					
+					$("#allReservationsHost").show();
+					$("#listOfReservationsHostTable").show();
+			    	let i;
+					$('#listOfReservationsHostTable tbody').empty();
+					
+					for(i=0; i< reservationList.length; i++){
+						let r= reservationList[i];
+						let rbr = i +1;
+						alert(r.id);
+						
+						$('#listOfReservationsHostTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
+								"<td>"+r.apartmentType+"</td>"+ "<td>"+r.apartmentID+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
+								+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
+								"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+"')\" class=\"btn btn-primary \">Approve</button></td>" +
+								"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+"')\" class=\"btn btn-primary \">Decline</button></td>"+
+								"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+"')\" class=\"btn btn-primary \">End</button></td>"+
+								"</tr>"		
+								);
+						
+						
+					}
+					
+					
+					
+				},
+				error: function(error){
+					console.log("Error getting search results...");
+				}
+			});
+	}	
+	 function cancelSearchReservationsHost(){
+		
+		  document.getElementById("usernameHostSearchReservations").value = "";
+			 
+			 getAllReservationsHost();
+		 
+		 
+	 }

@@ -186,5 +186,56 @@ public class SearchService {
 		
 	}
 	
+	@POST
+	@Path("/advancedSearch")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response advancedSearch(SearchApartmentDTO apartment, @Context HttpServletRequest request) {
+		
+		
+		
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>();
+		
+		
+		if(loggedUser == null)
+			apartmentList = apartments.apartmentSearchAdvanced(apartment);
+		else if(loggedUser.getRole().equals(Role.GUEST))
+			apartmentList = apartments.apartmentSearchAdvanced(apartment);
+		else if(loggedUser.getRole().equals(Role.HOST))
+			apartmentList = apartments.apartmentSearchHostAdvanced(apartment, loggedUser.getUsername());
+		else if(loggedUser.getRole().equals(Role.ADMIN))
+			apartmentList = apartments.apartmentSearchAdminAdvanced(apartment);
+		
+		
+		
+		
+			//sorting
+		
+			apartmentList = apartments.sortApartments(apartmentList, apartment.getSort());
+			
+			
+			//filter
+			if(loggedUser == null)
+				apartmentList = apartments.filterApartments(apartmentList, apartment.getType());
+			/*else if(loggedUser.getRole().equals(Role.ADMIN))
+				apartmentList = apartments.filterApartmentsAdmin(apartmentList, apartment.getType(), apartment.getStatus());
+			else if(loggedUser.getRole().equals(Role.GUEST))
+				apartmentList = apartments.filterApartments(apartmentList, apartment.getType());
+			else if(loggedUser.getRole().equals(Role.HOST))
+				apartmentList = apartments.filterApartmentsAdmin(apartmentList, apartment.getType(), apartment.getStatus());
+			*/
+		
+			
+	
+			if(apartmentList.isEmpty())
+				return Response.status(Response.Status.NO_CONTENT).build();
+			
+			return Response.status(Response.Status.OK).entity(apartmentList).build();
+		
+	}
+	
 	
 }

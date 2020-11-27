@@ -18,10 +18,12 @@ import comparators.ApartmentDateComparator;
 import comparators.ApartmentGuestComparator;
 import comparators.ApartmentPriceComparator;
 import comparators.ApartmentRoomComparator;
+import dto.ReservationDTO;
 import dto.SearchApartmentDTO;
 import beans.Amenity;
 import enums.ApartmentStatus;
 import enums.OrderComparator;
+import enums.ReservationStatus;
 
 public class ApartmentDAO {
 
@@ -376,6 +378,170 @@ public class ApartmentDAO {
 		return apartmentList;
 	}
 	
+	public ArrayList<Apartment> apartmentSearchAdvanced(SearchApartmentDTO ap){
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>();
+		
+		for(Apartment a : apartments.values()) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE)) {
+				
+				apartmentList.add(a);
+				
+			}
+			
+			
+		}	
+				if (ap.getDateFrom() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.after(ap.getDateFrom())))
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getDateTo() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.before(ap.getDateTo())))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getLocation() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getLocation().getAddress().getCity().toLowerCase()
+									.contains(ap.getLocation().toLowerCase()) || apartment.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase()))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getPriceMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() >= ap.getPriceMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getPriceMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() <= ap.getPriceMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getRoomsMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() >= ap.getRoomsMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getRoomsMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() <= ap.getRoomsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getGuestsMax() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getNumberOfGuests() <= ap.getGuestsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+				
+		
+		return apartmentList;
+	}
+	
+	public ArrayList<Apartment> apartmentSearchHostAdvanced(SearchApartmentDTO ap, String hostUsername) {
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>();
+		
+
+		for(Apartment a : apartments.values()) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(hostUsername)) {
+				
+				apartmentList.add(a);
+				
+			}
+			
+			
+		}	
+				if (ap.getDateFrom() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.after(ap.getDateFrom())))
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getDateTo() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.before(ap.getDateTo())))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getLocation() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getLocation().getAddress().getCity().toLowerCase()
+									.contains(ap.getLocation().toLowerCase()) || apartment.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase()))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getPriceMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() >= ap.getPriceMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getPriceMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() <= ap.getPriceMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getRoomsMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() >= ap.getRoomsMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getRoomsMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() <= ap.getRoomsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getGuestsMax() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getNumberOfGuests() <= ap.getGuestsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+		
+		
+		
+		
+		
+		return apartmentList;
+	}
+	
+public ArrayList<Apartment> apartmentSearchAdminAdvanced(SearchApartmentDTO ap) {
+		
+		ArrayList<Apartment> apartmentList = new ArrayList<>();
+		
+
+		for(Apartment a : apartments.values()) {
+				apartmentList.add(a);
+				
+		}	
+				if (ap.getDateFrom() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.after(ap.getDateFrom())))
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getDateTo() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getDates().stream()
+									.anyMatch(date -> date.before(ap.getDateTo())))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getLocation() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getLocation().getAddress().getCity().toLowerCase()
+									.contains(ap.getLocation().toLowerCase()) || apartment.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase()))
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getPriceMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() >= ap.getPriceMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getPriceMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getPricePerNight() <= ap.getPriceMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getRoomsMin() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() >= ap.getRoomsMin())
+							.collect(Collectors.toCollection(ArrayList::new));
+				if (ap.getRoomsMax() != null)
+					apartmentList = apartmentList.stream().filter(apartment -> apartment.getNumberOfRooms() <= ap.getRoomsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+
+				if (ap.getGuestsMax() != null)
+					apartmentList = apartmentList.stream()
+							.filter(apartment -> apartment.getNumberOfGuests() <= ap.getGuestsMax())
+							.collect(Collectors.toCollection(ArrayList::new));
+		
+		
+		
+		
+		
+		return apartmentList;
+	}
+	
+	
+	
 	//all apartments - admin & host search
 	public ArrayList<Apartment> apartmentSearchAdmin(SearchApartmentDTO ap){
 		
@@ -450,6 +616,23 @@ public class ApartmentDAO {
 		
 	}
 	
+	
+public ArrayList<Apartment> filterApartments(ArrayList<Apartment> reservationList, String type){
+		
+	
+	
+		if(type.equals("BOTH")) {
+			return reservationList;
+		}
+		
+		reservationList = reservationList.stream()
+				.filter(reservation -> reservation.getType().toLowerCase().equals(type.toLowerCase()))
+				.collect(Collectors.toCollection(ArrayList::new));
+		
+		
+		
+		return reservationList;
+	}
 	
 	
 }

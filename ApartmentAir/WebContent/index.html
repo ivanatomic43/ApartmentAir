@@ -211,7 +211,14 @@
       <label><i class="fa fa-male"></i>City</label>
       <input class="w3-input w3-border" type="text" id = "adminSearchCity" placeholder="City">
     </div>
-    <div class="w3-col m2">
+    <div class = "w3-col m1">
+				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
+        					<option value="PRICE_ASC" selected>Price Min</option>
+        					<option value="PRICE_DESC">Price Max</option>
+        					
+        			</select>
+        </div>
+    <div class="w3-col m1">
       <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsAdmin()" >Search</button>
     </div>
      <div class="w3-col m2">
@@ -223,28 +230,6 @@
     </div>
   </div>
 
-<div class="w3-row-padding"  id="sortAndFilter">
-		<div class = "w3-col m1">
-				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
-        					<option value="PRICE_ASC" selected>Price Min</option>
-        					<option value="PRICE_DESC">Price Max</option>
-        					<option value="DATE_ASC">Date Min</option>
-	    					<option value="DATE_DESC">Date Max</option>
-	    					<option value="GUEST_ASC">Guests Min</option>
-	    					<option value="GUEST_DESC">Guests Max</option>
-	    					<option value="ROOM_ASC">Rooms Min</option>
-	    					<option value="ROOM_DESC">Rooms Max</option>
-        			</select>
-        </div>
-	
-		<div class = "w3-col m1">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
-		</div>
-		
-		<div class = "w3-col m2">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
-		</div>
-	</div>
 
 
 
@@ -272,20 +257,7 @@
       <label><i class="fa fa-male"></i>City</label>
       <input class="w3-input w3-border" type="text" id = "guestSearchCity" placeholder="City">
     </div>
-    <div class="w3-col m2">
-      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartments()" >Search</button>
-    </div>
-     <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
-    </div>
-    <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="cancelSearchResults()">Cancel search results</button>
-      
-    </div>
-  </div>
-
-	<div class="w3-row-padding"  id="sortAndFilter">
-		<div class = "w3-col m1">
+    <div class = "w3-col m1">
 				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
         					<option value="PRICE_ASC" selected>Price Min</option>
         					<option value="PRICE_DESC">Price Max</option>
@@ -297,15 +269,18 @@
 	    					<option value="ROOM_DESC">Rooms Max</option>
         			</select>
         </div>
-	
-		<div class = "w3-col m1">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
-		</div>
-		
-		<div class = "w3-col m2">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
-		</div>
-	</div>
+    <div class="w3-col m1">
+      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartments()" >Search</button>
+    </div>
+     <div class="w3-col m2">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
+    </div>
+    <div class="w3-col m2">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="cancelSearchResults()">Cancel search results</button>
+      
+    </div>
+  </div>
+
 
 
   <div class="w3-row-padding w3-padding-16" id ="apartmentList">
@@ -386,18 +361,51 @@
            			<input class="w3-input w3-border" type="number"  name="numberOfRoomMAX"  id="numberOfRoomMAX">
           
          		</div>
+         		</div>
+         		<div class="w3-row-padding" style="margin:8 -16px;">
+          		<div class="w3-half w3-margin-bottom">
+         
+           			 <label><i class="fa fa-calendar-o"></i>Type</label><br>
+            		 <select  class="w3-input w3-border" id="filterType" name="filterType">
+            		 		<option value="BOTH" selected>Both</option>
+        					<option value="ROOM">Room</option>
+        					<option value="APARTMENT">Apartment</option>
+        				
+        			</select>
+			
+			
+			
+			
+           			 <label><i class="fa fa-calendar-o"></i>Sort</label><br>
+            		 <select  class="w3-input w3-border" id="filterSort" name="filterSort">
+        					<option value="PRICE_ASC" selected>Price Min</option>
+        					<option value="PRICE_DESC">Price Max</option>
+        				
+        			</select>
+           
+           
+         		</div>
+          		<div class="w3-half">
+          
+            		<label><i class="fa fa-calendar-o"></i>Amenities</label>
+           			 <div class="input-group" id="checkboxes"></div>
+          
+         		</div>
+        	</div>
+        	<button onclick="advancedSearchGuest()" type="button" class="w3-button w3-block w3-black" type="submit">Search</button>
+        	
+        </form>
         	</div>
    
-   
-        	<button type="button" class="w3-button w3-block w3-black" type="submit">Search</button>
-        </form>
-      </div>
-      <div class="modal-footer">
+    <div class="modal-footer">
         <button type="button" class="w3-button w3-block w3-black" data-dismiss="modal">Close</button>
       </div>
+        	
+      </div>
+     
     </div>
   </div>
-</div>
+
 
 
 <!-- LIST OF APARTMENTS FOR HOST  -->
@@ -420,20 +428,7 @@
       <label><i class="fa fa-male"></i>City</label>
       <input class="w3-input w3-border" type="text" id = "hostSearchCity" placeholder="City">
     </div>
-    <div class="w3-col m2">
-      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsHost()" >Search</button>
-    </div>
-     <div class="w3-col m2">
-     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
-    </div>
-    <div class="w3-col m2">
-     <button onclick="cancelSearchResults()" style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
-      
-    </div>
-  </div>
-  
-  <div class="w3-row-padding"  id="sortAndFilter">
-		<div class = "w3-col m1">
+    <div class = "w3-col m1">
 				<select class="w3-input w3-border" id="sort" name="sort" style="margin-top:25px;">
         					<option value="PRICE_ASC" selected>Price Min</option>
         					<option value="PRICE_DESC">Price Max</option>
@@ -445,15 +440,18 @@
 	    					<option value="ROOM_DESC">Rooms Max</option>
         			</select>
         </div>
-	
-		<div class = "w3-col m1">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Sort</button>
-		</div>
-		
-		<div class = "w3-col m2">
-			<button style="margin-top:25px;" class="w3-button w3-block w3-black">Filter options</button>
-		</div>
-	</div>
+    <div class="w3-col m1">
+      <button style="margin-top:25px;" class="w3-button w3-block w3-black" onclick="searchApartmentsHost()" >Search</button>
+    </div>
+     <div class="w3-col m2">
+     <button style="margin-top:25px;" class="w3-button w3-block w3-black"  data-toggle="modal" data-target="#advancedModal">Advanced search</button>
+    </div>
+    <div class="w3-col m2">
+     <button onclick="cancelSearchResults()" style="margin-top:25px;" class="w3-button w3-block w3-black">Cancel search results</button>
+      
+    </div>
+  </div>
+
   
   
   </div>

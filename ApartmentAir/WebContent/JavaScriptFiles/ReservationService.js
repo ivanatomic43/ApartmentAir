@@ -73,7 +73,7 @@ function leaveCommentClick(data){
 
 function leaveComment(data){
 	
-	alert(data);
+	
 	var info= data.split(",");
 	var reservationID = info[0];
 	var apartmentID = info[1];
@@ -81,13 +81,7 @@ function leaveComment(data){
 
 	
 	var user = JSON.parse(localStorage.getItem('user'));
-	
-	
-	alert(reservationID);
-	
-	alert(reservationStatus);
-	
-	
+ 
 	
 	
 	$("form#commentForm").submit(function(event){
@@ -97,7 +91,6 @@ function leaveComment(data){
 		var text = $("#newCommentText").val();
 		var rate = $("#newCommentRate").val();
 		
-		alert(reservationStatus);
 		
 		
 		
@@ -107,7 +100,7 @@ function leaveComment(data){
 		}
 		
 		if(reservationStatus == "DECLINED" || reservationStatus == "ENDED") {
-		alert("USAO U if");
+		
 		let comment = {
 				"guestID" : user.id,
 				"apartmentID": apartmentID,
@@ -195,7 +188,7 @@ function showAdminReservations(){
 
 function getAllReservationsAdmin(){
 	
-	alert("USAO u get all reservationsAdmin");
+	
 	
 
 	$("#listOfReservationsAdmin").show();

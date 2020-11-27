@@ -120,7 +120,7 @@ function getAllActiveApartmentsHost(){
 			
 			for(i=0; i < apartments.length; i++){
 				let ap= apartments[i];
-				alert("USAO U FOR ACTIVE");
+				
 				
 			$("#apartmentListHost").append(
 					

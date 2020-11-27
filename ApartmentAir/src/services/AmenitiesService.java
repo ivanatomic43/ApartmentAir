@@ -40,7 +40,7 @@ public class AmenitiesService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllAmenities() throws JsonGenerationException, JsonMappingException, IOException {
-		System.out.println("Usao u get all amm");
+	
 		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
 		return Response.status(Response.Status.OK).entity(amenities).build();
 	}
@@ -88,7 +88,7 @@ public class AmenitiesService {
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response removeAmenity(@PathParam("id") int id) throws JsonGenerationException, JsonMappingException, IOException {
-		System.out.println("Usao u delete");
+		
 		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
 		
 		amenities = amenities.stream().filter(a -> !(a.getId() == id))

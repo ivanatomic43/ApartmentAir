@@ -178,7 +178,7 @@ function searchApartmentsAdmin(){
 	}
 
 	let sort = $("#sort").val();
-	alert("SORT OPTIONA: " + sort);
+	
 	
 	let data = {
 			"dateFrom": dateFrom,
@@ -248,6 +248,22 @@ function cancelSearchResults(){
 		  document.getElementById("guestSearchStartDate").value = "";
 		  document.getElementById("guestSearchEndDate").value = "";
 		  document.getElementById("guestSearchCity").value = "";
+		  
+		  //advanced
+		  document.getElementById("advancedDateFrom").value = "";
+		  document.getElementById("advancedDateTo").value = "";
+		  document.getElementById("advancedCity").value = "";
+		  document.getElementById("advancedNumberOfGuests").value = "";
+		  document.getElementById("priceMIN").value = "";
+		  document.getElementById("priceMAX").value = "";
+		  document.getElementById("numberOfRoomMIN").value = "";
+		  document.getElementById("numberOfRoomMAX").value = "";
+	
+		  $('#filterType option:first').prop('selected',true);
+		  $('#filterSort option:first').prop('selected',true);
+		  
+		  
+		  
 		  $('#sort option:first').prop('selected',true);
 		  
 		  $.ajax({
@@ -426,7 +442,8 @@ function searchReservationsAdmin(){
 
 
 	let searchData = JSON.stringify(data);
-	alert(searchData);
+	
+	
 		
 	$.ajax({
 			url: "rest/search/searchReservations",
@@ -448,14 +465,14 @@ function searchReservationsAdmin(){
 				for(i=0; i< reservationList.length; i++){
 					let r= reservationList[i];
 					let rbr = i +1;
-					alert(r.id);
+					
 					
 					$('#listOfReservationsAdminTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
 							"<td>"+r.apartmentType+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
 							+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
 							"</tr>"		
 							);
-					alert("PROSAO JEDNOM APPEND");
+					
 					
 				}
 				
@@ -498,7 +515,7 @@ function searchReservationsAdmin(){
 
 
 		let searchData = JSON.stringify(data);
-		alert(searchData);
+		
 			
 		$.ajax({
 				url: "rest/search/searchReservations",
@@ -520,7 +537,7 @@ function searchReservationsAdmin(){
 					for(i=0; i< reservationList.length; i++){
 						let r= reservationList[i];
 						let rbr = i +1;
-						alert(r.id);
+				
 						
 						$('#listOfReservationsHostTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
 								"<td>"+r.apartmentType+"</td>"+ "<td>"+r.apartmentID+"</td>"+ "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
@@ -542,11 +559,193 @@ function searchReservationsAdmin(){
 				}
 			});
 	}	
-	 function cancelSearchReservationsHost(){
+function cancelSearchReservationsHost(){
 		
 		  document.getElementById("usernameHostSearchReservations").value = "";
 			 
 			 getAllReservationsHost();
 		 
-		 
-	 }
+}
+
+function advancedSearchGuest(){
+	
+	event.preventDefault();
+	
+	let advancedDateFrom = null;
+	let advancedDateTo = null;
+	let advancedCity = null;
+	let advancedMaxPeople = null;
+	let advancedPriceMin = null;
+	let advancedPriceMax = null;
+	let advancedRoomsMin = null;
+	let advancedRoomsMax = null;
+	
+
+	let advancedAmenities = [];
+	
+	if($("#advancedDateFrom").val() != ""){
+		advancedDateFrom = $("#advancedDateFrom").val();
+	}
+	
+	if($("#advancedDateTo").val() != ""){
+		advancedDateTo = $("#advancedDateTo").val();
+	}
+	
+	if($("#advancedCity").val() != ""){
+		advancedCity = $("#advancedCity").val();
+	}
+	
+	if($("#advancedNumberOfGuests").val() != ""){
+		advancedMaxPeople = $("#advancedNumberOfGuests").val();
+	}
+	
+	if($("#priceMIN").val() != ""){
+		advancedPriceMin = $("#priceMIN").val();
+	}
+	
+	if($("#priceMAX").val() != ""){
+		advancedPriceMax = $("#priceMAX").val();
+	}
+	
+	if($("#numberOfRoomMIN").val() != ""){
+		advancedRoomsMin = $("#numberOfRoomMIN").val();
+	}
+	
+	if($("#numberOfRoomMAX").val() != ""){
+		advancedRoomsMax = $("#numberOfRoomMAX").val();
+	}
+	
+	
+	let advancedType = $("#filterType").val();
+	let advancedSort = $("#filterSort").val();
+	
+	
+	let data = {
+			
+			"dateFrom": advancedDateFrom,
+			"dateTo" : advancedDateTo,
+			"location" : advancedCity,
+			"sort" : advancedSort,
+			"guestsMax" : parseInt(advancedMaxPeople),
+			"priceMin" : parseFloat(advancedPriceMin),
+			"priceMax" : parseFloat(advancedPriceMax),
+			"roomsMin" : parseInt(advancedRoomsMin),
+			"roomsMax": parseInt(advancedRoomsMax),
+			"type" : advancedType,
+			
+	};
+	
+	
+	let searchData = JSON.stringify(data);
+
+	
+	
+	$.ajax({
+		url: "rest/search/advancedSearch",
+		type: "POST",
+		data: searchData,
+		contentType: "application/json",
+		success: function(apartmentList){
+			
+			if(apartmentList == null){
+				alert("There is no match!");
+				return;
+			}
+			
+			 var user = JSON.parse(localStorage.getItem('user'));
+			 
+			 if(user.role === "GUEST" || user.role === null) {
+			
+				 	let i;
+				 	$("#apartmentList").empty();
+			
+				 	for(i=0; i < apartmentList.length; i++){
+				 		let ap= apartmentList[i];
+				
+				
+				 		$("#apartmentList").append(
+					
+				 				"<div class=\"w3-third w3-margin-bottom\">" +
+				 				"<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
+				 				"<div class=\"w3-container w3-white\">"+
+				 				"<h3>" +ap.type+ "</h3>" +
+				 				"<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+				 				"<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+				 				"<p>Rating: "+ap.numberOfRooms+"</p>"+
+				 				"<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
+				 				"<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
+				 				" </div>" +
+				 		"</div>");
+				 	}
+			
+			 } else if (user.role ==="ADMIN"){
+				 
+
+				 	let i;
+				 	$("#apartmentListAdmin").empty();
+			
+				 	for(i=0; i < apartmentList.length; i++){
+				 		let ap= apartmentList[i];
+				
+				
+				 		$("#apartmentListAdmin").append(
+					
+				 				"<div class=\"w3-third w3-margin-bottom\">" +
+				 				"<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
+				 				"<div class=\"w3-container w3-white\">"+
+				 				"<h3>" +ap.type+ "</h3>" +
+				 				"<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+				 				"<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+				 				"<p>Status: "+ap.status+"</p>"+
+				 				"<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
+				 				"<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
+				 				" </div>" +
+				 		"</div>");
+				 	}
+				 
+				 
+			 } else if(user.role ==="HOST"){
+				 
+
+
+					let i;
+					$("#apartmentListHost").empty();
+					
+					
+					for(i=0; i < apartmentList.length; i++){
+						let ap= apartmentList[i];
+						
+						
+					$("#apartmentListHost").append(
+							
+					"<div class=\"w3-third w3-margin-bottom\">" +
+		      "<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
+		      "<div class=\"w3-container w3-white\">"+
+		        "<h3>" +ap.type+ "</h3>" +
+		        "<h6 class=\"w3-opacity\">Price: " +ap.pricePerNight+ "</h6>" +
+		        "<p>Status: "+ ap.status+"</p>"+
+		        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+		        "<p>Rating: "+ap.numberOfGuests+"</p>"+
+		        "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
+		        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
+		        "<button onclick=\"editApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
+		        "<button onclick=\"deleteApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
+		     " </div>" +
+		    "</div>"
+					);	
+				 
+				 
+			 }
+			}
+			
+		},
+		error: function(error){
+			console.log("Error - advanced search...");
+			
+		}
+	});
+	
+	
+	
+	
+}

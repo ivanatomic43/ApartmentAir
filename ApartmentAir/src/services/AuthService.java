@@ -42,11 +42,11 @@ public class AuthService {
 		if(u==null) {
 			
 		}
-		System.out.println(u.getSurname()+" "+u.getName());
+		
 		
 		UserDAO users=(UserDAO) ctx.getAttribute("usersDAO");
 		boolean postojiVec=users.checkUserName(u.getUsername());
-		System.out.println("muuuuu"+postojiVec);
+		
 		if(postojiVec==true) {
 			return Response.status(400).build();
 		}
@@ -70,16 +70,16 @@ public class AuthService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public User login(User user, @Context HttpServletRequest request) {
-		System.out.println("Pronasao login na beku");
+		
 		UserDAO usersDAO=(UserDAO)ctx.getAttribute("usersDAO");
 		
 		
 		User u=usersDAO.checkLogin(user.getUsername(), user.getPassword());
-		System.out.println("User koji se loguje: " + u.getName());
+		
 		if(u!=null) {
-			System.out.println("Usao u if na beku");
+			
 			request.getSession().setAttribute("loggedUser", u);
-			System.out.println("User koji se return:" + u.getUsername());
+			
 			//u.setGender("male");
 			return u;
 			

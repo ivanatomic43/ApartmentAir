@@ -21,7 +21,7 @@ $(document).ready(function(){
 		url:"rest/amenity/getAllAmenities",
 		contentType:"application/json",
 		success:function(amenities){
-			console.log(amenities)
+			console.log(amenities);
 			for(let amenity of amenities){
 				addAmenity(amenity)
 			}
@@ -37,12 +37,21 @@ $(document).ready(function(){
 });
 
 function addAmenity(amenity){
+	
 	$("#checkboxes").append(
 	"<div class=\"form-check\">" +
 			"<input type=\"checkbox\" class=\"form-check-input\" id=\""+amenity.id+"\" name=\"amenities\" value=\""+amenity.name+"\">"+
 			"<label class=\"form-check-label\" for=\""+amenity.id+"\">"+ amenity.name + "</label>" +
 	"</div>"
 	);
+	
+	$("#checkboxesSearch").append(
+			"<div class=\"form-check\">" +
+					"<input type=\"checkbox\" class=\"form-check-input\" id=\""+amenity.id+"\" name=\"amenities\" value=\""+amenity.name+"\">"+
+					"<label class=\"form-check-label\" for=\""+amenity.id+"\">"+ amenity.name + "</label>" +
+			"</div>"
+			);
+	
 }
 
 
@@ -52,7 +61,18 @@ function showNewApartmentForm(){
 	$("#newApartmentForm").show();
 	$("#listOfApartmentsHost").hide();
 	
-	
+	document.getElementById("newAppPricePerNight").value = "";
+	document.getElementById("newAppStreet").value = "";
+	document.getElementById("newAppStreetNumber").value = "";
+	document.getElementById("newAppCity").value = "";
+	document.getElementById("newAppPostalNumber").value = "";
+	document.getElementById("newAppNumberOfGuests").value= "0";
+	document.getElementById("newAppNumberOfRooms").value= "0";
+	document.getElementById("newAppDateFrom").value= "";
+	document.getElementById("newAppDateTo").value= "";
+	document.getElementById("newAppImage").value= "";
+	document.getElementById("latitude").value= "";
+	document.getElementById("longitude").value= "";
 }
 
 function adImageSelected(){
@@ -183,11 +203,13 @@ function createApartment(){
 			data:app,
 			contentType: "application/json",
 			success: function(apartment){
-				alert("USAO U SUCCESS");
+			
 				//alert(newApartment);
 				if(apartment != null){
 				alert("New apartment created!");
+				$("#newApartmentForm").hide();
 				getAllInactiveApartments();
+				
 				} else {
 					alert("Neuspesno");
 				}
@@ -205,7 +227,7 @@ function createApartment(){
 	
 }
 function getAllApartmentsAdmin(){
-	 alert("USAO U GETALL APARTMENTS");
+	 
 	$.ajax({
 		url: "rest/apartment/getAllApartments",
 		type: "GET",
@@ -399,7 +421,7 @@ function getApartmentDetails(id){
 				 var user = JSON.parse(localStorage.getItem('user'));
 					if(user == null){
 						alert("Only guests can make a reservation! Please, log in or register...");
-						return ;
+						return;
 					}
 					event.preventDefault();
 					
@@ -444,7 +466,7 @@ function getApartmentDetails(id){
 						contentType: "application/json",
 						data: r,
 						success: function(reservation){
-							alert("USAOOVDE");
+							
 							showMyReservations();
 						},
 						error: function(error){

@@ -101,6 +101,7 @@ public class ApartmentDAO {
 		newApartment.setStatus(ApartmentStatus.INACTIVE);
 		newApartment.setComments(new ArrayList<>());
 		newApartment.setReservations(new ArrayList<>());
+		newApartment.setDeleted(false);
 		
 		ArrayList<Date> dates = newApartment.getDates();
 		Date startDate = dates.get(0);
@@ -131,13 +132,23 @@ public class ApartmentDAO {
 		return retVal;
 	}
 	
-
+	public Collection<Apartment> getAllApartmentsAdmin(){
+		ArrayList<Apartment> retVal=new ArrayList<>();
+		for(Apartment a:apartments.values()) {
+			if(a.isDeleted() == false)
+				retVal.add(a);
+			
+		}
+		Collections.reverse(retVal);
+		return retVal;
+	}
+	
 	public Collection<Apartment> getAllActiveApartmentsHost(String username){
 		ArrayList<Apartment> retVal=new ArrayList<>();
 		
 		for(Apartment a : apartments.values()) {
 			
-			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(username))
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(username) && a.isDeleted() == false)
 				retVal.add(a);
 			
 		}
@@ -151,7 +162,7 @@ public class ApartmentDAO {
 	public Collection<Apartment> getAllInactiveApartments(String username){
 		ArrayList<Apartment> retVal=new ArrayList<>();
 		for(Apartment a:apartments.values()) {
-			 if(a.getStatus().equals(ApartmentStatus.INACTIVE) && a.getHost().equals(username))
+			 if(a.getStatus().equals(ApartmentStatus.INACTIVE) && a.getHost().equals(username) && a.isDeleted() == false)
 				retVal.add(a);
 			
 		}
@@ -164,7 +175,7 @@ public class ApartmentDAO {
 		
 		for(Apartment a : apartments.values()) {
 			
-			if(a.getStatus().equals(ApartmentStatus.ACTIVE))
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.isDeleted() == false)
 				retVal.add(a);
 			
 		}
@@ -343,7 +354,7 @@ public class ApartmentDAO {
 		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
 		
 		for(Apartment a : apartments.values()) {
-			if(a.getStatus().equals(ApartmentStatus.ACTIVE)) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.isDeleted() == false) {
 				
 				if(ap.getDateFrom()== null & ap.getDateTo() == null) {
 					if((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))
@@ -434,7 +445,7 @@ public class ApartmentDAO {
 		
 
 		for(Apartment a : apartments.values()) {
-			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(hostUsername)) {
+			if(a.getStatus().equals(ApartmentStatus.ACTIVE) && a.getHost().equals(hostUsername) && a.isDeleted() == false) {
 				
 				apartmentList.add(a);
 				
@@ -491,6 +502,7 @@ public ArrayList<Apartment> apartmentSearchAdminAdvanced(SearchApartmentDTO ap) 
 		
 
 		for(Apartment a : apartments.values()) {
+			if(a.isDeleted() == false)
 				apartmentList.add(a);
 				
 		}	
@@ -545,7 +557,7 @@ public ArrayList<Apartment> apartmentSearchAdminAdvanced(SearchApartmentDTO ap) 
 		ArrayList<Apartment> apartmentList = new ArrayList<>(); 
 		
 		for(Apartment a : apartments.values()) {
-			
+				 if(a.isDeleted() == false) {
 				
 				if(ap.getDateFrom()== null & ap.getDateTo() == null) {
 					if((a.getLocation().getAddress().getCity().toLowerCase().contains(ap.getLocation().toLowerCase())) || (a.getLocation().getAddress().getStreet().toLowerCase().contains(ap.getLocation().toLowerCase())))
@@ -570,7 +582,7 @@ public ArrayList<Apartment> apartmentSearchAdminAdvanced(SearchApartmentDTO ap) 
 				}
 			}
 		
-		
+		}
 		
 		
 		

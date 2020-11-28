@@ -134,6 +134,21 @@ public class ReservationDAO {
 		return reservationList;
 	}
 	
+	
+	public Collection<Reservation> getAllReservationsA(){
+		System.out.println("Usao u get res a");
+		ArrayList<Reservation> reservationList = new ArrayList<>();
+		
+			for(Reservation r: reservations.values()) {
+				
+				reservationList.add(r);
+				 	
+				
+			}
+		Collections.reverse(reservationList);
+		return reservationList;
+	}
+	
 public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 		
 		ArrayList<ReservationDTO> reservationList = new ArrayList<>();

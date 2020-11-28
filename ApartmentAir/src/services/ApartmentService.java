@@ -1,6 +1,7 @@
 package services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Date;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,13 +22,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import beans.Amenity;
 import beans.Apartment;
+import beans.Reservation;
 import beans.User;
+import dao.AmenitiesDAO;
 import dao.ApartmentDAO;
+import dao.ReservationDAO;
 import dao.UserDAO;
+import dto.ReservationDTO;
 import enums.Role;
 
 @Path("/apartment")
@@ -47,6 +54,10 @@ public class ApartmentService {
 		if(ctx.getAttribute("usersDAO")==null) {
 			String contextPath=ctx.getRealPath("");
 			ctx.setAttribute("usersDAO", new UserDAO(contextPath));
+		}
+		if(ctx.getAttribute("reservationDAO")==null) {
+			String contextPath=ctx.getRealPath("");
+			ctx.setAttribute("reservationDAO", new ReservationDAO(contextPath));
 		}
 	
 	}
@@ -98,11 +109,18 @@ public class ApartmentService {
 	@Path("/getAllApartments")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<Apartment> getAllApartments(@Context HttpServletRequest request) {
+	public Response getAllApartmentsAdmin(@Context HttpServletRequest request) {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
 		
-		return apartments.getAllApartments();
+		if(!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Collection<Apartment> apartmentList = apartments.getAllApartmentsAdmin();
+		
+		
+		return Response.status(Response.Status.OK).entity(apartmentList).build();
 	
 	}
 	
@@ -174,13 +192,7 @@ public class ApartmentService {
 		
 	}
 	
-	
-	@DELETE
-	@Path("/deleteApartment/{id}")
-	public void deleteApartment(@PathParam("id") int id, @Context HttpServletRequest request) {
-		
-		
-	}
+
 	
 	@PUT
 	@Path("/makeActive/{id}")
@@ -243,6 +255,41 @@ public class ApartmentService {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		
 		return Response.status(Response.Status.OK).entity(dates).build();
+	}
+	
+	@Path("/deleteApartment/{id}")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response removeApartment(@PathParam("id") int id, @Context HttpServletRequest request)  {
+		System.out.println("usao u delete");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		String contextPath = ctx.getRealPath("");
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		
+		Collection<Reservation> reservationList = reservations.getAllReservationsA();
+		
+		
+		boolean isReserved = false;
+		
+		for(Reservation r : reservationList) {
+			if(r.getApartmentID() == id) {
+				isReserved = true;
+				return Response.status(Response.Status.BAD_REQUEST).entity(isReserved).build();
+			}
+		}
+		
+		Collection<Apartment> apartmentList = apartments.getAllApartments();
+		for(Apartment a : apartmentList) {
+			if(a.getId() == id && a.isDeleted() == false) {
+				a.setDeleted(true);
+			}
+		}
+		
+		 apartments.saveApartments(contextPath);
+		 isReserved = true;
+		
+		return Response.status(Response.Status.OK).entity(isReserved).build();
 	}
 	
 }

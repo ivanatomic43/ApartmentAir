@@ -108,6 +108,42 @@ function makeActive(data){
 	
 }
 
+function deleteApartment(data){
+	 var id = data;
+	 
+	 $.ajax({
+		 url: "rest/apartment/deleteApartment/" + id,
+		 type: "DELETE",
+		 contentType: "application/json",
+		 success: function(isReserved){
+			 alert("USAO U DELETE SUCC");
+			 
+			 if(isReserved == true){
+				 alert("You can't delete this apartment, it's reserved...");
+				 return;
+			 }
+			 
+			 alert("Apartment deleted!");
+			 
+			 var user = JSON.parse(localStorage.getItem('user'));
+			 
+			 if(user.role ==="ADMIN") {
+				 getAllApartmentsAdmin();
+				 return;
+			 }
+			 
+			 getAllActiveApartmentsHost();
+			 
+		 },
+		 error: function(error){
+			 console.log("Error deleting apartment...");
+			 
+		 }
+	 });
+	
+	
+}
+
 function getAllActiveApartmentsHost(){
 	
 	$.ajax({
@@ -115,6 +151,10 @@ function getAllActiveApartmentsHost(){
 		type: "GET",
 		contentType: "application/json",
 		success: function(apartments){
+			
+			if(apartments == null){
+				console.log("There is no active apartments...");
+			}
 			
 			let i;
 			$("#apartmentListHost").empty();
@@ -130,7 +170,7 @@ function getAllActiveApartmentsHost(){
       "<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
       "<div class=\"w3-container w3-white\">"+
         "<h3>" +ap.type+ "</h3>" +
-        "<h6 class=\"w3-opacity\">Price: " +ap.pricePerNight+ "</h6>" +
+        "<h6 class=\"w3-opacity\">Price: " +ap.pricePerNight+ "$</h6>" +
         "<p>Status: "+ ap.status+"</p>"+
         "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
         "<p>Rating: "+ap.numberOfGuests+"</p>"+

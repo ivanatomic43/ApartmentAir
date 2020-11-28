@@ -7,6 +7,7 @@ function showMyReservations(){
 	$("#apartmentDetails").hide();
 	$("#newApartmentForm").hide();
 	$("#listOfUsersHost").hide();
+	$("#newCommentForm").hide();
 	getAllReservationsGuest();
 	
 	

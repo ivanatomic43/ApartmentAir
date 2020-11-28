@@ -6,6 +6,7 @@ $(document).ready(function(){
 	
 	
 	 $("#listOfApartments").show();
+	 $("#newCommentForm").hide();
 	$.ajax({
 		url: "rest/apartment/getAllActiveApartments",
 		type: "GET",
@@ -138,6 +139,7 @@ function showLoginForm(){
 		 $("#userProfileDiv2").hide();
 		 $("#apartmentDetails").hide();
 		 $("#listOfReservationsGuest").hide();
+		 $("#newCommentForm").hide();
 		 
 		 
 		 

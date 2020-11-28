@@ -18,6 +18,14 @@ public class Apartment {
 		this.id = id;
 	}
 
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	private String type;
 	private int numberOfRooms;
 	private int numberOfGuests;
@@ -32,6 +40,7 @@ public class Apartment {
 	private ApartmentStatus status;
 	private List<String> amenities = new ArrayList<>();
 	private List<Reservation> reservations = new ArrayList<>();
+	private boolean deleted = false;
 	
 	public Apartment() {}
 

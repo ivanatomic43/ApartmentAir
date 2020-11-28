@@ -177,9 +177,10 @@ function editUser(){
 		contentType: "application/json",
 		success: function(user){
 		  	
+			
 			$("#editUserForm").hide();
-			//getMyUser();
-			window.location.replace("index.html");	
+			getMyUser();
+			
 			
 		}
 		

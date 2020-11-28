@@ -140,12 +140,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 		
 	}
 
-	public void editUser(User user, String contextPath) {
-		
-		users.replace(user.getId(), user);
-		saveUsers(contextPath);
-	}
-	
+
 	public ArrayList<User> getAllUsers(){
 		ArrayList<User> ret = new ArrayList<>();
 		for(User u: users.values()) {

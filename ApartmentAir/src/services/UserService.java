@@ -51,23 +51,29 @@ public class UserService {
 	@Path("/editUserProfile")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User editUserProfile(User user,@Context HttpServletRequest request) {
+	public Response editUserProfile(User user,@Context HttpServletRequest request) {
 	
-		System.out.println(user.getId() + user.getName() + user.getSurname()+user.getGender()+user.getPassword());
+		
 		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
 		String contextPath = ctx.getRealPath("");
 		
-		User temp = users.getUsers().get(user.getId());
-		user.setName(temp.getName());
-		user.setSurname(temp.getSurname());
-		user.setPassword(temp.getPassword());
-		user.setGender(temp.getGender());
+		Collection<User> usersList = users.getAllUsers();
+		
+		for(User u : usersList) {
+			if(u.getId() == user.getId()) {
+				u.setPassword(user.getPassword());
+				u.setName(user.getName());
+				u.setSurname(user.getSurname());
+				users.saveUsers(contextPath);
+				request.getSession().setAttribute("loggedUser", u);
+				return Response.status(Response.Status.OK).entity(u).build();
+			}
+		}
 		
 		
-		users.editUser(user, contextPath);
-		users.saveUsers(contextPath);
+		return Response.status(Response.Status.NOT_FOUND).build();
 		
-		return user;
+		
 	}
 	 
 	@GET

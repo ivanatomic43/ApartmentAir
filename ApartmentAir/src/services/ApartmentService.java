@@ -89,6 +89,37 @@ public class ApartmentService {
 		
 	}
 	
+	@PUT
+	@Path("/editApartment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editApartment(Apartment newApp, @Context HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+		
+		User user = (User)request.getSession().getAttribute("loggedUser");
+		String contextPath = ctx.getRealPath("");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		
+		Collection<Apartment> apartmentList = apartments.getAllApartmentsAdmin();
+		
+		for(Apartment a: apartmentList) {
+			if(a.getId() == newApp.getId()) {
+				a.setType(newApp.getType());
+				a.setPricePerNight(newApp.getPricePerNight());
+				a.setNumberOfGuests(newApp.getNumberOfGuests());
+				a.setNumberOfRooms(newApp.getNumberOfRooms());
+				apartments.saveApartments(contextPath);
+				return Response.status(Response.Status.OK).build();
+				
+			}
+		}
+		
+		return Response.status(Response.Status.NOT_FOUND).build();
+		
+		
+	}
+	
+	
 	@GET
 	@Path("/getApartment/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -675,6 +675,66 @@
        </div>
    </div>
  </div>
+ 
+ 
+ <!-- EDIT APARTMENT FORM -->
+ <div id="editApartmentForm" class="w3-display-container w3-content" style=" display:none; margin-left:auto; margin-top:300px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki" style="width: 1000px;">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Edit Apartment</h2>
+    </div>
+    <div class="w3-container w3-light-grey w3-padding-16" style="width:1000px;">
+      <form method="post">
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            <label  ><i class="fa fa-calendar-o"></i>Type:</label><br>
+            <input type="radio" id="apartmentEdit" name="apartmentType" value="Apartment">
+			<label for="apartment">Apartment</label><br>
+			<input type="radio" id="roomEdit" name="roomType" value="Room">
+			<label for="room">Room</label><br>
+           
+          </div>
+          <div class="w3-half">
+          
+            <label><i class="fa fa-calendar-o"></i> Price per night:</label>
+            <input class="w3-input w3-border" type="text"  name="editApartmentPricePerNight"  id="editApartmentPricePerNight" required>
+          
+          </div>
+        </div>
+       
+        
+  
+          <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-child"></i>Number of guests:</label>
+          <input class="w3-input w3-border" type="number"  name="editApartmentNumberOfGuests" min="0" max="10" id="editApartmentNumberOfGuests">
+          </div>
+          <div class="w3-half">
+                <label><i class="fa fa-child"></i>Number of rooms:</label>
+          <input class="w3-input w3-border" type="number"  name="editApartmentNumberOfRooms" min="0" max="10" id="editApartmentNumberOfRooms">
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            <label><i class="fa fa-child"></i>List of amenities:</label><br>
+            
+            <div class="input-group" id="checkboxesEdit"></div>
+            
+           
+          </div>
+          <div class="w3-half">
+          		
+          </div>
+       </div>
+       
+       
+          <button class="w3-button w3-dark-grey" type="submit" onclick="editApartment()"><i class="fa fa-search w3-margin-right" ></i>Edit</button>
+         </form>
+       </div>
+   </div>
+ </div>
        
 <!-- FACILITY DETAILS -->
 <div class="w3-main w3-khaki" style="margin:auto; width:1000px; display:none;" id="apartmentDetails">

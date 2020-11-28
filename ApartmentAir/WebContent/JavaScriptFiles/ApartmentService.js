@@ -51,7 +51,12 @@ function addAmenity(amenity){
 					"<label class=\"form-check-label\" for=\""+amenity.id+"\">"+ amenity.name + "</label>" +
 			"</div>"
 			);
-	
+	$("#checkboxesEdit").append(
+			"<div class=\"form-check\">" +
+					"<input type=\"checkbox\" class=\"form-check-input\" id=\""+amenity.id+"\" name=\"amenities\" value=\""+amenity.name+"\">"+
+					"<label class=\"form-check-label\" for=\""+amenity.id+"\">"+ amenity.name + "</label>" +
+			"</div>"
+			);
 }
 
 
@@ -254,7 +259,7 @@ function getAllApartmentsAdmin(){
         "<p>Rating: "+ap.numberOfGuests+"</p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
         "<button onclick=\"showApartmentDetails('"+ ap.id +"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
-        "<button onclick=\"editApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
+        "<button onclick=\"editApartmentClick('"+ap.id+","+ap.type+","+ap.pricePerNight+","+ap.numberOfGuests+","+ap.numberOfRooms+","+ap.amenities+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
         "<button onclick=\"deleteApartment('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Delete facility</button>"+
      " </div>" +
     "</div>"
@@ -273,7 +278,115 @@ function getAllApartmentsAdmin(){
 	
 }
 
+function editApartmentClick(data){
 
+	$("#listOfApartments").hide();
+	$("#listOfApartmentsAdmin").hide();
+	$("#listOfApartmentsHost").hide();
+	$("#editApartmentForm").show();
+	
+	fillEditApartmentForm(data);
+	
+}
+
+function fillEditApartmentForm(data){
+	
+	let info = data.split(",");
+	apartmentID = info[0];
+	apartmentType = info[1];
+	alert(apartmentType);
+	$("#editApartmentPricePerNight").val(info[2]);
+	$("#editApartmentNumberOfGuests").val(info[3]);
+	$("#editApartmentNumberOfRooms").val(info[4]);
+	
+	
+
+	
+	if(apartmentType == "Apartment"){
+		$('input[name=apartmentType]').prop('checked', true);
+	}
+	 if(apartmentType =="Room"){
+		 $('input[name=roomType]').prop('checked', true);
+	 }
+	
+	 
+	 
+	
+}
+function editApartment(){
+	alert("USAO");
+	event.preventDefault();
+	
+	let id= apartmentID;
+	let type = "";
+	let editPricePerNight = $("#editApartmentPricePerNight").val();
+	let editNumberOfGuests= $("#editApartmentNumberOfGuests").val();
+	let editNumberOfRooms = $("#editApartmentNumberOfRooms").val();
+
+	
+	if(editPricePerNight == "" || editNumberOfGuests == "0" || editNumberOfRooms =="0"){
+		alert("Please fill the form!");
+		return;
+	}
+	
+	
+	if (document.getElementById("apartmentEdit").checked) {
+		  type = document.getElementById("apartmentEdit").value;
+		}
+	else if (document.getElementById("roomEdit").checked) {
+		  type = document.getElementById("roomEdit").value;
+		}
+	else {
+		
+		alert("Please select type!");
+		
+		return;
+	}
+	
+   let data= {
+		  
+		   "id": id,
+		"type"  : type,
+		"numberOfRooms": editNumberOfRooms,
+		"numberOfGuests": editNumberOfGuests,
+		"pricePerNight": editPricePerNight
+		
+   };
+	
+      let u= JSON.stringify(data);
+	alert(u);
+	$.ajax({
+		
+		url:"rest/apartment/editApartment",
+		type: "PUT",
+		data: u,
+		contentType: "application/json",
+		success: function(){
+		  	
+			alert("USAO U SUCCC");
+			$("#editApartmentForm").hide();
+			
+			var user = JSON.parse(localStorage.getItem('user'));
+			
+			if(user.role ==="ADMIN"){
+				$("#listOfApartmentsAdmin").show();
+				getAllApartmentsAdmin();
+			} else if(user.role ==="HOST"){
+				$("#listOfApartmentsHost").show();
+				getAllActiveApartmentsHost();
+			}
+			
+			
+		}
+		
+		
+	});
+	
+	
+	
+	
+	
+}
 
 function showApartmentDetails(data){
 	
@@ -641,61 +754,5 @@ function fillTheDatepicker(date3, date4, date1, date2){
 }
 
 
-/*function createNewReservation(){
-	
-	var user = JSON.parse(localStorage.getItem('user'));
-	if(user == null){
-		alert("Only guests can make a reservation! Please, log in or register...");
-		return ;
-	}
-	event.preventDefault();
-	
-	let apartmentID = apartment.id;
-	alert(apartment.id);
-	
-	var startDate = $('#daterange').data('daterangepicker').startDate;
-	var endDate = moment($('#daterange').data('daterangepicker').endDate).toDate();
-	alert(startDate);
-	var date = new Date(startDate);
-	alert(date);
-	
-	let numberOfNightss = $('#reservationNights').val();
-	let numberOfNights = parseInt(numberOfNightss);
-	let totalPrice = (apartment.price) * numberOfNights;
-	let message = $('#reservationMessage').val();
-	let guestID = user.id;
-	if(startDate == '' || endDate == ''){
-		alert('Pick a date!');
-		return;
-	}
-	
-	
-	let data = {
-			"apartmentID": apartmentID,
-			"dateOfReservation": date,
-			"numberOfNights": numberOfNights,
-			"totalPrice": totalPrice,
-			"message": message,
-			"guestID": guestID
-	};
-	
-	let r = JSON.stringify(data);
-	
-	alert(r);
-	$.ajax({
-		url: "rest/reservation/createNewReservation",
-		type: "POST",
-		contentType: "application/json",
-		data: r,
-		success: function(reservation){
-			
-		},
-		error: function(error){
-			console.log("Error...");
-		}
-		
-	});
-	
-}
-*/
+
 

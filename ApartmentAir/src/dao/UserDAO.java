@@ -13,6 +13,7 @@ import beans.Reservation;
 import beans.User;
 import dto.ReservationDTO;
 import enums.Role;
+import enums.UserStatus;
 
 public class UserDAO {
 
@@ -65,6 +66,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 		int id=generateNewId();
 		user.setId(id);
 		user.setRole(Role.GUEST);
+		user.setStatus(UserStatus.ACTIVE);
 		users.put(id, user);
 		saveUsers(contextPath);
 	}
@@ -177,6 +179,22 @@ private HashMap<Integer, User> users=new HashMap<>();
 		
 	}
 	
+	
+	public void changeUserStatus(int id) {
+		
+		
+		for(User u: users.values()) {
+			if(u.getId() == id) {
+				if(u.getStatus().equals(UserStatus.ACTIVE)) {
+					u.setStatus(UserStatus.BLOCKED);;
+				} else if(u.getStatus().equals(UserStatus.BLOCKED)) {
+					u.setStatus(UserStatus.ACTIVE);
+				}
+			}
+		}
+		
+		
+	}
 	
 	public Collection<User> searchUsersAdmin(User user){
 		 ArrayList<User> usersList = new ArrayList<>();

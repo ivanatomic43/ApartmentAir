@@ -234,9 +234,10 @@ function getAllUsers(){
 					
 				$('#allUsersTable tbody').append("<tr><th scope=\"row\">"+u.id+"</th>"+
 						"<td>"+u.name+"</td>"+ "<td>"+u.surname+"</td>"+ "<td>"+u.username+"</td>"+ "<td>"+u.gender+"</td>"+ "<td>"+u.role+"</td>"+
+						"<td>"+u.status+"</td>"+
 						"<td><button type=\"button\" onclick=\"changeRole('"+u.id+","+u.role+
 						"')\" class=\"btn btn-primary \">Change Role</button>" +
-						"<button type=\"button\" onclick=\"removeUser('"+u.id+"')\" class=\"btn btn-primary\">Remove</button></td></tr>"		
+						"<button type=\"button\" onclick=\"blockUnblock('"+u.id+"')\" class=\"btn btn-primary\">Block/Unblock</button></td></tr>"		
 						);
 				}
 				
@@ -247,6 +248,27 @@ function getAllUsers(){
 		    }
 		  });
 	
+	
+}
+
+function blockUnblock(data){
+	
+	var info = data.split(",");
+	var id = info[0];
+	
+	
+
+	$.ajax({
+		url: "rest/users/blockUnblock/" + id,
+		type: "PUT",
+		contentType: "application/json",
+		success: function(){
+			alert("Status changed!");
+			getAllUsers();
+		}
+		
+		
+	});
 	
 }
 

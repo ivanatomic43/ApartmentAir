@@ -69,7 +69,7 @@ function login(){
 					adaptToUser(user);
 					
 				}else{
-					alert("Wrong username or password!");
+					alert("Wrong username or password!/User is blocked!");
 				}
 				
 			}

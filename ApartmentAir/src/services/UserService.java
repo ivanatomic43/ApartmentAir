@@ -114,6 +114,30 @@ public class UserService {
 	 return Response.status(200).build();
 	}
 	
+
+	@PUT
+	@Path("/blockUnblock/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response blockUnblock(@PathParam("id") int id, @Context HttpServletRequest request) {
+		
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		String contextPath = ctx.getRealPath("");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		
+		if (loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if(loggedUser.getRole().equals(Role.GUEST) || loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		users.changeUserStatus(id);
+		users.saveUsers(contextPath);
+		
+	 return Response.status(200).build();
+	}
+	
+	
+	
 	@GET
 	@Path("/getAllUsersHost/{username}")
 	@Consumes(MediaType.APPLICATION_JSON)

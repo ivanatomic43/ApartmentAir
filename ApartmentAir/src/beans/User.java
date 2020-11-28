@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.Role;
+import enums.UserStatus;
 
 public class User {
 
@@ -15,7 +16,17 @@ public class User {
 	private String surname;
 	private String gender;
 	private Role role;
+	private UserStatus status;
 	
+	public UserStatus getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+
 	private List<Integer> apartmentsForRent = new ArrayList<>(); //host
 	private List<Integer> rentedApartments = new ArrayList<>(); //guest
 	private List<Integer> reservationList = new ArrayList<>(); //guest

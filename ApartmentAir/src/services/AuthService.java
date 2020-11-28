@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 import beans.User;
 import dao.UserDAO;
+import enums.UserStatus;
 
 @Path("/auth")
 public class AuthService {
@@ -76,8 +77,7 @@ public class AuthService {
 		
 		User u=usersDAO.checkLogin(user.getUsername(), user.getPassword());
 		
-		if(u!=null) {
-			
+		if(u!=null && u.getStatus().equals(UserStatus.ACTIVE)) {
 			request.getSession().setAttribute("loggedUser", u);
 			
 			//u.setGender("male");

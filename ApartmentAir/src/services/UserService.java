@@ -2,6 +2,7 @@ package services;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -19,9 +20,12 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import beans.Reservation;
 import beans.User;
 import dao.ApartmentDAO;
+import dao.ReservationDAO;
 import dao.UserDAO;
+import dto.ReservationDTO;
 import enums.Role;
 
 @Path("/users")
@@ -102,6 +106,34 @@ public class UserService {
 		users.saveUsers(contextPath);
 		
 	 return Response.status(200).build();
+	}
+	
+	@GET
+	@Path("/getAllUsersHost/{username}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsersHost(@PathParam("username")String username, @Context HttpServletRequest request){
+		
+		
+		
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		
+		if (loggedUser == null)
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		if (!(loggedUser.getRole().equals(Role.HOST)))
+			return Response.status(Response.Status.FORBIDDEN).build();
+		
+		
+		Collection<ReservationDTO> reservationList = reservations.getAllReservationsHost(username);
+		
+		ArrayList<User> usersList = users.getAllUsersHost(reservationList);
+		
+		
+		
+			
+		return Response.status(Response.Status.OK).entity(usersList).build();
 	}
 	
 }

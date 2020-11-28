@@ -205,7 +205,7 @@ function createApartment(){
 	
 }
 function getAllApartmentsAdmin(){
-	
+	 alert("USAO U GETALL APARTMENTS");
 	$.ajax({
 		url: "rest/apartment/getAllApartments",
 		type: "GET",
@@ -267,10 +267,76 @@ function showApartmentDetails(data){
 	$("#apartmentAmenities").show();
 	$("#allCommentsHost").hide();
 	$("#allCommentsAdmin").hide();
+	$("#listOfUsersHost").hide();
 	getApartmentDetails(id);
 	getApartmentAmenities(id);
 	getApartmentComments(id);
 	getApartmentDates(id);
+}
+
+
+function backToList(){
+	
+	$("#apartmentDetails").hide();
+	
+	var user = JSON.parse(localStorage.getItem('user'));
+	
+	if(user === null || user.role === "GUEST" ){
+		
+		$("#listOfApartments").show();
+		$.ajax({
+			url: "rest/apartment/getAllActiveApartments",
+			type: "GET",
+			contentType: "application/json",
+			success: function(apartments){
+				
+				let i;
+				$("#apartmentList").empty();
+				
+				if(apartments== null){
+					console.log("There is no active apartments!");
+					return;
+				}
+				
+				for(i=0; i < apartments.length; i++){
+					let ap= apartments[i];
+					
+					
+				$("#apartmentList").append(
+						
+				"<div class=\"w3-third w3-margin-bottom\">" +
+	      "<img src=\""+ap.image+"\" alt=\"Norway\" style=\"width:100%\">"+
+	      "<div class=\"w3-container w3-white\">"+
+	        "<h3>" +ap.type+ "</h3>" +
+	        "<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
+	        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
+	        "<p>Rating: "+ap.numberOfRooms+"</p>"+
+	        "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
+	        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
+	     " </div>" +
+	    "</div>"
+				);	
+					
+					
+				}
+				
+				
+			}
+			
+		});
+		
+	} else if (user.role === "HOST"){
+		
+		$("#listOfApartmentsHost").show();
+		showActiveApartments();
+		
+	} else if (user.role === "ADMIN") {
+		
+		$("#listOfApartmentsAdmin").show();
+		getAllApartmentsAdmin();
+		
+	}
+	
 }
 
 function getApartmentDetails(id){
@@ -288,8 +354,11 @@ function getApartmentDetails(id){
 			
 			
 			$("#apartmentInfo").append(
+					
 					"<div class=\"w3-container\" >" +
+					
 					"<h2 class=\"w3-text-black\">The Facility Details</h2>"+
+					"<button style=\"margin-top:25px;\" class=\"w3-button w3-block w3-black\" onclick=\"backToList()\">Back to list</button>" +
 					"<div class=\"w3-display-container mySlides\"> " +
     "<img src=\""+apartment.image+"\" style=\"width:100%;margin-bottom:-6px\">" +
       "<div class=\"w3-display-bottomleft w3-container w3-black\">"+
@@ -299,12 +368,7 @@ function getApartmentDetails(id){
     
   
     "</div>" +
-  "<div class=\"w3-row-padding w3-section\">"+
-    "<div class=\"w3-col s3\">" +
-      "<img class=\"demo w3-opacity w3-hover-opacity-off\" src=\""+apartment.image+"\" style=\"width:100%;cursor:pointer\" onclick=\"currentDiv(1)\" title=\"Photo of the facility\">"+
-    "</div>"+
-
-	"</div>"+
+  
 
   "<div class=\"w3-container\" id =\"apartmentInfo\">"+
     "<h4><strong>Basic information</strong></h4>"+
@@ -313,7 +377,7 @@ function getApartmentDetails(id){
         "<p><i class=\"fa fa-fw fa-male\"></i> Type of facility: "+ apartment.type+ "</p>"+
         "<p><i class=\"fa fa-fw fa-bath\"></i> Max people: "+ apartment.numberOfGuests+ "</p>"+
         "<p><i class=\"fa fa-fw fa-bed\"></i> Number of rooms: "+ apartment.numberOfRooms+ "</p>"+
-        "<p><i class=\"fa fa-fw fa-bed\"></i> Price per night: "+ apartment.pricePerNight+ "</p>"+
+        "<p><i class=\"fa fa-fw fa-bed\"></i> Price per night: "+ apartment.pricePerNight+ "$</p>"+
         "<p><i class=\"fa fa-fw fa-bed\"></i> Host: " + apartment.host+ "</p>"+
       "</div>" +
       

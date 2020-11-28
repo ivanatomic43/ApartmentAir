@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Reservation;
 import beans.User;
+import dto.ReservationDTO;
 import enums.Role;
 
 public class UserDAO {
@@ -79,7 +80,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 	}
 	
 	public void saveUsers(String contextPath) {
-		System.out.println("kthhh  "+contextPath);
+		
 		try {
 			File file=new File(contextPath+"/jsonFiles/users.json");
 			ObjectMapper objectMapper=new ObjectMapper();
@@ -129,7 +130,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 	}
 	
 	public void addApartmentForRent(String contextPath, int appId, int userId) {
-		System.out.println("Usao u addapartmentforrentDAO");
+		
 		User user = users.get(userId);
 		user.getApartmentsForRent().add(appId);
 		users.replace(user.getId(), user);
@@ -222,7 +223,7 @@ private HashMap<Integer, User> users=new HashMap<>();
 	}
 	
 	public void addReservation(String contextPath, int appId, int userId) {
-		System.out.println("Usao u addReservationDAO");
+		
 		User user = users.get(userId);
 		user.getReservationList();
 		users.replace(user.getId(), user);
@@ -232,6 +233,34 @@ private HashMap<Integer, User> users=new HashMap<>();
 		
 	}
 	
+	public ArrayList<User> getAllUsersHost(Collection<ReservationDTO> reservationList){
+		
+		ArrayList<User> usersList = new ArrayList<>();
+		ArrayList<Integer> usersID = new ArrayList<>();		
+		
+		for(ReservationDTO r : reservationList) {
+			
+			usersID.add(r.getGuestID());
+			
+		}
+		
+		
+		for(User u : users.values()) {
+			
+			for( int id : usersID) {
+				 if(u.getId() == id) {
+					 usersList.add(u);
+				 }
+				
+			}
+		}
+		
+		
+		return usersList;
+		
+		
+		
+	}
 	
 }
 

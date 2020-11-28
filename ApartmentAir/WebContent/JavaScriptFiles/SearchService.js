@@ -243,7 +243,7 @@ function cancelSearchResults(){
 	
 	 var user = JSON.parse(localStorage.getItem('user'));
 	 
-	  if((user == null) || user.role==="GUEST"){
+	  if(user == null || user.role==="GUEST"){
 		  
 		  document.getElementById("guestSearchStartDate").value = "";
 		  document.getElementById("guestSearchEndDate").value = "";

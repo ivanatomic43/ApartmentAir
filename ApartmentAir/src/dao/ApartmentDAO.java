@@ -95,7 +95,7 @@ public class ApartmentDAO {
 	}
 	
 	public Apartment addApartment(Apartment newApartment, String contextPath) {
-		System.out.println("Usao u addApartmentDAO");
+		
 		int id = generateNewId();
 		newApartment.setId(id);
 		newApartment.setStatus(ApartmentStatus.INACTIVE);
@@ -207,9 +207,7 @@ public class ApartmentDAO {
 		for(Apartment a : apartments.values()) {
 			if(a.getId() == id) {
 				amenities = a.getAmenities();
-				for(int i = 0; i <amenities.size(); i ++) {
-					System.out.println("Amenities: " + i);
-				}
+				
 				return amenities;
 			}
 		}
@@ -241,8 +239,7 @@ public class ApartmentDAO {
 		c.setTime(startDate);
 		c.add(Calendar.DATE, nights);
 		Date endDate = c.getTime();
-		System.out.println("start date: "+ startDate);
-		System.out.println("end date: " + endDate);
+		
 		
 		for(Apartment a: apartments.values()) {
 			if(a.getId() == id) {

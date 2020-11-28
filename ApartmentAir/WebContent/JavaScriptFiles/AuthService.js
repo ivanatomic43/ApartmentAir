@@ -302,6 +302,9 @@ function logout(){
 		contentType:'application/json',
 		success: function(){
 			//window.location.replace("index.html");
+			
+			window.localStorage.clear(); 
+			
 			$("#loginForm").show();
 			$("#profileBtn").hide();
 			$("#logoutBtn").hide();
@@ -336,6 +339,7 @@ function logout(){
 			$("#allCommentsHost").hide();
 			$("#newCommentForm").hide();
 			$("#allCommentsAdmin").hide();
+			$("#listOfUsersHost").hide();
 			
 			//adaptToUser(user);
 			

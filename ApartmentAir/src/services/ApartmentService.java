@@ -139,7 +139,7 @@ public class ApartmentService {
 		
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
-		System.out.println("Username od hosta:" + loggedUser.getUsername());
+		
 		
 		if(loggedUser==null)
 			return Response.status(Response.Status.UNAUTHORIZED).build();

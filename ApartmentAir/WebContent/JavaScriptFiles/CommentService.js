@@ -7,7 +7,7 @@ function showHostComments(){
 	$("#newApartmentForm").hide();
 	$("#listOfApartmentsHost").hide();
 	$("#listOfReservationsHost").hide();
-	
+	$("#listOfUsersHost").hide();
 		getAllCommentsHost();
 	
 	

@@ -11,6 +11,7 @@ function getMyUser(){
 			$("#userProfileDiv2").show();
 			$("#listOfApartments").hide();
 			$("#addAmenityForm").hide();
+			$("#editAmenityForm").hide();
 			$("#allAmenitiesDiv").hide();
 			$("#listOfApartmentsAdmin").hide();
 			$("#listOfApartmentsHost").hide();
@@ -19,6 +20,7 @@ function getMyUser(){
 			$("#listOfReservationsHost").hide();
 			$("#allCommentsAdmin").hide();
 			$("#allCommentsHost").hide();
+			$("#listOfUsersHost").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -268,3 +270,69 @@ function changeRole(data){
 	
 }
 
+function showUsersHost(){
+	
+	$("#listOfApartmentsHost").hide();
+	
+	$("#newApartmentForm").hide();
+	$("#editUserForm").hide();
+	$("#userProfileDiv").hide();
+	$("#userProfileDiv2").hide();
+
+	$("#listOfReservationsHost").hide();
+	$("#allCommentsHost").hide();
+	
+	$("#listOfUsersHost").show();
+	 getAllUsersHost();
+	
+	
+	
+	
+}
+
+function getAllUsersHost(){
+	
+	$("#allUsersDivHost").show();
+	
+	var user = JSON.parse(localStorage.getItem('user'));
+	let hostUsername = user.username;
+	let hostID = user.id;
+	
+	  $.ajax({
+		    type: "GET",
+		    url: "rest/users/getAllUsersHost/" + user.username,
+		    contentType: "application/json",
+		    success: function(users){
+		    	
+		    	if(users == null){
+		    		console.log("There is no guests...");
+		    		return;
+		    	} 
+		    	
+		    	$("#allUsersTableHost").show();
+		    	
+		    	let i;
+				$('#allUsersTableHost tbody').empty();
+				
+				for(i=0; i< users.length; i++){
+					let u= users[i];
+					let rbr = i +1;
+					
+					
+				$('#allUsersTableHost tbody').append("<tr><th scope=\"row\">"+u.id+"</th>"+
+						"<td>"+u.name+"</td>"+ "<td>"+u.surname+"</td>"+ "<td>"+u.username+"</td>"+ "<td>"+u.gender+"</td>"+ "<td>"+u.role+"</td>"+
+						"</tr>"		
+						);
+				}
+				
+		    
+		    },
+		    error: function () {
+		      console.log("Error");
+		    }
+		  });
+	
+	
+	
+	
+}

@@ -6,6 +6,7 @@ function showMyReservations(){
 	$("#listOfApartments").hide();
 	$("#apartmentDetails").hide();
 	$("#newApartmentForm").hide();
+	$("#listOfUsersHost").hide();
 	getAllReservationsGuest();
 	
 	
@@ -178,7 +179,7 @@ function showAdminReservations(){
 	$("#allAmenitiesTable").hide();
 	$("#allUsersDiv").hide();
 	$("#allUsersTable").hide();
-	$("#apartmentListAdmin").hide();
+	//$("#apartmentListAdmin").hide();
 	$("#allCommentsAdmin").hide();
 	$("#listOfUsersAdmin").hide();
 	$("#listOfReservationsAdmin").show();

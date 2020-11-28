@@ -908,6 +908,61 @@
 	</table>
   </div>
 
+<!-- ALL USERS HOST PREVIEW TABLE -->
+<div hidden="hidden" class="w3-content" style=" margin-top:auto; background-color: #d9b38c;" id="listOfUsersHost">
+
+	 <div class="w3-row-padding">
+    <div class="w3-col m3">
+     
+      <input style="margin-top: 30px;" class="w3-input w3-border" type="text" placeholder="Username" id="usernameHostSearch">
+    </div>
+    <div class="w3-col m3">
+      
+       <select style="margin-top: 30px;" class="form-control" name="gender" id="gender">
+       					<option value="" selected>Choose gender...</option>
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                      </select>
+    </div>
+    <div class="w3-col m2">
+     
+       
+    </div>
+    <div class="w3-col m2">
+     
+      <button onclick="searchUsersHost()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Search</button>
+      
+    </div>
+    <div class="w3-col m2">
+     
+      
+      <button onclick="cancelSearchUsersHost()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
+    </div>
+  </div>
+
+
+
+<div hidden="hidden" id="allUsersDivHost" class="preview-users"  style="display:none;">
+	<table class="table table-hover" id="allUsersTableHost">
+		  <thead class="table-header">
+		    <tr>
+		      <th scope="col">User ID</th>
+		      <th scope="col">Name</th>
+         	  <th scope="col">Surname</th>
+         	  <th scope="col">Username</th>
+         	  <th scope="col">Gender</th>
+         	  <th scope="col">Role</th>
+         	  <th scope="col">Action</th>
+		    
+		  </thead>
+		  <tbody class="table-cell" >
+		   
+		   
+		  </tbody>
+	</table>
+ </div>
+</div>
+
 
 
 

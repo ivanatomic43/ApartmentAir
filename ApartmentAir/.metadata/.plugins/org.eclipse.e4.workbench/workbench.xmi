@@ -79,8 +79,9 @@
           <tags>persp.showIn:org.eclipse.eclemma.ui.CoverageView</tags>
           <tags>persp.newWizSC:org.eclipse.jpt.jpa.ui.wizard.newJpaProject</tags>
           <tags>persp.perspSC:org.eclipse.jpt.ui.jpaPerspective</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_Uzow0e4jEeqLl_7TLR8DFg" selectedElement="_Uzow1-4jEeqLl_7TLR8DFg" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_Uzow0e4jEeqLl_7TLR8DFg" selectedElement="_Uzow0u4jEeqLl_7TLR8DFg" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_Uzow0u4jEeqLl_7TLR8DFg" elementId="topLeft" containerData="2500" selectedElement="_Uzow0-4jEeqLl_7TLR8DFg">
+              <tags>active</tags>
               <children xsi:type="advanced:Placeholder" xmi:id="_Uzow0-4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_UzK2wO4jEeqLl_7TLR8DFg" closeable="true">
                 <tags>View</tags>
                 <tags>categoryTag:General</tags>
@@ -117,7 +118,6 @@
                 </children>
               </children>
               <children xsi:type="basic:PartStack" xmi:id="_Uzow3u4jEeqLl_7TLR8DFg" elementId="bottomRight" containerData="3000" selectedElement="_Uzow3-4jEeqLl_7TLR8DFg">
-                <tags>active</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_Uzow3-4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.views.AllMarkersView" ref="_UzcjkO4jEeqLl_7TLR8DFg" closeable="true">
                   <tags>View</tags>
                   <tags>categoryTag:General</tags>
@@ -215,9 +215,11 @@
     <sharedElements xsi:type="basic:Part" xmi:id="_UzK2wO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Project Explorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.png" tooltip="" closeable="true">
       <persistedState key="originalCompatibilityViewClass" value="org.eclipse.ui.navigator.resources.ProjectExplorer"/>
       <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.ui.navigator.resources"/>
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1599164618900&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;>&#xD;&#xA;&lt;lastRecentlyUsedFilters/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
+      <tags>active</tags>
+      <tags>activeOnClose</tags>
       <menus xmi:id="_U2EZwO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.navigator.ProjectExplorer">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -248,8 +250,6 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view PRIMARY_SORT_FIELD=&quot;org.eclipse.ui.ide.allSeverityField&quot; categoryGroup=&quot;org.eclipse.ui.ide.type&quot; markerContentGenerator=&quot;org.eclipse.ui.ide.allMarkersGenerator&quot; partName=&quot;Markers&quot;>&#xD;&#xA;&lt;columnWidths org.eclipse.ui.ide.allSeverityField=&quot;450&quot; org.eclipse.ui.ide.locationField=&quot;135&quot; org.eclipse.ui.ide.markerType=&quot;135&quot; org.eclipse.ui.ide.pathField=&quot;180&quot; org.eclipse.ui.ide.resourceField=&quot;135&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.allSeverityField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.resourceField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.pathField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.locationField&quot;/>&#xD;&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.markerType&quot;/>&#xD;&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
-      <tags>active</tags>
-      <tags>activeOnClose</tags>
       <menus xmi:id="_VSsrYO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.views.AllMarkersView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -353,7 +353,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_UUBcoO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_UUWz0O4jEeqLl_7TLR8DFg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_TVmsm-4jEeqLl_7TLR8DFg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_6rnncGDTEeurkZPMRHy2cA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_TVmsm-4jEeqLl_7TLR8DFg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_UUBcoe4jEeqLl_7TLR8DFg" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -387,7 +387,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_UUCqwO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_UUZQEO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_TVleiu4jEeqLl_7TLR8DFg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_6ruVIGDTEeurkZPMRHy2cA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_TVleiu4jEeqLl_7TLR8DFg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_UUCqwe4jEeqLl_7TLR8DFg" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -3283,7 +3283,7 @@
   <addons xmi:id="_TUggc-4jEeqLl_7TLR8DFg" elementId="MinMax Addon" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.minmax.MinMaxAddon"/>
   <addons xmi:id="_TUggdO4jEeqLl_7TLR8DFg" elementId="org.eclipse.ui.workbench.addon.0" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_TUqRYO4jEeqLl_7TLR8DFg" elementId="SplitterAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.addons.swt/org.eclipse.e4.ui.workbench.addons.splitteraddon.SplitterAddon"/>
-  <addons xmi:id="_IYS0IKimEeS11vbz3f9ezw" elementId="org.eclipse.ui.ide.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
+  <addons xmi:id="_5mBRUWDTEeurkZPMRHy2cA" elementId="org.eclipse.ui.ide.addon.0" contributionURI="bundleclass://org.eclipse.ui.ide/org.eclipse.ui.internal.ide.addons.SaveAllDirtyPartsAddon"/>
   <addons xmi:id="_dz0JgGOlEeSMMaPQU2nlzw" elementId="org.eclipse.ui.ide.application.addon.0" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.ui.ide.application/org.eclipse.ui.internal.ide.application.addons.ModelCleanupAddon"/>
   <categories xmi:id="_TVVm0O4jEeqLl_7TLR8DFg" elementId="com.github.fabeclipse.textedgrep.grepCommands" name="GrepCommands"/>
   <categories xmi:id="_TVVm0e4jEeqLl_7TLR8DFg" elementId="org.springframework.tooling.ls.eclipse.gotosymbol.commands.category" name="STS4"/>

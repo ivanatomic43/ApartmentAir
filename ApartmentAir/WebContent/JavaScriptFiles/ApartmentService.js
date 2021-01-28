@@ -302,10 +302,10 @@ function fillEditApartmentForm(data){
 	
 
 	
-	if(apartmentType == "Apartment"){
+	if(apartmentType === "Apartment"){
 		$('input[name=apartmentType]').prop('checked', true);
 	}
-	 if(apartmentType =="Room"){
+	 if(apartmentType ==="Room"){
 		 $('input[name=roomType]').prop('checked', true);
 	 }
 	
@@ -314,7 +314,7 @@ function fillEditApartmentForm(data){
 	
 }
 function editApartment(){
-	alert("USAO");
+	
 	event.preventDefault();
 	
 	let id= apartmentID;
@@ -363,7 +363,7 @@ function editApartment(){
 		contentType: "application/json",
 		success: function(){
 		  	
-			alert("USAO U SUCCC");
+			
 			$("#editApartmentForm").hide();
 			
 			var user = JSON.parse(localStorage.getItem('user'));

@@ -196,6 +196,7 @@ function showLoginForm(){
 		 $("#allCommentsAdmin").hide();
 		 $("#listOfUsersAdmin").hide();
 		 $("#listOfApartmentsAdmin").show();
+		 $("#createHostForm").hide();
 		 getAllApartmentsAdmin();
 	 
 	 } else if(user.role ==="HOST"){

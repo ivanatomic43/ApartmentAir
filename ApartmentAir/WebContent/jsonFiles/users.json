@@ -1,1 +1,2 @@
-[{"id":1,"username":"ivanatomic","password":"ivana123","name":"Ivana","surname":"Tomic","role":"ADMIN","gender":"Female","status":"ACTIVE","apartmentsForRent":[],"rentedApartments":[],"reservationList":[]}]
+[{"id":1,"username":"ivanatomic","password":"ivana123","name":"Ivana","surname":"Tomic","role":"ADMIN","gender":"Female","status":"ACTIVE","apartmentsForRent":[],"rentedApartments":[],"reservationList":[]},
+ {"id":2,"username":"host","password":"123","name":"HostName","surname":"HostSurname","role":"HOST","gender":"Male","status":"ACTIVE","apartmentsForRent":[],"rentedApartments":[],"reservationList":[]}]

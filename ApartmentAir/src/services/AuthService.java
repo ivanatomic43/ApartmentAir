@@ -41,7 +41,7 @@ public class AuthService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registration(User u, @Context HttpServletRequest request) {
 		if(u==null) {
-			
+			System.out.println("User je null");
 		}
 		
 		

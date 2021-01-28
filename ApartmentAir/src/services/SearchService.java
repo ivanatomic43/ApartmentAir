@@ -88,6 +88,38 @@ public class SearchService {
 	}
 	
 	@POST
+	@Path("/searchUsersHost")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchUsersHost(User user, @Context HttpServletRequest request) {
+		
+		
+		UserDAO users = (UserDAO)ctx.getAttribute("usersDAO");
+		ReservationDAO reservations = (ReservationDAO)ctx.getAttribute("reservationDAO");
+		
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		
+
+		
+		if(loggedUser == null)
+			return Response.status(Response.Status.FORBIDDEN).build();
+		if(!loggedUser.getRole().equals(Role.HOST))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Collection<ReservationDTO> reservationList = reservations.getAllReservationsHost(loggedUser.getUsername());
+		
+		Collection<User> usersList = users.searchUsersHost(user, reservationList);
+		
+		if(usersList.isEmpty())
+			return Response.status(Response.Status.NO_CONTENT).build();
+		
+		
+		
+		
+		return Response.status(Response.Status.OK).entity(usersList).build();
+	}
+	
+	@POST
 	@Path("/basicSearch")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

@@ -66,9 +66,20 @@ function getAllReservationsGuest(){
 
 function leaveCommentClick(data){
 	
+	
+	
+	var info= data.split(",");
+	var reservationID = info[0];
+	var apartmentID = info[1];
+	var reservationStatus = info[2];
+	
+	if(reservationStatus != "DECLINED" || reservationStatus != "FINISHED"){
+		alert("You can only leave comment only for declined or finished reservations...");
+		return;
+	}
+	
 	$("#listOfReservationsGuest").hide();
 	$("#newCommentForm").show();
-	
 	leaveComment(data);
 	
 }
@@ -101,7 +112,7 @@ function leaveComment(data){
 			return;
 		}
 		
-		if(reservationStatus == "DECLINED" || reservationStatus == "ENDED") {
+		if((reservationStatus === "DECLINED") || (reservationStatus === "FINISHED")) {
 		
 		let comment = {
 				"guestID" : user.id,
@@ -135,7 +146,7 @@ function leaveComment(data){
 			
 		});
 		} else {
-			alert("You can only leave comment for DECLINED and ENDED reservations!");
+			alert("You can only leave comment for DECLINED and FINISHED reservations!");
 			return;
 		}
 		
@@ -184,6 +195,7 @@ function showAdminReservations(){
 	$("#allCommentsAdmin").hide();
 	$("#listOfUsersAdmin").hide();
 	$("#listOfReservationsAdmin").show();
+	$("#createHostForm").hide();
 
 	getAllReservationsAdmin();
 }
@@ -246,6 +258,7 @@ function showReservationsHost(){
 	$("#userProfileDiv2").hide();
 	$("#editUserForm").hide();
 	$("#listOfApartmentsHost").hide();
+	$("#listOfUsersHost").hide();
 	$("#apartmentDetails").hide();
 	$("#allUsersDiv").hide();
 	$("#allUsersTable").hide();
@@ -287,9 +300,9 @@ function getAllReservationsHost(){
 					"<td>"+r.apartmentType+"</td>"+ 
 					"<td>"+r.apartmentID+"</td>"+  "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
 					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
-					"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+"')\" class=\"btn btn-primary \">Approve</button></td>" +
-					"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+"')\" class=\"btn btn-primary \">Decline</button></td>"+
-					"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+"')\" class=\"btn btn-primary \">End</button></td>"+
+					"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">Approve</button></td>" +
+					"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">Decline</button></td>"+
+					"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">End</button></td>"+
 					"</tr>"		
 					);
 			}
@@ -308,8 +321,12 @@ function getAllReservationsHost(){
 
 function approveReservation(data){
 	
-	var id = data;
+	var info = data.split(",");
+	var id = data[0];
+	var status = data[1];
 	
+	 
+	if(status ==="CREATED") {
 	$.ajax({
 		url: "rest/reservation/approveReservation/" + id,
 		type: "PUT",
@@ -325,12 +342,21 @@ function approveReservation(data){
 		
 		
 	});
+	
+	} else {
+		alert("Reservation has already been approved/declined/finished");
+		return;
+	}
 }
 
 function declineReservation(data){
 	
-	var id = data;
+	var info = data.split(",");
+	var id = data[0];
+	var status = data[1];
 	
+	 
+	if(status === "CREATED") {
 	$.ajax({
 		url: "rest/reservation/declineReservation/" + id,
 		type: "PUT",
@@ -346,11 +372,18 @@ function declineReservation(data){
 		
 		
 	});
+	} else {
+		alert("Reservation has already been approved/declined/finished");
+		return;
+	}
 }
 function finishReservation(data){
 	
-	var id = data;
+	var info = data.split(",");
+	var id = data[0];
+	var status = data[1];
 	
+	if(status ==="ACCEPTED"){
 	$.ajax({
 		url: "rest/reservation/finishReservation/" + id,
 		type: "PUT",
@@ -359,13 +392,23 @@ function finishReservation(data){
 			alert("Reservation finished!");
 			getAllReservationsGuest();
 		},
+		statusCode: {
+			400: function() {
+				alert("End date has not passed..");
+				return;
+			}
+		},
 		error: function(error){
 			console.log("Error finishing the reservation...");
 		}
 		
 		
 		
-	});
+	}); 
+	} else {
+		alert("Reservation status must be ACCEPTED");
+		return;
+	}
 }
 
 

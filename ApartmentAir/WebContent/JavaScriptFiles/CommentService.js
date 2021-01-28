@@ -133,6 +133,7 @@ function showAdminComments(){
 	$("#allUsersDiv").hide();
 	$("#listOfApartmentsAdmin").hide();
 	$("#listOfReservationsAdmin").hide();
+	$("#createHostForm").hide();
 	
 		getAllCommentsAdmin();
 	

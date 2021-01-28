@@ -71,6 +71,15 @@ private HashMap<Integer, User> users=new HashMap<>();
 		saveUsers(contextPath);
 	}
 	
+	public void addHost(User user,String contextPath) {
+		int id=generateNewId();
+		user.setId(id);
+		user.setRole(Role.HOST);
+		user.setStatus(UserStatus.ACTIVE);
+		users.put(id, user);
+		saveUsers(contextPath);
+	}
+	
 	public int generateNewId() {
 		int id=1;
 		for(User u:users.values()) {
@@ -223,6 +232,65 @@ private HashMap<Integer, User> users=new HashMap<>();
 			 }
 		 }
 		 for(User u: users.values()) {
+			 if(u.getGender().toLowerCase().equals(gender) && !usersList.contains(u) && gender != null) {
+				 usersList.add(u);
+			 }
+		 }
+		 
+		 
+		 
+		 
+		 Collections.reverse(usersList);
+		 return usersList;
+	}
+	
+	public Collection<User> searchUsersHost(User user, Collection<ReservationDTO> reservationList){
+		 ArrayList<User> usersList = new ArrayList<>();
+		 ArrayList<User> hostUsers = new ArrayList<>();
+		 ArrayList<Integer> guests = new ArrayList<>();
+		 
+		 for(ReservationDTO r : reservationList) {
+			 
+			 	guests.add(r.getGuestID());
+			 	System.out.println(r.getGuestID());
+			 
+		 }
+		
+		 for(int id : guests) {
+			 
+			 for(User u : users.values()) {
+				 	
+				 if(id == u.getId()) {
+					 hostUsers.add(u);
+				 }
+				 
+			 }
+			 
+		 }
+		 String username = user.getUsername().toLowerCase();
+		 String gender = user.getGender().toLowerCase();
+		 String role = "";
+		 
+		 
+		 if(user.getRole().equals("")) {
+			 role = "";
+		 } else {
+			  role = user.getRole().toString().toLowerCase();
+		 }
+		 
+		 
+		 
+		 for(User u: hostUsers) {
+			 if(u.getUsername().toLowerCase().equals(username) && username != null && !usersList.contains(u)) {
+				 usersList.add(u);
+			 }
+		 }
+		 for(User u: hostUsers) {
+			 if(u.getRole().toString().toLowerCase().equals(role) && !usersList.contains(u) && role != null) {
+				 usersList.add(u);
+			 }
+		 }
+		 for(User u: hostUsers) {
 			 if(u.getGender().toLowerCase().equals(gender) && !usersList.contains(u) && gender != null) {
 				 usersList.add(u);
 			 }

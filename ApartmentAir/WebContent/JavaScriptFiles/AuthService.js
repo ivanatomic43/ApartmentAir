@@ -96,11 +96,21 @@ function registration(){
 	let confirmpassword = $("#ConPasswordReg")[0].value;
 	
 	let gender = $("#genderReg").val();
+	let validation = true;
 	
-	
+	var one = password;
+	var two = confirmpassword;
+	var n = one.localCompare(two);
+	if(n == 0){
+		validation = true;
+	} else {
+		alert("Passwords does not match!");
+		validation = false;
+		return;
+	}
 
 	
-	let validation = true;
+	
 	
 	let letters = /^[A-Za-z]+$/;
 	
@@ -109,6 +119,7 @@ function registration(){
 	}else{
 		validation=false;
 	    nameReg.style.borderColor= "red";
+	    return;
 	}
 	
 	if(surname.match(letters)){
@@ -116,6 +127,7 @@ function registration(){
 	}else{
 		validation=false;
 	    surnameReg.style.borderColor= "red";
+	    return;
 	}
 	
 	  if(password)
@@ -125,17 +137,22 @@ function registration(){
 	    }else{
 	    	validation=false;
 	    	passwordReg.style.borderColor= "red";
+	    	return;
 	    }
+	  
+	  if(confirmpassword){
+		  ConPasswordReg.style.borderColor = "white";
+	  } else {
+		  validation = false;
+		  ConPasswordReg.style.borderColor = "red";
+		  return;
+	  }
+	   if(confirmpassword != password){
+		   alert("Passwords do not match!");
+		   return;
+	   }
 	    
-	    if(confirmpassword == password)
-	    {
-	    	ConPasswordReg.style.borderColor= "white";
-
-	    }else{
-	    	validation=false;
-	    	ConfirmPasswordReg.style.borderColor= "red";
-	    	alert("Passwords did  not match");
-	    }
+	    
 	
 	    
 	    if(gender)
@@ -145,6 +162,7 @@ function registration(){
 	    }else{
 	    	validation=false;
 	    	genderReg.style.borderColor= "red";
+	    	return;
 	    }
 	
 	    event.preventDefault();
@@ -162,7 +180,7 @@ function registration(){
 	
 	u= JSON.stringify(data);
 	
-	
+	alert(validation);
 		if(validation){
 		
 			$.ajax({
@@ -230,7 +248,7 @@ function adaptToUser(u){
 	//let uloga=parseString(u.role);
 	//alert(uloga);
 	
-	if(u.role=="GUEST"){
+	if(u.role==="GUEST"){
 		$("#profileBtn").show();
 		$("#usersAdminBtn").hide();
 		$("#usersHostBtn").hide();
@@ -247,6 +265,7 @@ function adaptToUser(u){
 		$("#reservationsAdminBtn").hide();
 		$("#reservationsGuestBtn").show();
 		$("#sortAndFilter").show();
+		$("#createHostBtn").hide();
 		
 	} 
 	
@@ -268,6 +287,7 @@ function adaptToUser(u){
 		$("#reservationsHostBtn").show();
 		$("#reservationsAdminBtn").hide();
 		$("#reservationsGuestBtn").hide();
+		$("#createHostBtn").hide();
 	}
 	
 	if(u.role==="ADMIN"){
@@ -287,6 +307,8 @@ function adaptToUser(u){
 		$("#reservationsHostBtn").hide();
 		$("#reservationsAdminBtn").show();
 		$("#reservationsGuestBtn").hide();
+		$("#createHostBtn").show();
+		
 		
 	}
 		
@@ -340,6 +362,7 @@ function logout(){
 			$("#newCommentForm").hide();
 			$("#allCommentsAdmin").hide();
 			$("#listOfUsersHost").hide();
+			$("#createHostBtn").hide();
 			
 			//adaptToUser(user);
 			

@@ -59,6 +59,76 @@ function searchUsersAdmin(){
 	
 }
 
+function searchUsersHost(){
+	
+	
+	let username = $("#usernameHostSearch").val();
+	let gender = $("#genderHostSearch option:selected").val();
+	let role = $("#roleHostSearch option:selected").val();
+	
+	
+	
+	
+	let data = { "username": username,
+				"gender": gender,
+				"role": role
+				
+			
+			
+				};
+	
+	let u = JSON.stringify(data);
+	
+	
+	$.ajax({
+		url: "rest/search/searchUsersHost",
+		type: "POST",
+		data: u,
+		contentType: "application/json",
+		success: function(users){
+			
+			if(users == null){
+				alert("There is no match!");
+				return;
+			}
+			
+			
+			$("#allUsersDivHost").show();
+	    	let i;
+			$('#allUsersTableHost tbody').empty();
+			
+			for(i=0; i< users.length; i++){
+				let u= users[i];
+				let rbr = i +1;
+				
+				
+			$('#allUsersTableHost tbody').append("<tr><th scope=\"row\">"+u.id+"</th>"+
+					"<td>"+u.name+"</td>"+ "<td>"+u.surname+"</td>"+ "<td>"+u.username+"</td>"+ "<td>"+u.gender+"</td>"+ "<td>"+u.role+"</td>"+
+					"<td>" +
+					"</td></tr>"		
+					);
+			}
+			
+			
+			
+		}
+		
+		
+	});
+	
+	
+}
+
+function cancelSearchHost(){
+	
+	
+    document.getElementById("usernameHostSearch").value = "";
+    $('#genderHostSearch option:first').prop('selected',true);
+    $('#roleHostSearch option:first').prop('selected',true);
+    getAllUsersHost();
+	
+}
+
 function cancelSearch(){
 	
 	
@@ -238,6 +308,8 @@ function searchApartmentsAdmin(){
 	
 	
 }
+
+
 
 function cancelSearchResults(){
 	

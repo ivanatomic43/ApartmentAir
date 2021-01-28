@@ -21,6 +21,8 @@ function getMyUser(){
 			$("#allCommentsAdmin").hide();
 			$("#allCommentsHost").hide();
 			$("#listOfUsersHost").hide();
+			$("#editApartmentForm").hide();
+			$("#createHostForm").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -199,7 +201,7 @@ function showUsersAdmin(){
 	$("#addAmenityForm").hide();
 	$("#editAmenityForm").hide();
 	$("#allAmenitiesDiv").hide();
-	$("#allAmenitiesTable").hide();
+	
 	$("#newApartmentForm").hide();
 	$("#editUserForm").hide();
 	$("#userProfileDiv").hide();
@@ -355,6 +357,86 @@ function getAllUsersHost(){
 		    }
 		  });
 	
+	
+	
+	
+}
+
+function createHostClick(){
+	
+	 
+	$("#listOfApartments").hide();
+	$("#addAmenityForm").hide();
+	$("#listOfApartmentsAdmin").hide();
+	$("#userProfileDiv").hide();
+	$("#userProfileDiv2").hide();
+	$("#listOfReservationsAdmin").hide();
+	$("#allUsersDiv").hide();
+	$("#listOfUsersAdmin").hide();
+	$("#allAmenitiesDiv").hide();
+	$("#allCommentsAdmin").hide();
+	$("#createHostForm").show();
+	
+	
+}
+
+function createNewHost(){
+	
+	let price=$("#newAppPricePerNight")[0].value;
+	let numberOfGuests = $("#newAppNumberOfGuests")[0].value;
+	let numberOfRooms = $("#newAppNumberOfRooms")[0].value;
+	
+	var name = $("#newHostName")[0].value;
+	var surname = $("#newHostSurname")[0].value;
+	var password = $("#newHostPassword")[0].value;
+	var conPassword = $("#newHostConPassword")[0].value;
+	var username = $("#newHostUsername")[0].value;
+	var gender = $("#newHostGender").val();
+	
+	
+	if( name === "" || surname === "" || password ==="" || conPassword ==="" || username ==="" || gender ==="") {
+		alert("Empty fields!!");
+		return;
+	}
+	
+	if(password != conPassword){
+		alert("Passwords don't match");
+		return;
+	}
+	
+	
+	let data =  {
+			"username": username,
+			"password": password,
+			"name": name,
+			"surname": surname,
+			"gender": gender
+		};
+
+	let host =  JSON.stringify(data);
+	
+		
+		$.ajax({
+			url:"rest/users/createHost",
+			type: "POST",
+			data:host,
+			contentType: "application/json",
+			success: function(){
+			
+			alert("Host created!");
+			$("#createHostForm").hide();
+				
+				
+				
+			}, 
+			statusCode: {
+				400 : function() {
+					alert("Error");
+				}
+			}
+			
+		});
+
 	
 	
 	

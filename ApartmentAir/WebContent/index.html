@@ -95,6 +95,9 @@
       <li class="nav-item">
             <a class="nav-link" onclick="showAdminComments()" id="commentsAdminBtn" style="display: none;">Recensions</a>
          </li>
+       <li class="nav-item">
+            <a class="nav-link" onclick="createHostClick()" id="createHostBtn" style="display: none;">Create host</a>
+         </li>
       <li class="nav-item">
             <a class="nav-link" onclick="showHostComments()" id="commentsHostBtn" style="display: none;">Recensions</a>
          </li>
@@ -158,7 +161,7 @@
   <!-- REGISTER FORM --> 
   <section>
 <div class="login-form" id="registrationForm" hidden = "true">
-    <form method="post">
+    
         <h2 class="text-center">Register</h2>       
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Name" required="required" id="nameReg" name="nameReg">
@@ -188,7 +191,7 @@
         <div class="clearfix">
             
         </div>        
-    </form>
+    
     
 </div>
 </section>
@@ -868,7 +871,7 @@
 
 
   <!--AMENITIES TABLE-->
-<div hidden="hidden" id="allAmenitiesDiv" class="preview-amenities"  style="display:none;">
+<div hidden="hidden" id="allAmenitiesDiv" class="preview-amenities"  >
 	<table class="table table-hover" id="allAmenitiesTable">
 		  <thead class="table-header">
 		    <tr>
@@ -980,14 +983,22 @@
     </div>
     <div class="w3-col m3">
       
-       <select style="margin-top: 30px;" class="form-control" name="gender" id="gender">
+       <select style="margin-top: 30px;" class="form-control" name="genderHostSearch" id="genderHostSearch">
        					<option value="" selected>Choose gender...</option>
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
                       </select>
     </div>
     <div class="w3-col m2">
+      
      
+        <select style="margin-top: 30px;" class="form-control" name="roleHostSearch" id="roleHostSearch">
+        				
+                        <option value="ADMIN" selected>Admin</option>
+                        <option value="HOST">Host</option>
+                        <option value="GUEST">Guest</option>
+                      </select>
+    
        
     </div>
     <div class="w3-col m2">
@@ -998,7 +1009,7 @@
     <div class="w3-col m2">
      
       
-      <button onclick="cancelSearchUsersHost()" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
+      <button onclick="cancelSearchUsersHost" style="margin-top: 30px;" class="w3-button w3-block w3-black">Cancel</button>
     </div>
   </div>
 
@@ -1264,6 +1275,55 @@
 	</table>
   </div>
   
+  <!-- CREATE HOST FORM -->
+<div id="createHostForm" class="w3-display-container w3-content" style="display: none; margin-top: 250px; margin-left:520px;">
+ 
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+    <div class="w3-container w3-khaki">
+      <h2><i class="fa fa-bed w3-margin-right"></i>Create a host</h2>
+    </div>
+    <div class="w3-container w3-white w3-padding-16">
+      
+        <div class="w3-row-padding" style="margin:0 -16px;">
+          <div class="w3-half w3-margin-bottom">
+         
+            
+            <input class="w3-input w3-border" type="text" name="newHostName" id="newHostName" required placeholder="Name"></textarea>
+          </div>
+          <div class="w3-half">
+           	<input class="w3-input w3-border" type="text" name="newHostSurname" id="newHostSurname" required placeholder="Surname"></textarea>
+          </div>
+        </div>
+        <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            
+            <input class="w3-input w3-border" type="text"  name="newHostUsername" id ="newHostUsername" required placeholder="Username">
+          </div>
+          <div class="w3-half">
+            <select name="newHostGender" id ="newHostGender">
+             <option value ="Male">Male</option>
+             <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+         <div class="w3-row-padding" style="margin:8px -16px;">
+          <div class="w3-half w3-margin-bottom">
+            
+            <input class="w3-input w3-border" type="password"  name="newHostPassword" id ="newHostPassword" required placeholder="Password">
+          </div>
+          <div class="w3-half">
+            <input class="w3-input w3-border" type="password"  name="newHostConPassword" id ="newHostConPassword" required placeholder="Confirm password">
+          </div>
+        </div>
+        
+      
+        
+        <button  class="w3-button w3-dark-grey" onclick="createNewHost()"><i class="fa fa-search w3-margin-right"></i>Create</button>
+      
+    </div>
+    </div>
+  </div>
+	  
 </body>
 
 </html>

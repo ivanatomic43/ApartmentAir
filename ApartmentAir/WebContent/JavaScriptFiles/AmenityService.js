@@ -14,19 +14,21 @@ function showAmenities(){
 	$("#listOfUsersAdmin").hide();
 	$("#allAmenitiesDiv").show();
 	$("#allCommentsAdmin").hide();
+	$("#createHostForm").hide();
+	$("#allAmenitiesTable").show();
 	getAllAmenities();
 }
 
 function getAllAmenities(){
-	
+	$("#allAmenitiesDiv").show();
 	  $.ajax({
 		    type: "GET",
 		    url: "rest/amenity/getAllAmenities",
 		    contentType: "application/json",
 		    success: function(amenities){
 		    	
-		    	alert("Usao u succ");
-		    	$("allAmenitiesTable").show();
+		    	
+		    	$("#allAmenitiesTable").show();
 		    	let i;
 				$('#allAmenitiesTable tbody').empty();
 				
@@ -46,7 +48,7 @@ function getAllAmenities(){
 		    
 		    },
 		    error: function () {
-		      console.log("100% TE ZAJEBAVA NEKI #ID");
+		      console.log("error");
 		    }
 		  });
 	
@@ -60,10 +62,9 @@ function getAllAmenities(){
 	
 function createNewAmenity(){
 	event.preventDefault();
-	alert("Usao u create new amenity");
+	
 	
 	let name = $("#newAmenityName")[0].value;
-	alert(name);
 	
 	let data = {
 			"name": name
@@ -118,7 +119,7 @@ function editAmenity(){
 	
 	let id = editAmenityId;
 	let name = $("#editAmenityName")[0].value;
-	alert(name);
+	
 	
 	let validation= true;
 	
@@ -140,14 +141,14 @@ function editAmenity(){
 			};
 		
 		let am = JSON.stringify(data);
-	 alert(am); // ovo saljem kao promenu
+	 
 		$.ajax({
 			url: "rest/amenity/editAmenity",
 			type: "PUT",
 			data: am,
 			contentType: "application/json",
 			success: function(){
-				alert("Usao u success edita");
+				
 				//$("#editAmenityName").val('');
 				$("#addAmenityForm").show();
 				getAllAmenities();

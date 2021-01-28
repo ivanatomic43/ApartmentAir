@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -164,6 +165,30 @@ public class UserService {
 		
 			
 		return Response.status(Response.Status.OK).entity(usersList).build();
+	}
+	
+	@POST
+	@Path("/createHost")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createHost(User u, @Context HttpServletRequest request) {
+		if(u==null) {
+			System.out.println("User je null");
+		}
+		
+		
+		UserDAO users=(UserDAO) ctx.getAttribute("usersDAO");
+		boolean postojiVec=users.checkUserName(u.getUsername());
+		
+		if(postojiVec==true) {
+			return Response.status(400).build();
+		}
+		
+		String contextPath=ctx.getRealPath("");
+		users.addHost(u, contextPath);
+		//request.getSession().setAttribute("loggedUser", u);
+		
+		return Response.status(Response.Status.OK).entity(u).build();
 	}
 	
 }

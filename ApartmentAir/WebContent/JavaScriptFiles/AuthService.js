@@ -98,16 +98,6 @@ function registration(){
 	let gender = $("#genderReg").val();
 	let validation = true;
 	
-	var one = password;
-	var two = confirmpassword;
-	var n = one.localCompare(two);
-	if(n == 0){
-		validation = true;
-	} else {
-		alert("Passwords does not match!");
-		validation = false;
-		return;
-	}
 
 	
 	
@@ -180,7 +170,7 @@ function registration(){
 	
 	u= JSON.stringify(data);
 	
-	alert(validation);
+	
 		if(validation){
 		
 			$.ajax({
@@ -193,6 +183,12 @@ function registration(){
 					//afterRegFunction();
 					localStorage.setItem("user", JSON.stringify(user));
 					adaptToUser(user);
+					  document.getElementById("nameReg").value = "";
+					  document.getElementById("surnameReg").value = "";
+					  document.getElementById("usernameReg").value = "";
+					  document.getElementById("passwordReg").value = "";
+					  document.getElementById("ConPasswordReg").value = "";
+					  
 					
 					
 				},
@@ -200,7 +196,7 @@ function registration(){
 				statusCode: {
 					400: function() {
 						alert("Username exist. Try another username.");
-						//$('#error').text("Greska pri unosu, korisnicko ime vec postoji!");
+						
 						
 					}
 				}
@@ -363,6 +359,7 @@ function logout(){
 			$("#allCommentsAdmin").hide();
 			$("#listOfUsersHost").hide();
 			$("#createHostBtn").hide();
+			$("#createHostForm").hide();
 			
 			//adaptToUser(user);
 			

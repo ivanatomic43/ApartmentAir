@@ -21,6 +21,7 @@ function getMyUser(){
 			$("#allCommentsAdmin").hide();
 			$("#allCommentsHost").hide();
 			$("#listOfUsersHost").hide();
+			$("#listOfUsersAdmin").hide();
 			$("#editApartmentForm").hide();
 			$("#createHostForm").hide();
 			

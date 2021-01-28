@@ -102,6 +102,7 @@ public class ApartmentDAO {
 		newApartment.setComments(new ArrayList<>());
 		newApartment.setReservations(new ArrayList<>());
 		newApartment.setDeleted(false);
+		newApartment.setRating(0);
 		
 		ArrayList<Date> dates = newApartment.getDates();
 		Date startDate = dates.get(0);
@@ -141,6 +142,17 @@ public class ApartmentDAO {
 		}
 		Collections.reverse(retVal);
 		return retVal;
+	}
+	
+	public boolean rateApartment(int apID, double rate) {
+		
+		for(Apartment a : apartments.values()) {
+			if(a.getId() == apID) {
+				a.setRating(rate);
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public Collection<Apartment> getAllActiveApartmentsHost(String username){

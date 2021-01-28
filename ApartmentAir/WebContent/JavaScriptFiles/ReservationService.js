@@ -294,15 +294,15 @@ function getAllReservationsHost(){
 			for(i=0; i< reservationList.length; i++){
 				let r= reservationList[i];
 				let rbr = i +1;
-				
+				alert(r.reservationStatus);
 				
 			$('#listOfReservationsHostTable tbody').append("<tr><th scope=\"row\">"+r.id+"</th>"+
 					"<td>"+r.apartmentType+"</td>"+ 
 					"<td>"+r.apartmentID+"</td>"+  "<td>"+r.street+" "+r.number+", "+r.city+"</td>"+ "<td>"+r.dateOfReservation+"</td>"+ "<td>"+r.totalPrice
 					+"$</td>"+ "<td>"+r.guestName+" "+r.guestSurname+"</td>"+ "<td>"+r.guestUsername+"</td>"+"<td>"+r.hostUsername+"</td>"+ "<td>"+r.reservationStatus+"</td>"+
-					"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">Approve</button></td>" +
-					"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">Decline</button></td>"+
-					"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+", "+r.reservationStatus+"')\" class=\"btn btn-primary \">End</button></td>"+
+					"<td><button type=\"button\" onclick=\"approveReservation('"+r.id+","+r.reservationStatus+"')\" class=\"btn btn-primary \">Approve</button></td>" +
+					"<td><button type=\"button\" onclick=\"declineReservation('"+r.id+","+r.reservationStatus+"')\" class=\"btn btn-primary \">Decline</button></td>"+
+					"<td><button type=\"button\" onclick=\"finishReservation('"+r.id+","+r.reservationStatus+"')\" class=\"btn btn-primary \">End</button></td>"+
 					"</tr>"		
 					);
 			}
@@ -320,13 +320,14 @@ function getAllReservationsHost(){
 }
 
 function approveReservation(data){
-	
-	var info = data.split(",");
-	var id = data[0];
-	var status = data[1];
-	
+	alert(data);
+	let info = data.split(",");
+	let id = info[0];
+	let status = info[1];
+	alert(id);
+	alert(status);
 	 
-	if(status ==="CREATED") {
+	if(status === "CREATED") {
 	$.ajax({
 		url: "rest/reservation/approveReservation/" + id,
 		type: "PUT",

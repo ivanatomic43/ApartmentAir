@@ -204,6 +204,7 @@ public Collection<ReservationDTO> getAllReservationsHost(String hostUsername){
 			if(r.getId() == id && (r.getReservationStatus().equals(ReservationStatus.ACCEPTED) || r.getReservationStatus().equals(ReservationStatus.CREATED))) {
 				
 				r.setReservationStatus(ReservationStatus.CANCELED);
+				
 				return cancelled = true;
 			}
 			

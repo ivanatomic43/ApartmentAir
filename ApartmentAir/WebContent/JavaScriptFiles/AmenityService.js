@@ -116,7 +116,7 @@ function fillEditAmenityForm(data){
 }
 
 function editAmenity(){
-	
+	event.preventDefault();
 	let id = editAmenityId;
 	let name = $("#editAmenityName")[0].value;
 	
@@ -159,6 +159,8 @@ function editAmenity(){
 				}
 			}
 		});
+		
+		event.preventDefault();
 	}
 }
 

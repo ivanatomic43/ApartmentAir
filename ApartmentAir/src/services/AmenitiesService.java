@@ -3,9 +3,12 @@ package services;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -25,8 +28,13 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Amenity;
-
+import beans.Apartment;
+import beans.User;
 import dao.AmenitiesDAO;
+import dao.ApartmentDAO;
+import dao.ReservationDAO;
+import dao.UserDAO;
+import enums.Role;
 
 @Path("/amenity")
 public class AmenitiesService {
@@ -34,15 +42,48 @@ public class AmenitiesService {
 	@Context
 	ServletContext ctx;
 	
+
 	
+	@PostConstruct
+	public void init() {
+		if(ctx.getAttribute("apartmentDAO")==null) {
+			String contextPath=ctx.getRealPath("");
+			ctx.setAttribute("apartmentDAO", new ApartmentDAO(contextPath));
+		}
+		if(ctx.getAttribute("amenitiesDAO")==null) {
+			String contextPath=ctx.getRealPath("");
+			ctx.setAttribute("amenitiesDAO", new AmenitiesDAO(contextPath));
+		}
+		
+		if(ctx.getAttribute("usersDAO")==null) {
+			String contextPath=ctx.getRealPath("");
+			ctx.setAttribute("usersDAO", new UserDAO(contextPath));
+		}
+		if(ctx.getAttribute("reservationDAO")==null) {
+			String contextPath=ctx.getRealPath("");
+			ctx.setAttribute("reservationDAO", new ReservationDAO(contextPath));
+		}
+	
+	}
 
 	@Path("/getAllAmenities")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllAmenities() throws JsonGenerationException, JsonMappingException, IOException {
+	public Response getAllAmenities(@Context HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 	
-		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
-		return Response.status(Response.Status.OK).entity(amenities).build();
+		AmenitiesDAO amenities = (AmenitiesDAO)ctx.getAttribute("amenitiesDAO");
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+		
+		
+		/*if(!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();*/
+		
+		Collection<Amenity> amenitiesList = amenities.getAllAmenities();
+		
+		
+		
+		
+		return Response.status(Response.Status.OK).entity(amenitiesList).build();
 	}
 	
 	
@@ -50,13 +91,25 @@ public class AmenitiesService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addAmenity(Amenity amenity) throws JsonGenerationException, JsonMappingException, IOException {
+	public Response addAmenity(Amenity amenity, @Context HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 		
-		int newId = AmenitiesDAO.generateNewId(ctx.getRealPath("."));
-		Amenity a = new Amenity(newId, amenity.getName());
-		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
-		amenities.add(a);
-		AmenitiesDAO.writeAmenities(ctx.getRealPath("."),amenities);
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+
+		AmenitiesDAO amenities = (AmenitiesDAO)ctx.getAttribute("amenitiesDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Amenity a = amenities.createNewAmenity(amenity, contextPath);
+		
+		if(a == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
+		}
+		
+		
+		
+		
 		return Response.status(Response.Status.OK).entity(a).build();
 	}
 	
@@ -64,36 +117,53 @@ public class AmenitiesService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response editAmenity(Amenity amenity) throws JsonGenerationException, JsonMappingException, IOException {
+	public Response editAmenity(Amenity amenity, @Context HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 		
 		Amenity newAm = new Amenity(amenity.getId(), amenity.getName()); //saljem novu ukucanu izmenu ovde
 	
-		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
 		
-		for(Amenity oldAm : amenities) {
-			if(oldAm.getId() == newAm.getId()) {
-				oldAm.setName(newAm.getName());
-			
-				AmenitiesDAO.writeAmenities(ctx.getRealPath("."), amenities);
-				return Response.status(200).build();
-			}
-			
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+
+		AmenitiesDAO amenities = (AmenitiesDAO)ctx.getAttribute("amenitiesDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		Amenity a = amenities.editAmenity(amenity, contextPath);
+		
+		if(a == null) {
+			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 		
 		
-		return Response.status(Response.Status.NOT_FOUND).build();		
+		
+		
+		return Response.status(Response.Status.OK).entity(a).build();		
 	}
 	
 	@Path("/removeAmenity/{id}")
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response removeAmenity(@PathParam("id") int id) throws JsonGenerationException, JsonMappingException, IOException {
+	public Response removeAmenity(@PathParam("id") int id, @Context HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException {
 		
-		ArrayList<Amenity> amenities = AmenitiesDAO.readAmenities(ctx.getRealPath("."));
 		
-		amenities = amenities.stream().filter(a -> !(a.getId() == id))
-				.collect(Collectors.toCollection(ArrayList::new));
-		AmenitiesDAO.writeAmenities(ctx.getRealPath("."),amenities);
+
+		User loggedUser = (User)request.getSession().getAttribute("loggedUser");
+
+		AmenitiesDAO amenities = (AmenitiesDAO)ctx.getAttribute("amenitiesDAO");
+		String contextPath = ctx.getRealPath("");
+		
+		if(!loggedUser.getRole().equals(Role.ADMIN))
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		
+		
+		boolean removed  = amenities.removeAmenity(id, contextPath);
+		
+		if(!removed)
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		
+	
 		
 		
 		return Response.status(Response.Status.OK).build();

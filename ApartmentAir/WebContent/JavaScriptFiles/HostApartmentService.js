@@ -116,7 +116,7 @@ function deleteApartment(data){
 		 type: "DELETE",
 		 contentType: "application/json",
 		 success: function(isReserved){
-			 alert("USAO U DELETE SUCC");
+			 
 			 
 			 if(isReserved == true){
 				 alert("You can't delete this apartment, it's reserved...");
@@ -134,6 +134,11 @@ function deleteApartment(data){
 			 
 			 getAllActiveApartmentsHost();
 			 
+		 },
+		 statusCode: {
+			 400: function(){
+				 alert("You cannot delete apartment, its reserved");
+			 }
 		 },
 		 error: function(error){
 			 console.log("Error deleting apartment...");
@@ -173,7 +178,7 @@ function getAllActiveApartmentsHost(){
         "<h6 class=\"w3-opacity\">Price: " +ap.pricePerNight+ "$</h6>" +
         "<p>Status: "+ ap.status+"</p>"+
         "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
-        "<p>Rating: "+ap.numberOfGuests+"</p>"+
+        "<p>Rating: "+ap.rating+"</p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
         "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
         "<button onclick=\"editApartmentClick('"+ap.id+","+ap.type+","+ap.pricePerNight+","+ap.numberOfGuests+","+ap.numberOfRooms+","+ap.amenities+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+

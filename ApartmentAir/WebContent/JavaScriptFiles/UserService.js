@@ -24,6 +24,7 @@ function getMyUser(){
 			$("#listOfUsersAdmin").hide();
 			$("#editApartmentForm").hide();
 			$("#createHostForm").hide();
+			$("#allUsersDiv").hide();
 			
 			$("#userProfileDiv2").append("<div class=\"row gutters-sm\"  style=\"background-color: #F2F0DD\">" +
       "<div class=\"col-md-4 mb-3\">" +
@@ -210,6 +211,7 @@ function showUsersAdmin(){
 	$("#listOfUsersAdmin").show();
 	$("#listOfReservationsAdmin").hide();
 	$("#allCommentsAdmin").hide();
+	$("#createHostForm").hide();
 	 getAllUsers();
 	
 	
@@ -377,6 +379,8 @@ function createHostClick(){
 	$("#allAmenitiesDiv").hide();
 	$("#allCommentsAdmin").hide();
 	$("#createHostForm").show();
+	$("#editAmenityForm").hide();
+	$("#editUserForm").hide();
 	
 	
 }

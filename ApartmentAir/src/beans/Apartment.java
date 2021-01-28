@@ -26,6 +26,14 @@ public class Apartment {
 		this.deleted = deleted;
 	}
 
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
 	private String type;
 	private int numberOfRooms;
 	private int numberOfGuests;
@@ -41,6 +49,7 @@ public class Apartment {
 	private List<String> amenities = new ArrayList<>();
 	private List<Reservation> reservations = new ArrayList<>();
 	private boolean deleted = false;
+	private double rating;
 	
 	public Apartment() {}
 

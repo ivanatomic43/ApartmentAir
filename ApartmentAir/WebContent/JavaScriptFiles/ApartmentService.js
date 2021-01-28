@@ -27,7 +27,7 @@ $(document).ready(function(){
 			}
 		},
 		error:function(){
-			alert('error getting amenities')
+			console.log('error getting amenities');
 		}
 	})
 
@@ -65,6 +65,7 @@ function showNewApartmentForm(){
 	$("#listOfApartments").hide();
 	$("#newApartmentForm").show();
 	$("#listOfApartmentsHost").hide();
+	
 	
 	document.getElementById("newAppPricePerNight").value = "";
 	document.getElementById("newAppStreet").value = "";
@@ -256,7 +257,7 @@ function getAllApartmentsAdmin(){
         "<h6 class=\"w3-opacity\">Price: "+ap.pricePerNight+ "$</h6>" +
         "<p> Status: "+ ap.status+"</p>"+
         "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
-        "<p>Rating: "+ap.numberOfGuests+"</p>"+
+        "<p>Rating: "+ap.rating+"</p>"+
         "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
         "<button onclick=\"showApartmentDetails('"+ ap.id +"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See detalis</button>"+
         "<button onclick=\"editApartmentClick('"+ap.id+","+ap.type+","+ap.pricePerNight+","+ap.numberOfGuests+","+ap.numberOfRooms+","+ap.amenities+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">Edit facility</button>"+
@@ -445,7 +446,7 @@ function backToList(){
 	        "<h3>" +ap.type+ "</h3>" +
 	        "<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
 	        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
-	        "<p>Rating: "+ap.numberOfRooms+"</p>"+
+	        "<p>Rating: "+ap.rating+"</p>"+
 	        "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
 	        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
 	     " </div>" +

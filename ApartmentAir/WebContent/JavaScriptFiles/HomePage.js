@@ -88,6 +88,7 @@ function showLoginForm(){
 		 $("#loginBtn").show();
 		 $("#regBtn").show();
 		 $("#loginForm").hide();
+		 $("#registrationForm").hide();
 		 
 		 $.ajax({
 				url: "rest/apartment/getAllActiveApartments",
@@ -169,7 +170,7 @@ function showLoginForm(){
 		        "<h3>" +ap.type+ "</h3>" +
 		        "<h6 class=\"w3-opacity\">Price:" +ap.pricePerNight+ "$</h6>" +
 		        "<p>Location: "+ ap.location.address.street+" "+ap.location.address.number+", "+ap.location.address.city+"</p>"+
-		        "<p>Rating: "+ap.numberOfRooms+"</p>"+
+		        "<p>Rating: "+ap.rating+"</p>"+
 		        "<p class=\"w3-large\"><i class=\"fa fa-bath\"></i> <i class=\"fa fa-phone\"></i> <i class=\"fa fa-wifi\"></i></p>"+
 		        "<button onclick=\"showApartmentDetails('"+ap.id+"')\" class=\"w3-button w3-block w3-black w3-margin-bottom\">See Details</button>"+
 		     " </div>" +

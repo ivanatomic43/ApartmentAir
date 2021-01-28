@@ -68,7 +68,7 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createApartment(Apartment newApp, @Context HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
-		System.out.println("Usao u create");
+		
 		User user = (User)request.getSession().getAttribute("loggedUser");
 		System.out.println(user.getUsername());
 		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");

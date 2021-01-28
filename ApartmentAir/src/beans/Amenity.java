@@ -4,8 +4,8 @@ public class Amenity {
 
 	
 
-	private long id;
-	public Amenity(long id, String name) {
+	private int id;
+	public Amenity(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -32,14 +32,14 @@ public class Amenity {
 	/**
 	 * @return the id
 	 */
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

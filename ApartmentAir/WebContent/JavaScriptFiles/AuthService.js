@@ -89,6 +89,8 @@ function login(){
 
 function registration(){
 	
+	
+	
 	let name = $("#nameReg")[0].value;
 	let surname = $("#surnameReg")[0].value;
 	let username = $("#usernameReg")[0].value;
@@ -203,6 +205,8 @@ function registration(){
 				
 				
 			});
+			
+			event.preventDefault();
 		} else{
 			alert("Fields are empty!");
 		}
@@ -262,6 +266,7 @@ function adaptToUser(u){
 		$("#reservationsGuestBtn").show();
 		$("#sortAndFilter").show();
 		$("#createHostBtn").hide();
+		getAllActiveApartments();
 		
 	} 
 	

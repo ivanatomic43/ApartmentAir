@@ -106,7 +106,6 @@ private HashMap<Integer, Comment> comments =new HashMap<>();
 	
 	public Comment leaveComment(Comment newComment, int hostID, String contextPath) {
 		
-		System.out.println("USAO U LEave comment dao");
 		
 		int id = generateNewId();
 		newComment.setId(id);
@@ -114,7 +113,7 @@ private HashMap<Integer, Comment> comments =new HashMap<>();
 		newComment.setStatus(CommentStatus.WAITING_FOR_APPROVAL);
 		
 		comments.put(newComment.getId(), newComment);
-		System.out.println("putt comments");
+		
 		saveComments(contextPath);
 		
 		return newComment;

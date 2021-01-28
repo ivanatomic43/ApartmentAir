@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
@@ -255,9 +256,25 @@ public class CommentService {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		
 		CommentDAO comments = (CommentDAO)ctx.getAttribute("commentDAO");
+		ApartmentDAO apartments = (ApartmentDAO)ctx.getAttribute("apartmentDAO");
 		String contextPath = ctx.getRealPath("");
 		
 		boolean approved = comments.approveComment(id, contextPath);
+		
+		if(approved) {
+		int apID;
+		double rate=0;
+		Collection<CommentDTO> allComm = comments.getAllCommentsAdmin();
+		for(CommentDTO dto : allComm) {
+			if(dto.getId() == id) {
+				apID = dto.getApartmentID();
+				rate = dto.getRating();
+				boolean done = apartments.rateApartment(apID, rate);
+				}
+			}
+		}
+		
+		
 		
 		if(!approved)
 			return Response.status(Response.Status.BAD_REQUEST).build();
